@@ -6,22 +6,22 @@ namespace FitMyFood.ViewModels
 {
     public class ItemDetailViewModel : BaseViewModel
     {
-        public Item Item { get; set; }
+        public FoodItem Item { get; set; }
         public ItemDetailViewModel()
         {
-            var item = new Item
+            var item = new FoodItem
             {
                 Text = "Item 1",
                 Description = "This is an item description."
             };
             init(item);
         }
-        public ItemDetailViewModel(Item item = null)
+        public ItemDetailViewModel(FoodItem item = null)
         {
             init(item);
         }
 
-        void init(Item item = null)
+        void init(FoodItem item = null)
         {
             Title = item?.Text;
             Item = item;

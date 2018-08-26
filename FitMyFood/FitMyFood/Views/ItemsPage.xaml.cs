@@ -27,7 +27,7 @@ namespace FitMyFood.Views
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var item = args.SelectedItem as Item;
+            var item = args.SelectedItem as FoodItem;
             if (item == null)
                 return;
 

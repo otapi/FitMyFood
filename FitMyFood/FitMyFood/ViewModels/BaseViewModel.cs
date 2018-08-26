@@ -12,7 +12,7 @@ namespace FitMyFood.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
+        public DataStore dataStore => new DataStore();
 
         bool isBusy = false;
         public bool IsBusy

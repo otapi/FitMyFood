@@ -12,20 +12,20 @@ namespace FitMyFood.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        public ObservableCollection<Item> Items { get; set; }
+        public ObservableCollection<FoodItem> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
         public ItemsViewModel()
         {
             Title = "Browse";
-            Items = new ObservableCollection<Item>();
+            Items = new ObservableCollection<FoodItem>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
+            MessagingCenter.Subscribe<NewItemPage, FoodItem>(this, "AddItem", async (obj, item) =>
             {
-                var newItem = item as Item;
+                var newItem = item as FoodItem;
                 Items.Add(newItem);
-                await DataStore.AddItemAsync(newItem);
+                await dataStore.foodItems.AddItemAsync(newItem);
             });
         }
 
@@ -39,7 +39,7 @@ namespace FitMyFood.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await dataStore.foodItems.GetItemsAsync();
                 foreach (var item in items)
                 {
                     Items.Add(item);

@@ -1,10 +1,9 @@
-﻿using System;
+﻿using SQLite;
 
 namespace FitMyFood.Models
 {
-    public class Item
+    public class FoodItem : DataStoreItemMaster
     {
-        public string Id { get; set; }
         public string Text { get; set; }
         public string Description { get; set; }
     }
