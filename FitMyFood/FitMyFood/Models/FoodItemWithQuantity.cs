@@ -4,15 +4,10 @@ using System.Collections.Generic;
 namespace FitMyFood.Models
 {
     /// <summary>
-    /// Datasheet for a food with it's ingredients
+    /// Datasheet for a food with it's ingredients + Quantity for composedItems
     /// </summary>
-    public class ComposedFoodItem : SimpleMaster
+    public class FoodItemWithQuantity : FoodItem
     {
-        // ForeignKey
-        public int OwnerFoodItemId { get; set; }
-        // ForeignKey
-        public int FoodItemId { get; set; }
-
         /// <summary>
         /// How many unit has?
         /// </summary>

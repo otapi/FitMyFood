@@ -6,7 +6,7 @@ namespace FitMyFood.Models
     /// <summary>
     /// Personal settings of the app and of the user
     /// </summary>
-    public class Settings : DataStoreItemMaster
+    public class Settings : SimpleMaster
     {
         /// <summary>
         /// Profile name - not used at the moment

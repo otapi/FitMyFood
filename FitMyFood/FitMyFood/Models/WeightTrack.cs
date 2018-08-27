@@ -7,7 +7,7 @@ namespace FitMyFood.Models
     /// <summary>
     /// Entry of measured weight for the user per days
     /// </summary>
-    public class WeightTrack : DataStoreItemMaster
+    public class WeightTrack : SimpleMaster
     {
         public DateTime Date { get; set; }
         /// <summary>

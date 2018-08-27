@@ -5,7 +5,7 @@ using SQLite;
 
 namespace FitMyFood.Models
 {
-    public class DataStoreItemMaster
+    public class SimpleMaster
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

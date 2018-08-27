@@ -1,12 +1,11 @@
-﻿using SQLite;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace FitMyFood.Models
 {
     /// <summary>
     /// Datasheet for a food with it's ingredients
     /// </summary>
-    public class FoodItem : DataStoreItemMaster
+    public class FoodItem : SimpleMaster
     {
         public string Name { get; set; }
         /// <summary>
@@ -34,6 +33,6 @@ namespace FitMyFood.Models
         /// <summary>
         /// True if this is a composed food
         /// </summary>
-        bool IsComposedFood { get; set; }
+        public bool IsComposedFood { get; set; }
     }
 }

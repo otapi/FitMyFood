@@ -4,13 +4,13 @@ using System.Text;
 using SQLite;
 using System.Threading.Tasks;
 
-namespace FitMyFood.Services
+namespace FitMyFood.Data
 {
-    public class DataStoreDAO<T> where T : Models.DataStoreItemMaster, new()
+    public class SimpleDAO<T> where T : Models.SimpleMaster, new()
     {
         readonly SQLiteAsyncConnection database;
 
-        public DataStoreDAO(SQLiteAsyncConnection database)
+        public SimpleDAO(SQLiteAsyncConnection database)
         {
             this.database = database;
             database.CreateTableAsync<T>().Wait();

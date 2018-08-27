@@ -7,7 +7,7 @@ namespace FitMyFood.Models
     /// <summary>
     /// Set of foods for a meal
     /// </summary>
-    public class MealFood : DataStoreItemMaster
+    public class MealFood : SimpleMaster
     {
         // Foreignkey
         public int DailyProfile { get; set; }
