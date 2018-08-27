@@ -12,7 +12,7 @@ namespace FitMyFood.Models
         /// <summary>
         /// Default unit
         /// </summary>
-        string UnitDescription { get; set; }
+        public string UnitDescription { get; set; }
         /// <summary>
         /// x gram in a unit
         /// </summary>
@@ -35,9 +35,5 @@ namespace FitMyFood.Models
         /// True if this is a composed food
         /// </summary>
         bool IsComposedFood { get; set; }
-        /// <summary>
-        /// List of FoodItems if this is a composed food
-        /// </summary>
-        public List<int> ComposedFoodItems { get; set; }
     }
 }
