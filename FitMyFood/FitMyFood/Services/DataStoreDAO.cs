@@ -21,11 +21,12 @@ namespace FitMyFood.Services
             return await database.Table<T>().ToListAsync();
         }
         
+        
         public async Task<T> GetItemAsync(int Id)
         {
             return await database.Table<T>().Where(i => i.Id == Id).FirstOrDefaultAsync();
         }
-
+        
         public async Task<int> UpdateItemAsync(T item)
         {
             return await database.UpdateAsync(item);

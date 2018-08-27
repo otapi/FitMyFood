@@ -11,8 +11,8 @@ namespace FitMyFood.ViewModels
         {
             var item = new FoodItem
             {
-                Text = "Item 1",
-                Description = "This is an item description."
+                Name = "Item 1",
+                UnitDescription = "This is an item description."
             };
             init(item);
         }
@@ -23,7 +23,7 @@ namespace FitMyFood.ViewModels
 
         void init(FoodItem item = null)
         {
-            Title = item?.Text;
+            Title = item?.Name;
             Item = item;
         }
     }

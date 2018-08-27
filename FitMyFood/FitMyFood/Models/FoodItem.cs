@@ -1,10 +1,43 @@
 ﻿using SQLite;
+using System.Collections.Generic;
 
 namespace FitMyFood.Models
 {
+    /// <summary>
+    /// Datasheet for a food with it's ingredients
+    /// </summary>
     public class FoodItem : DataStoreItemMaster
     {
-        public string Text { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; }
+        /// <summary>
+        /// Default unit
+        /// </summary>
+        string UnitDescription { get; set; }
+        /// <summary>
+        /// x gram in a unit
+        /// </summary>
+        public double UnitWeight { get; set; }
+
+        /// <summary>
+        /// x gram in 100g
+        /// </summary>
+        public double Fat { get; set; }
+        /// <summary>
+        /// x gram in 100g
+        /// </summary>
+        public double Carbo { get; set; }
+        /// <summary>
+        /// x gram in 100g
+        /// </summary>
+        public double Protein { get; set; }
+
+        /// <summary>
+        /// True if this is a composed food
+        /// </summary>
+        bool IsComposedFood { get; set; }
+        /// <summary>
+        /// List of FoodItems if this is a composed food
+        /// </summary>
+        public List<int> ComposedFoodItems { get; set; }
     }
 }

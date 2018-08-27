@@ -19,8 +19,8 @@ namespace FitMyFood.Views
 
             Item = new FoodItem
             {
-                Text = "Item name",
-                Description = "This is an item description."
+                Name = "Item name",
+                UnitDescription = "This is an item description."
             };
 
             BindingContext = this;
