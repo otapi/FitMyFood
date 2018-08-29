@@ -31,7 +31,7 @@ namespace FitMyFood.Data
                 , Owner.Id);
         }
 
-        private async Task<ComposedFoodItem> findComposedFoodItem(FoodItem owner, FoodItem foodItem)
+        private async Task<ComposedFoodItem> FindComposedFoodItem(FoodItem owner, FoodItem foodItem)
         {
             var table = database.Table<ComposedFoodItem>();
             var query = from r
@@ -44,7 +44,7 @@ namespace FitMyFood.Data
 
         public async Task<int> UpdateItemAsync(FoodItem owner, FoodItem foodItem, double quantity)
         {
-            ComposedFoodItem composedItem = await findComposedFoodItem(owner, foodItem);
+            ComposedFoodItem composedItem = await FindComposedFoodItem(owner, foodItem);
             if (composedItem == null)
             {
                 throw new Exception("The owner - composed item relationship is missing from the ComposedFoodItem table. Could not update it.");
@@ -71,7 +71,7 @@ namespace FitMyFood.Data
         }
         public async Task<int> DeleteItemAsync(FoodItem owner, FoodItem foodItem)
         {
-            ComposedFoodItem composedItem = await findComposedFoodItem(owner, foodItem);
+            ComposedFoodItem composedItem = await FindComposedFoodItem(owner, foodItem);
             if (composedItem == null)
             {
                 throw new Exception("The owner - composed item relationship is missing from the ComposedFoodItem table. Could not delet it.");

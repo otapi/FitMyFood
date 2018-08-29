@@ -14,15 +14,15 @@ using FitMyFood.ViewModels;
 namespace FitMyFood.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ItemsPage : ContentPage
+    public partial class MainListFoodItemPage : ContentPage
     {
-        ItemsViewModel viewModel;
+        MainListFoodItemViewModel viewModel;
 
-        public ItemsPage()
+        public MainListFoodItemPage()
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new ItemsViewModel();
+            BindingContext = viewModel = new MainListFoodItemViewModel();
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)

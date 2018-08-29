@@ -10,12 +10,12 @@ using FitMyFood.Views;
 
 namespace FitMyFood.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel
+    public class MainListFoodItemViewModel : BaseViewModel
     {
         public ObservableCollection<FoodItem> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
-        public ItemsViewModel()
+        public MainListFoodItemViewModel()
         {
             Title = "Browse";
             Items = new ObservableCollection<FoodItem>();
