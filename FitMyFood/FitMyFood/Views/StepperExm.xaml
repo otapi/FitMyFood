@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitMyFood.Views.StepperExm">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Vertical" VerticalOptions="Center">
+                <StackLayout Orientation="Vertical" >
+                    <ListView x:Name="MyResultsList" ItemSelected="MyResultsList_ItemSelected" VerticalOptions="CenterAndExpand"  RowHeight="60" CachingStrategy="RecycleElement" SeparatorVisibility="None">
+                        <ListView.Header>
+                            <Grid BackgroundColor="DarkGray">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50*" />
+                                    <ColumnDefinition Width="300*" />
+                                    <ColumnDefinition Width="300*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" FontSize="Small" Text="Team"/>
+                                <Label Grid.Column="1" FontSize="Small" Text="Place"/>
+                                <Label Grid.Column="2" FontSize="Small" Text="Score"/>
+                            </Grid>
+                        </ListView.Header>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50*" />
+                                            <ColumnDefinition Width="200*" />
+                                            <ColumnDefinition Width="200*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Row="0" Grid.Column="0"  WidthRequest="30" Text="{Binding TeamNumber}"/>
+                                        <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"  WidthRequest="300" Text="{Binding Players}"/>
+                                        <StackLayout Orientation="Horizontal"  Grid.Row="1" Grid.Column="1" HeightRequest="30">
+                                            <Entry x:Name="MyFinishField"  IsEnabled="False" WidthRequest="30"  Text="{Binding FinishOrder}" />
+                                            <Stepper x:Name="MyFinishStepper" WidthRequest="75"  Increment="1" Minimum="0" Maximum="{Binding TotalTeams}" Value="{Binding FinishOrder}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal"  Grid.Row="1" Grid.Column="2" HeightRequest="30">
+                                            <Entry x:Name="MyScoreField" IsEnabled="False"  WidthRequest="50" Text="{Binding Score}"/>
+                                            <Slider x:Name="MyScoreSlider"  WidthRequest="100" Minimum="-100" Maximum="100" ValueChanged="MyScoreSlider_ValueChanged"  Value="{Binding Score}" ></Slider>
+                                        </StackLayout>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+                <Label x:Name="MyMessage" HorizontalOptions="Start" />
+                <StackLayout VerticalOptions="End" Orientation="Horizontal" HorizontalOptions="Center">
+                    <Button Text="Review" Clicked="Button_Clicked" ></Button>
+                    <Button Text="Close"  ></Button>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
