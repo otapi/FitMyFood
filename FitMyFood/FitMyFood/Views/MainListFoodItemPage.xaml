@@ -28,29 +28,22 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Padding="10">
-                            <Label Text="{Binding Name}" 
-                                LineBreakMode="NoWrap" 
-                                Style="{DynamicResource ListItemTextStyle}" 
-                                FontSize="16" />
-                            <Label Text="{Binding Fat},
-                                Path=Value,
-                                StringFormat='{0:F1}'}"
-                                Style="{DynamicResource ListItemTextStyle}"
-                                />
+                            <Label Text="{Binding Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" 
+                                FontSize="16" 
+                            />
                             <Stepper x:Name="stepper"
-                                 Minimum="0"
-                                 Maximum="10"
-                                 Increment="0.1"
-                                 ValueChanged="Stepper_ValueChanged"/>       
-
+                                    Minimum="0"
+                                    Maximum="10"
+                                    Increment="0.1"
+                                    Value="{Binding Fat}"
+                            />
                             <Label Text="{Binding Source={x:Reference stepper},
-                                 Path=Value,
-                                 StringFormat='{0:F1}'}"
-                                />
+                              Path=Value,
+                              StringFormat='Value: {0:F1}'}"/>
                             <Label Text="{Binding UnitDescription}" 
                                 LineBreakMode="NoWrap" 
-                                />
-                            
+                            />
+
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

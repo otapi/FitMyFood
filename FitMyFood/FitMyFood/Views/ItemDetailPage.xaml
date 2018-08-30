@@ -14,5 +14,8 @@
         <Label Text="{Binding Item.Name}" FontSize="Small"/>
         <Label Text="Description:" FontSize="Medium" />
         <Label Text="{Binding Item.UnitDescription}" FontSize="Small"/>
+        <Label Text="Fat:" FontSize="Medium" />
+        <Label Text="{Binding Item.Fat, StringFormat='Value: {0:F1}'}"
+                            />
     </StackLayout>
 </ContentPage>
