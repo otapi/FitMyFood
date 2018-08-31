@@ -15,8 +15,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\MainListFoodItemPage.xaml.cs">
-      <DependentUpon>MainListFoodItemPage.xaml</DependentUpon>
+    <Compile Update="Views\PageMenu.xaml.cs">
+      <DependentUpon>PageMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PageNewItem.xaml.cs">
+      <DependentUpon>PageNewItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PageMain.xaml.cs">
+      <DependentUpon>PageMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PageItemDetail.xaml.cs">
+      <DependentUpon>PageItemDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PageAbout.xaml.cs">
+      <DependentUpon>PageAbout.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PageMainListFoodItem.xaml.cs">
+      <DependentUpon>PageMainListFoodItem.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

@@ -7,12 +7,12 @@ using FitMyFood.Models;
 
 namespace FitMyFood.Data
 {
-    public class ComposedFoodDAO
+    public class DAOComposedFood
     {
         readonly SQLiteAsyncConnection database;
         DataStore datastore;
 
-        public ComposedFoodDAO(DataStore datastore)
+        public DAOComposedFood(DataStore datastore)
         {
             this.database = datastore.database;
             this.datastore = datastore;

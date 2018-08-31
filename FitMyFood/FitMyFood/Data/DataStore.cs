@@ -12,26 +12,26 @@ namespace FitMyFood.Data
     {
         public readonly SQLiteAsyncConnection database;
 
-        public ComposedFoodDAO composedFoodItems;
-        public BaseDAO<Models.FoodItem> foodItems;
-        public BaseDAO<Models.DailyProfile> dailyProfiles;
-        public BaseDAO<Models.Meal> meals;
-        public BaseDAO<Models.MealFood> mealFoods;
-        public BaseDAO<Models.WeightTrack> weightTracks;
+        public DAOComposedFood composedFoodItems;
+        public DAOGeneral<Models.FoodItem> foodItems;
+        public DAOGeneral<Models.DailyProfile> dailyProfiles;
+        public DAOGeneral<Models.Meal> meals;
+        public DAOGeneral<Models.MealFood> mealFoods;
+        public DAOGeneral<Models.WeightTrack> weightTracks;
 
-        public BaseDAO<Models.Settings> settings;
+        public DAOGeneral<Models.Settings> settings;
 
         public DataStore()
         {
             database = new SQLiteAsyncConnection(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FitMyFoodSQLite.db3"));
 
-            composedFoodItems = new ComposedFoodDAO(this);
-            foodItems = new BaseDAO<Models.FoodItem>(database);
-            dailyProfiles = new BaseDAO<Models.DailyProfile>(database);
-            meals = new BaseDAO<Models.Meal>(database);
-            mealFoods = new BaseDAO<Models.MealFood>(database);
-            settings = new BaseDAO<Models.Settings>(database);
-            weightTracks = new BaseDAO<Models.WeightTrack>(database);
+            composedFoodItems = new DAOComposedFood(this);
+            foodItems = new DAOGeneral<Models.FoodItem>(database);
+            dailyProfiles = new DAOGeneral<Models.DailyProfile>(database);
+            meals = new DAOGeneral<Models.Meal>(database);
+            mealFoods = new DAOGeneral<Models.MealFood>(database);
+            settings = new DAOGeneral<Models.Settings>(database);
+            weightTracks = new DAOGeneral<Models.WeightTrack>(database);
         }
 
         

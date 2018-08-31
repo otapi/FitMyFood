@@ -20,7 +20,7 @@ namespace FitMyFood.Views
         {
             InitializeComponent();
 
-            BindingContext = App.MainListFoodItemViewModel;
+            BindingContext = App.vmMainListFoodItem;
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -29,7 +29,7 @@ namespace FitMyFood.Views
             if (item == null)
                 return;
 
-            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
+            await Navigation.PushAsync(new ItemDetailPage(new VMItemDetail(item)));
 
             // Manually deselect item.
             ItemsListView.SelectedItem = null;
@@ -44,19 +44,19 @@ namespace FitMyFood.Views
         {
             base.OnAppearing();
 
-            if (App.MainListFoodItemViewModel.Items.Count == 0)
-                App.MainListFoodItemViewModel.LoadItemsCommand.Execute(null);
+            if (App.vmMainListFoodItem.Items.Count == 0)
+                App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
         }
 
         void OnButtonClick(object sender, EventArgs e)
         {
-            var it = App.MainListFoodItemViewModel;
+            var it = App.vmMainListFoodItem;
         }
 
         void OnStepperChanged(object sender, EventArgs e)
         {
-            FoodItem foodItem = (sender as Xamarin.Forms.Stepper).BindingContext as Models.FoodItem;
-            new Common.Commands.SaveFoodItem().Execute(foodItem);
+            FoodItem foodItem = (sender as Stepper).BindingContext as FoodItem;
+            App.vmMainListFoodItem.SaveFoodItemCommand.Execute(foodItem);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace FitMyFood.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ItemDetailPage : ContentPage
     {
-        public ItemDetailPage(ItemDetailViewModel viewModel)
+        public ItemDetailPage(VMItemDetail viewModel)
         {
             InitializeComponent();
 

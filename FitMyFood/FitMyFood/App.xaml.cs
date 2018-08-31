@@ -8,7 +8,7 @@ namespace FitMyFood
 {
     public partial class App : Application
     {
-        public static ViewModels.MainListFoodItemViewModel MainListFoodItemViewModel { get; set; }
+        public static ViewModels.VMMainListFoodItem vmMainListFoodItem { get; set; }
         public App()
         {
             InitializeComponent();

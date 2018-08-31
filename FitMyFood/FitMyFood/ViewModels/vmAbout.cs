@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace FitMyFood.ViewModels
 {
-    public class AboutViewModel : BaseViewModel
+    public class VMAbout : VMBase
     {
-        public AboutViewModel()
+        public VMAbout()
         {
             Title = "About";
 

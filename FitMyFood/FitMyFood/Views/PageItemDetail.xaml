@@ -6,7 +6,7 @@
              Title="{Binding Title}">
 
     <ContentPage.BindingContext>
-        <vm:ItemDetailViewModel />
+        <vm:VMItemDetail />
     </ContentPage.BindingContext>
     
     <StackLayout Spacing="20" Padding="15">

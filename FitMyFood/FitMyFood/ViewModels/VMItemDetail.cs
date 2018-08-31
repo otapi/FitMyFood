@@ -4,10 +4,10 @@ using FitMyFood.Models;
 
 namespace FitMyFood.ViewModels
 {
-    public class ItemDetailViewModel : BaseViewModel
+    public class VMItemDetail : VMBase
     {
         public FoodItem Item { get; set; }
-        public ItemDetailViewModel()
+        public VMItemDetail()
         {
             var item = new FoodItem
             {
@@ -16,7 +16,7 @@ namespace FitMyFood.ViewModels
             };
             init(item);
         }
-        public ItemDetailViewModel(FoodItem item = null)
+        public VMItemDetail(FoodItem item = null)
         {
             init(item);
         }
