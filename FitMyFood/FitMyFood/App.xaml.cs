@@ -9,10 +9,11 @@ namespace FitMyFood
     public partial class App : Application
     {
         public static ViewModels.VMMainListFoodItem vmMainListFoodItem { get; set; }
+        public static Data.DataStore dataStore { get; set; }
+
         public App()
         {
             InitializeComponent();
-
 
             MainPage = new MainPage();
         }

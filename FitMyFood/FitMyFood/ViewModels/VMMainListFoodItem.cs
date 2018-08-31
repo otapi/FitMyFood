@@ -27,7 +27,7 @@ namespace FitMyFood.ViewModels
             {
                 var newItem = item as FoodItem;
                 Items.Add(newItem);
-                await dataStore.foodItems.AddItemAsync(newItem);
+                await App.dataStore.foodItems.AddItemAsync(newItem);
             });
         }
 
@@ -37,24 +37,13 @@ namespace FitMyFood.ViewModels
                 return;
 
             IsBusy = true;
-
-            try
-            {
                 Items.Clear();
-                var items = await dataStore.foodItems.GetItemsAsync();
+                var items = await App.dataStore.foodItems.GetItemsAsync();
                 foreach (var item in items)
                 {
                     Items.Add(item);
                 }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            IsBusy = false;
         }
         async Task ExecuteSaveFoodItemCommand(FoodItem foodItem)
         {
@@ -63,18 +52,8 @@ namespace FitMyFood.ViewModels
 
             IsBusy = true;
 
-            try
-            {
-                await App.vmMainListFoodItem.dataStore.foodItems.UpdateItemAsync(foodItem);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            await App.dataStore.foodItems.UpdateItemAsync(foodItem);
+            IsBusy = false;
         }
 
     }

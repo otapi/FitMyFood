@@ -13,8 +13,6 @@ namespace FitMyFood.ViewModels
 {
     public class VMBase : INotifyPropertyChanged
     {
-        public DataStore dataStore => new DataStore();
-
         bool isBusy = false;
         public bool IsBusy
         {
