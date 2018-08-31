@@ -15,6 +15,37 @@
     </ContentPage.ToolbarItems>
 
     <StackLayout>
+        <Grid VerticalOptions="FillAndExpand"
+          Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Picker Title="DailyProfile" Grid.Row="0" Grid.Column="0">
+            <Picker.Items>
+                <x:String>Normal</x:String>
+                <x:String>Úszás</x:String>
+            </Picker.Items>
+        </Picker>
+            <Picker Title="Meal" Grid.Row="0" Grid.Column="1">
+            <Picker.Items>
+                <x:String>Breakfast</x:String>
+                <x:String>1st Snack</x:String>
+            </Picker.Items>
+        </Picker>
+            <Picker Title="Meal Variation" Grid.Row="0" Grid.Column="2">
+            <Picker.Items>
+                <x:String>A</x:String>
+                <x:String>B</x:String>
+            </Picker.Items>
+        </Picker>
+        </Grid>
         <ListView x:Name="ItemsListView"
                 ItemsSource="{Binding Items}"
                 VerticalOptions="FillAndExpand"
