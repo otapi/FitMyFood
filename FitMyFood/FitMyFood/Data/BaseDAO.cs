@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FitMyFood.Data
 {
-    public class SimpleDAO<T> where T : Models.SimpleMaster, new()
+    public class BaseDAO<T> where T : Models.BaseModel, new()
     {
         readonly SQLiteAsyncConnection database;
 
-        public SimpleDAO(SQLiteAsyncConnection database)
+        public BaseDAO(SQLiteAsyncConnection database)
         {
             this.database = database;
             database.CreateTableAsync<T>().Wait();

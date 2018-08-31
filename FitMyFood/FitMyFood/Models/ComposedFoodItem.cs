@@ -6,7 +6,7 @@ namespace FitMyFood.Models
     /// <summary>
     /// Datasheet for a food with it's ingredients
     /// </summary>
-    public class ComposedFoodItem : SimpleMaster
+    public class ComposedFoodItem : BaseModel
     {
         // ForeignKey
         public int OwnerFoodItemId { get; set; }

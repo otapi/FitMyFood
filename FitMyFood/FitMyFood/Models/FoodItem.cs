@@ -5,7 +5,7 @@ namespace FitMyFood.Models
     /// <summary>
     /// Datasheet for a food with it's ingredients
     /// </summary>
-    public class FoodItem : SimpleMaster
+    public class FoodItem : BaseModel
     {
         public string Name { get; set; }
         /// <summary>
