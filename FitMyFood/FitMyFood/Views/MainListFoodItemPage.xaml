@@ -36,6 +36,7 @@
                                     Maximum="10"
                                     Increment="0.1"
                                     Value="{Binding Fat}"
+                                    ValueChanged="OnStepperChanged"
                             />
                             <Label Text="{Binding Source={x:Reference stepper},
                               Path=Value,
@@ -49,5 +50,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Text="Button!" Clicked="OnButtonClick" />
     </StackLayout>
 </ContentPage>

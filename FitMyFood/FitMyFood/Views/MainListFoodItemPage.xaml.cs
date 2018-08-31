@@ -16,13 +16,11 @@ namespace FitMyFood.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainListFoodItemPage : ContentPage
     {
-        MainListFoodItemViewModel viewModel;
-
         public MainListFoodItemPage()
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new MainListFoodItemViewModel();
+            BindingContext = App.MainListFoodItemViewModel;
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -46,10 +44,19 @@ namespace FitMyFood.Views
         {
             base.OnAppearing();
 
-            if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
+            if (App.MainListFoodItemViewModel.Items.Count == 0)
+                App.MainListFoodItemViewModel.LoadItemsCommand.Execute(null);
         }
 
-       
+        void OnButtonClick(object sender, EventArgs e)
+        {
+            var it = App.MainListFoodItemViewModel;
+        }
+
+        void OnStepperChanged(object sender, EventArgs e)
+        {
+            FoodItem foodItem = (sender as Xamarin.Forms.Stepper).BindingContext as Models.FoodItem;
+            new Common.Commands.SaveFoodItem().Execute(foodItem);
+        }
     }
 }

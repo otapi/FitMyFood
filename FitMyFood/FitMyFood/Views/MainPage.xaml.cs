@@ -13,11 +13,18 @@ namespace FitMyFood.Views
         Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
         public MainPage()
         {
+            App.MainListFoodItemViewModel = new ViewModels.MainListFoodItemViewModel();
             InitializeComponent();
 
             MasterBehavior = MasterBehavior.Popover;
-
+            
             MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
+        }
+
+        protected override void OnAppearing()
+        {
+            
+            base.OnAppearing();
         }
 
         public async Task NavigateFromMenu(int id)

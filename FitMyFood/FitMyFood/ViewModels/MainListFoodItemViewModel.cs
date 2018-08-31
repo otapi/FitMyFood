@@ -12,23 +12,15 @@ namespace FitMyFood.ViewModels
 {
     public class MainListFoodItemViewModel : BaseViewModel
     {
-        ObservableCollection<FoodItem> items;
-        public ObservableCollection<FoodItem> Items
-        {
-            get { return items; }
-            set
-            {
-                SetProperty(ref items, value);
-            }
-        }
+        public ObservableCollection<FoodItem> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
-
+        
         public MainListFoodItemViewModel()
         {
             Title = "Browse";
-            items = new ObservableCollection<FoodItem>();
+            Items = new ObservableCollection<FoodItem>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-
+            
             MessagingCenter.Subscribe<NewItemPage, FoodItem>(this, "AddItem", async (obj, item) =>
             {
                 var newItem = item as FoodItem;
@@ -62,5 +54,6 @@ namespace FitMyFood.ViewModels
                 IsBusy = false;
             }
         }
+        
     }
 }
