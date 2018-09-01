@@ -10,6 +10,8 @@ using Xamarin.Forms.Xaml;
 using FitMyFood.Models;
 using FitMyFood.Views;
 using FitMyFood.ViewModels;
+using CarouselView.FormsPlugin.Abstractions;
+using System.Collections.ObjectModel;
 
 namespace FitMyFood.Views
 {
@@ -23,18 +25,6 @@ namespace FitMyFood.Views
             BindingContext = App.vmMainListFoodItem;
         }
 
-        async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
-        {
-            var item = args.SelectedItem as FoodItem;
-            if (item == null)
-                return;
-
-            await Navigation.PushAsync(new ItemDetailPage(new VMItemDetail(item)));
-
-            // Manually deselect item.
-            ItemsListView.SelectedItem = null;
-        }
-
         async void AddItem_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
@@ -44,8 +34,6 @@ namespace FitMyFood.Views
         {
             base.OnAppearing();
 
-            if (App.vmMainListFoodItem.Items.Count == 0)
-                App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
         }
 
         void OnButtonClick(object sender, EventArgs e)
@@ -53,10 +41,6 @@ namespace FitMyFood.Views
             var it = App.vmMainListFoodItem;
         }
 
-        void OnStepperChanged(object sender, EventArgs e)
-        {
-            FoodItem foodItem = (sender as Stepper).BindingContext as FoodItem;
-            App.vmMainListFoodItem.SaveFoodItemCommand.Execute(foodItem);
-        }
+        
     }
 }
