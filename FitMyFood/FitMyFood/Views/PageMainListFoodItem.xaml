@@ -48,26 +48,51 @@
             </Picker.Items>
         </Picker>
         </Grid>
-        <cv:CarouselViewControl Orientation="Horizontal" ShowArrows="True" ShowIndicators="True" VerticalOptions="FillAndExpand">
+        <cv:CarouselViewControl Orientation="Vertical" ShowArrows="True" ShowIndicators="True" VerticalOptions="FillAndExpand">
             <cv:CarouselViewControl.ItemsSource>
                 <x:Array Type="{x:Type View}">
+                    <cv:CarouselViewControl Orientation="Horizontal" ShowArrows="True" ShowIndicators="True" VerticalOptions="FillAndExpand">
+                        <cv:CarouselViewControl.ItemsSource>
+                            <x:Array Type="{x:Type View}">
 
-                    <!-- Page1 Display Photo -->
-                    <Label Text="view 0" />
+                                <!-- Page1 Display Photo -->
+                                <Label Text="view 00"  VerticalOptions="FillAndExpand"/>
+
+                                <!-- Page2 Display Bio -->
+                                <Label Text="view 01"  VerticalOptions="FillAndExpand"/>
+
+                                <!-- Page2 Display contact information -->
+                                <Label Text="view 02"  VerticalOptions="FillAndExpand"/>
+
+                            </x:Array>
+                        </cv:CarouselViewControl.ItemsSource>
+                    </cv:CarouselViewControl>
+
+                    <cv:CarouselViewControl Orientation="Horizontal" ShowArrows="True" ShowIndicators="True" VerticalOptions="FillAndExpand">
+                        <cv:CarouselViewControl.ItemsSource>
+                            <x:Array Type="{x:Type View}">
+
+                                <!-- Page1 Display Photo -->
+                                <Label Text="view 10"  VerticalOptions="FillAndExpand"/>
+
+                                <!-- Page2 Display Bio -->
+                                <Label Text="view 11"  VerticalOptions="FillAndExpand"/>
+
+                                <!-- Page2 Display contact information -->
+                                <Label Text="view 12"  VerticalOptions="FillAndExpand"/>
+
+                            </x:Array>
+                        </cv:CarouselViewControl.ItemsSource>
+                    </cv:CarouselViewControl>
 
                     <!-- Page2 Display Bio -->
-                    <Label Text="view 1" />
+                    <Label Text="view 1"  VerticalOptions="FillAndExpand"/>
 
                     <!-- Page2 Display contact information -->
-                    <Label Text="view 2" />
+                    <Label Text="view 2"  VerticalOptions="FillAndExpand"/>
 
                 </x:Array>
             </cv:CarouselViewControl.ItemsSource>
-            <cv:CarouselViewControl.ItemTemplate>
-                <DataTemplate>
-                    <views:ViewMainListFoodItem />
-                </DataTemplate>
-            </cv:CarouselViewControl.ItemTemplate>
         </cv:CarouselViewControl>
 
         <Button Text="Button!" Clicked="OnButtonClick" />
