@@ -42,6 +42,7 @@ namespace FitMyFood.Data
             {
                 await AddItemAsync(t);
             }
+            await Task.CompletedTask;
         }
         public async Task<int> DeleteItemAsync(T item)
         {

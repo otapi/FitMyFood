@@ -30,18 +30,15 @@
                 Orientation="Horizontal" 
                 Grid.Row="0" Grid.Column="0" 
                 Style="{StaticResource carouselStyle}"
-                ItemsSource="{Binding DailProfileItemSource}"
+                ItemsSource="{Binding DailProfileSelectorSource}"
                 />
-
-                <cv:CarouselViewControl Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Style="{StaticResource carouselStyle}">
-                <cv:CarouselViewControl.ItemsSource>
-                    <x:Array Type="{x:Type View}">
-                        <Label Text="Breakfast" HorizontalTextAlignment="Center"/>
-                        <Label Text="1st Snack" HorizontalTextAlignment="Center" />
-                        <Label Text="Lunch"  HorizontalTextAlignment="Center"/>
-                    </x:Array>
-                </cv:CarouselViewControl.ItemsSource>
-            </cv:CarouselViewControl>
+            <cv:CarouselViewControl 
+                Orientation="Horizontal" 
+                Grid.Row="0" Grid.Column="0" 
+                Style="{StaticResource carouselStyle}"
+                ItemsSource="{Binding MealSelectorSource}"
+                />
+                
             <cv:CarouselViewControl Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Style="{StaticResource carouselStyle}">
                 <cv:CarouselViewControl.ItemsSource>
                     <x:Array Type="{x:Type View}">

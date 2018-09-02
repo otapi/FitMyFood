@@ -13,8 +13,9 @@ namespace FitMyFood.ViewModels
     public class VMMainListFoodItem : VMBase
     {
         public ObservableCollection<FoodItem> Items { get; set; }
-        public ObservableCollection<View> DailProfileItemSource { get; set; }
-
+        public ObservableCollection<View> DailProfileSelectorSource { get; set; }
+        public ObservableCollection<View> MealSelectorSource { get; set; }
+        
 
         public Command LoadSelectorsCommand { get; set; }
         public Command LoadItemsCommand { get; set; }
@@ -24,7 +25,7 @@ namespace FitMyFood.ViewModels
         {
             Title = "Browse";
             Items = new ObservableCollection<FoodItem>();
-            DailProfileItemSource = new ObservableCollection<View>();
+            DailProfileSelectorSource = new ObservableCollection<View>();
 
             LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
@@ -42,21 +43,53 @@ namespace FitMyFood.ViewModels
         async Task ExecuteLoadSelectorsCommand()
         {
             IsBusy = true;
-            
+            await PopulateDailyProfileSelector();
+            await Task.CompletedTask;
+            await PopulateMealSelector();
+            IsBusy = false;
+            await Task.CompletedTask;
+
+        }
+
+        async Task PopulateMealSelector()
+        {
+            var items = await App.dataStore.meals.GetItemsAsync();
+            if (items.Count == 0)
+            {
+                items.Add(new Meal() { Name = "Breakfast", KcalRatio = 20 });
+                items.Add(new Meal() { Name = "1st Snack", KcalRatio = 10 });
+                items.Add(new Meal() { Name = "Lunch", KcalRatio = 35 });
+                items.Add(new Meal() { Name = "2nd Snack", KcalRatio = 10 });
+                items.Add(new Meal() { Name = "Dinner", KcalRatio = 25 });
+                await App.dataStore.meals.AddItemsAsync(items);
+            }
+
+            MealSelectorSource.Clear();
+            foreach (var item in items)
+            {
+                MealSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
+            }
+            await Task.CompletedTask;
+
+        }
+
+        async Task PopulateDailyProfileSelector()
+        {
             var items = await App.dataStore.dailyProfiles.GetItemsAsync();
             if (items.Count == 0)
             {
-                items.Add(new DailyProfile() { Name = "Normal", ExtraKcal = 0});
+                items.Add(new DailyProfile() { Name = "Normal", ExtraKcal = 0 });
                 items.Add(new DailyProfile() { Name = "Sport", ExtraKcal = 800 });
+                await App.dataStore.dailyProfiles.AddItemsAsync(items);
             }
-            await App.dataStore.dailyProfiles.AddItemsAsync(items);
 
-            DailProfileItemSource.Clear(); // = new ObservableCollection<View>();
+            DailProfileSelectorSource.Clear(); // = new ObservableCollection<View>();
             foreach (var item in items)
             {
-                DailProfileItemSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
+                DailProfileSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
             }
-            IsBusy = false;
+            await Task.CompletedTask;
+
         }
         async Task ExecuteLoadItemsCommand()
         {
@@ -70,6 +103,8 @@ namespace FitMyFood.ViewModels
                     Items.Add(item);
                 }
             IsBusy = false;
+            await Task.CompletedTask;
+
         }
         async Task ExecuteSaveFoodItemCommand(FoodItem foodItem)
         {
@@ -78,6 +113,7 @@ namespace FitMyFood.ViewModels
 
             await App.dataStore.foodItems.UpdateItemAsync(foodItem);
             IsBusy = false;
+            await Task.CompletedTask;
         }
 
     }
