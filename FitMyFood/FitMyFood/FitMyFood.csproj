@@ -35,10 +35,4 @@
       <DependentUpon>PageMainListFoodItem.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Views\ViewMainListFoodItem.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
 </Project>
