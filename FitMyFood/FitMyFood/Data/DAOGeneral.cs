@@ -36,7 +36,13 @@ namespace FitMyFood.Data
         {
             return await database.InsertAsync(item);
         }
-
+        public async Task AddItemsAsync(List<T> items)
+        {
+            foreach (var t in items)
+            {
+                await AddItemAsync(t);
+            }
+        }
         public async Task<int> DeleteItemAsync(T item)
         {
             return await database.DeleteAsync(item);
