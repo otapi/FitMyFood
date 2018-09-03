@@ -69,8 +69,6 @@ namespace FitMyFood.ViewModels
             {
                 MealSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
             }
-            await Task.CompletedTask;
-
         }
 
         async Task PopulateDailyProfileSelector()
