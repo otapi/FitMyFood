@@ -26,6 +26,8 @@ namespace FitMyFood.ViewModels
             Title = "Browse";
             Items = new ObservableCollection<FoodItem>();
             DailProfileSelectorSource = new ObservableCollection<View>();
+            MealSelectorSource = new ObservableCollection<View>();
+
 
             LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
@@ -44,12 +46,9 @@ namespace FitMyFood.ViewModels
         {
             IsBusy = true;
             await PopulateDailyProfileSelector();
-            await Task.CompletedTask;
             await PopulateMealSelector();
             IsBusy = false;
-            await Task.CompletedTask;
-
-        }
+                    }
 
         async Task PopulateMealSelector()
         {
