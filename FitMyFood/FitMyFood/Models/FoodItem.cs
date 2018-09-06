@@ -7,7 +7,6 @@ namespace FitMyFood.Models
     /// </summary>
     public class FoodItem : BaseModel
     {
-        public string Name { get; set; }
         /// <summary>
         /// Default unit
         /// </summary>

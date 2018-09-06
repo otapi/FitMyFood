@@ -8,8 +8,8 @@ namespace FitMyFood.Data
 {
     public class DAOGeneral<T> where T : Models.BaseModel, new()
     {
-        readonly SQLiteAsyncConnection database;
-        readonly DataStore datastore;
+        protected readonly SQLiteAsyncConnection database;
+        protected readonly DataStore datastore;
 
         public DAOGeneral(DataStore datastore)
         {
@@ -22,13 +22,22 @@ namespace FitMyFood.Data
         {
             return await database.Table<T>().ToListAsync();
         }
-        
-        
+
+        public async Task<List<T>> GetItemsByNameAsync(string name)
+        {
+            return await database.Table<T>().Where(i => i.Name == name).ToListAsync();
+        }
+
         public async Task<T> GetItemAsync(int Id)
         {
             return await database.Table<T>().Where(i => i.Id == Id).FirstOrDefaultAsync();
         }
-        
+
+        public async Task<T> GetFirstItemByNameAsync(string name)
+        {
+            return await database.Table<T>().Where(i => i.Name == name).FirstOrDefaultAsync();
+        }
+
         public async Task<int> UpdateItemAsync(T item)
         {
             return await database.UpdateAsync(item);

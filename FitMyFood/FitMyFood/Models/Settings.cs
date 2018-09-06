@@ -8,10 +8,6 @@ namespace FitMyFood.Models
     /// </summary>
     public class Settings : BaseModel
     {
-        /// <summary>
-        /// Profile name - not used at the moment
-        /// </summary>
-        public string Name { get; set; }
         public double ActualWeight { get; set; }
         public int Height { get; set; }
         /// <summary>

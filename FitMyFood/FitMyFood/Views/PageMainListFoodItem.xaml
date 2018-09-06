@@ -30,7 +30,7 @@
                 Orientation="Horizontal" 
                 Grid.Row="0" Grid.Column="0" 
                 Style="{StaticResource carouselStyle}"
-                ItemsSource="{Binding DailProfileSelectorSource}"
+                ItemsSource="{Binding DailyProfileSelectorSource}"
                 />
             <cv:CarouselViewControl 
                 Orientation="Horizontal" 

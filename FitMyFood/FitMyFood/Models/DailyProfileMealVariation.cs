@@ -13,6 +13,6 @@ namespace FitMyFood.Models
         public int DailyProfileId { get; set; }
         // Foreignkey
         public int MealId { get; set; }
-        public string VariatioName { get; set; }
+
     }
 }

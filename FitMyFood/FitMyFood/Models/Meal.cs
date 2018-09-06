@@ -9,7 +9,6 @@ namespace FitMyFood.Models
     /// </summary>
     public class Meal : BaseModel
     {
-        public String Name { get; set; }
         public int KcalRatio { get; set; }
     }
 }

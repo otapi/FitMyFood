@@ -7,16 +7,11 @@ using FitMyFood.Models;
 
 namespace FitMyFood.Data
 {
-    public class DAOComposedFood
+    public class DAOComposedFood<T> : DAOGeneral<T> where T : Models.BaseModel, new()
     {
-        readonly SQLiteAsyncConnection database;
-        readonly DataStore datastore;
-
-        public DAOComposedFood(DataStore datastore)
+        public DAOComposedFood(DataStore datastore) : base(datastore)
         {
-            this.database = datastore.database;
-            this.datastore = datastore;
-            database.CreateTableAsync<ComposedFoodItem>().Wait();
+
         }
 
         public async Task<List<FoodItemWithQuantity>> GetComposedFoodItemsAsync(FoodItem Owner)
