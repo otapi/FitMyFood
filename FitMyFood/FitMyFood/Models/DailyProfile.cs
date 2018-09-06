@@ -9,7 +9,7 @@ namespace FitMyFood.Models
     /// </summary>
     public class DailyProfile : BaseModel
     {
-        public String Name { get; set; }
+        public String DailyProfileName { get; set; }
         public int ExtraKcal { get; set; }
     }
 }

@@ -5,14 +5,16 @@ using System.Text;
 namespace FitMyFood.Models
 {
     /// <summary>
-    /// Set of foods for a meal
+    /// FoodItem for a given DailyProfile, Meal and Variaton
     /// </summary>
-    public class MealFood : BaseModel
+    public class DailyProfileMealVariationFoodItem : BaseModel
     {
         // Foreignkey
         public int DailyProfile { get; set; }
         // Foreignkey
         public int Meal { get; set; }
+        // Foreignkey
+        public int Variation { get; set; }
         // Foreignkey
         public int FoodItem { get; set; }
         /// <summary>

@@ -16,7 +16,8 @@ namespace FitMyFood.Data
         public DAOGeneral<Models.FoodItem> foodItems;
         public DAOGeneral<Models.DailyProfile> dailyProfiles;
         public DAOGeneral<Models.Meal> meals;
-        public DAOGeneral<Models.MealFood> mealFoods;
+        public DAOGeneral<Models.DailyProfileMealVariation> dailyProfileMealVariation;
+        public DAOGeneral<Models.DailyProfileMealVariationFoodItem> dailyProfileMealVariationFoodItem;
         public DAOGeneral<Models.WeightTrack> weightTracks;
 
         public DAOGeneral<Models.Settings> settings;
@@ -29,7 +30,8 @@ namespace FitMyFood.Data
             foodItems = new DAOGeneral<Models.FoodItem>(database);
             dailyProfiles = new DAOGeneral<Models.DailyProfile>(database);
             meals = new DAOGeneral<Models.Meal>(database);
-            mealFoods = new DAOGeneral<Models.MealFood>(database);
+            dailyProfileMealVariation = new DAOGeneral<Models.DailyProfileMealVariation>(database);
+            dailyProfileMealVariationFoodItem = new DAOGeneral<Models.DailyProfileMealVariationFoodItem>(database);
             settings = new DAOGeneral<Models.Settings>(database);
             weightTracks = new DAOGeneral<Models.WeightTrack>(database);
         }
