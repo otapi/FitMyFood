@@ -10,7 +10,7 @@ namespace FitMyFood.Data
     public class DAOComposedFood
     {
         readonly SQLiteAsyncConnection database;
-        DataStore datastore;
+        readonly DataStore datastore;
 
         public DAOComposedFood(DataStore datastore)
         {

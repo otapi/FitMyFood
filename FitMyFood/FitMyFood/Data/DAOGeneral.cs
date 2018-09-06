@@ -9,10 +9,12 @@ namespace FitMyFood.Data
     public class DAOGeneral<T> where T : Models.BaseModel, new()
     {
         readonly SQLiteAsyncConnection database;
+        readonly DataStore datastore;
 
-        public DAOGeneral(SQLiteAsyncConnection database)
+        public DAOGeneral(DataStore datastore)
         {
-            this.database = database;
+            this.datastore = datastore;
+            this.database = datastore.database;
             database.CreateTableAsync<T>().Wait();
         }
 

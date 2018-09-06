@@ -49,6 +49,7 @@ namespace FitMyFood.ViewModels
             IsBusy = true;
             await PopulateDailyProfileSelector();
             await PopulateMealSelector();
+            await PopulateVariationSelector();
             IsBusy = false;
                     }
 
@@ -77,15 +78,15 @@ namespace FitMyFood.ViewModels
             var items = await App.dataStore.dailyProfiles.GetItemsAsync();
             if (items.Count == 0)
             {
-                items.Add(new DailyProfile() { DailyProfileName = "Normal", ExtraKcal = 0 });
-                items.Add(new DailyProfile() { DailyProfileName = "Sport", ExtraKcal = 800 });
+                items.Add(new DailyProfile() { Name = "Normal", ExtraKcal = 0 });
+                items.Add(new DailyProfile() { Name = "Sport", ExtraKcal = 800 });
                 await App.dataStore.dailyProfiles.AddItemsAsync(items);
             }
 
             DailProfileSelectorSource.Clear(); // = new ObservableCollection<View>();
             foreach (var item in items)
             {
-                DailProfileSelectorSource.Add(new Label() { Text = item.DailyProfileName, HorizontalTextAlignment = TextAlignment.Center });
+                DailProfileSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
             }
             await Task.CompletedTask;
 
@@ -97,11 +98,11 @@ namespace FitMyFood.ViewModels
             if (items.Count == 0)
             {
                 items.Add(new DailyProfileMealVariation() { VariationName DailyProfileName = "Variation A", ExtraKcal = 0 });
-                items.Add(new DailyProfile() { DailyProfileName = "Sport", ExtraKcal = 800 });
+                items.Add(new DailyProfile() { Name = "Sport", ExtraKcal = 800 });
                 await App.dataStore.dailyProfiles.AddItemsAsync(items);
             }
 
-            DailProfileSelectorSource.Clear(); // = new ObservableCollection<View>();
+            DailProfileSelectorSource.Clear();
             foreach (var item in items)
             {
                 DailProfileSelectorSource.Add(new Label() { Text = item.DailyProfileName, HorizontalTextAlignment = TextAlignment.Center });

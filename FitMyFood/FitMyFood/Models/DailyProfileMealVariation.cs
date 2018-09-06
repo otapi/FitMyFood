@@ -10,9 +10,9 @@ namespace FitMyFood.Models
     public class DailyProfileMealVariation : BaseModel
     {
         // Foreignkey
-        public int DailyProfile { get; set; }
+        public int DailyProfileId { get; set; }
         // Foreignkey
-        public int Meal { get; set; }
-        public string VariationName { get; set; }
+        public int MealId { get; set; }
+        public string VariatioName { get; set; }
     }
 }
