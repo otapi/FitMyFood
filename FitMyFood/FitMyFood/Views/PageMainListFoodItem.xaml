@@ -30,18 +30,21 @@
                 Orientation="Horizontal" 
                 Grid.Row="0" Grid.Column="0" 
                 Style="{StaticResource carouselStyle}"
+                Position="{Binding DailyProfileSelectorPosition}"
                 ItemsSource="{Binding DailyProfileSelectorSource}"
                 />
             <cv:CarouselViewControl 
                 Orientation="Horizontal" 
                 Grid.Row="1" Grid.Column="0" 
                 Style="{StaticResource carouselStyle}"
+                Position="{Binding MealSelectorPosition}"
                 ItemsSource="{Binding MealSelectorSource}"
                 />
             <cv:CarouselViewControl 
                 Orientation="Horizontal" 
                 Grid.Row="2" Grid.Column="0" 
                 Style="{StaticResource carouselStyle}"
+                Position="{Binding VariationSelectorPosition}"
                 ItemsSource="{Binding VariationSelectorSource}"
                 />
         </Grid>

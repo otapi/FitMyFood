@@ -10,7 +10,16 @@ namespace FitMyFood
     {
         public static ViewModels.VMMainListFoodItem vmMainListFoodItem { get; set; }
         public static Data.DataStore dataStore { get; set; }
-
+        
+        public static void PrintWarning(string message)
+        {
+            System.Diagnostics.Debug.WriteLine($"[FitMyFood][Warning] {message}");
+        }
+        public static void PrintNote(string message)
+        {
+            System.Diagnostics.Debug.WriteLine($"[FitMyFood][Note] {message}");
+        }
+        
         public App()
         {
             InitializeComponent();
