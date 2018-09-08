@@ -29,14 +29,17 @@
             <cards:CarouselView 
                 Grid.Row="0" Grid.Column="0" 
                 ItemsSource="{Binding DailyProfileSelectorSource}"
+                SelectedIndex="{Binding DailyProfileSelectorIndex}"
                 />
             <cards:CarouselView 
                 Grid.Row="1" Grid.Column="0" 
                 ItemsSource="{Binding MealSelectorSource}"
+                SelectedIndex="{Binding MealSelectorIndex}"
                 />
             <cards:CarouselView 
                 Grid.Row="2" Grid.Column="0" 
                 ItemsSource="{Binding VariationSelectorSource}"
+                SelectedIndex="{Binding VariationSelectorIndex}"
                 />
         </Grid>
         <ListView x:Name="ItemsListView"

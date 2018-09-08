@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 using FitMyFood.Models;
 using FitMyFood.Views;
+using System.Collections.Generic;
 
 namespace FitMyFood.ViewModels
 {
@@ -17,29 +18,45 @@ namespace FitMyFood.ViewModels
         public ObservableCollection<View> MealSelectorSource { get; set; }
         public ObservableCollection<View> VariationSelectorSource { get; set; }
 
-        public View DailyProfileSelectorPosition { get; set; }
-
-        View _mealSelectorPosition;
-        public View MealSelectorPosition
+        int _DailyProfileSelectorIndex;
+        public int DailyProfileSelectorIndex
         {
             set
             {
-                _mealSelectorPosition = value;
-                OnPropertyChanged("MealSelectorPosition");
-                PopulateVariationSelector().Wait();
+                _DailyProfileSelectorIndex = value;
+                OnPropertyChanged("DailyProfileSelectorIndex");
+                UpdateVariantSelectorCommand.Execute(null);
             }
             get
             {
-                return _mealSelectorPosition;
+                return _DailyProfileSelectorIndex;
             }
         }
-        
-        public View VariationSelectorPosition { get; set; }
+        int _MealSelectorIndex;
+        public int MealSelectorIndex
+        {
+            set
+            {
+                _MealSelectorIndex = value;
+                OnPropertyChanged("MealSelectorIndex");
+                UpdateVariantSelectorCommand.Execute(null);
+            }
+            get
+            {
+                return _MealSelectorIndex;
+            }
+        }
+        public int VariationSelectorindex { get; set; }
 
         public Command LoadSelectorsCommand { get; set; }
         public Command UpdateVariantSelectorCommand { get; set; }
         public Command LoadItemsCommand { get; set; }
         public Command SaveFoodItemCommand { get; set; }
+
+        List<DailyProfile> DailyProfileSelectorItems;
+        List<Meal> MealSelectorItems;
+        List<DailyProfileMealVariation> VariationSelectorItems;
+
 
         public VMMainListFoodItem()
         {
@@ -49,10 +66,9 @@ namespace FitMyFood.ViewModels
             MealSelectorSource = new ObservableCollection<View>();
             VariationSelectorSource = new ObservableCollection<View>();
 
-            DailyProfileSelectorPosition = new Label();
-            MealSelectorPosition = new Label();
-            VariationSelectorPosition = new Label();
-
+            DailyProfileSelectorItems = new List<DailyProfile>();
+            MealSelectorItems = new List<Meal>();
+            VariationSelectorItems = new List<DailyProfileMealVariation>();
 
             LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
@@ -77,19 +93,19 @@ namespace FitMyFood.ViewModels
 
         async Task PopulateMealSelector()
         {
-            var items = await App.dataStore.meals.GetItemsAsync();
-            if (items.Count == 0)
+            MealSelectorItems = await App.dataStore.meals.GetItemsAsync();
+            if (MealSelectorItems.Count == 0)
             {
-                items.Add(new Meal() { Name = "Breakfast", KcalRatio = 20 });
-                items.Add(new Meal() { Name = "1st Snack", KcalRatio = 10 });
-                items.Add(new Meal() { Name = "Lunch", KcalRatio = 35 });
-                items.Add(new Meal() { Name = "2nd Snack", KcalRatio = 10 });
-                items.Add(new Meal() { Name = "Dinner", KcalRatio = 25 });
-                await App.dataStore.meals.AddItemsAsync(items);
+                MealSelectorItems.Add(new Meal() { Name = "Breakfast", KcalRatio = 20 });
+                MealSelectorItems.Add(new Meal() { Name = "1st Snack", KcalRatio = 10 });
+                MealSelectorItems.Add(new Meal() { Name = "Lunch", KcalRatio = 35 });
+                MealSelectorItems.Add(new Meal() { Name = "2nd Snack", KcalRatio = 10 });
+                MealSelectorItems.Add(new Meal() { Name = "Dinner", KcalRatio = 25 });
+                await App.dataStore.meals.AddItemsAsync(MealSelectorItems);
             }
 
             MealSelectorSource.Clear();
-            foreach (var item in items)
+            foreach (var item in MealSelectorItems)
             {
                 MealSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
             }
@@ -97,16 +113,16 @@ namespace FitMyFood.ViewModels
 
         async Task PopulateDailyProfileSelector()
         {
-            var items = await App.dataStore.dailyProfiles.GetItemsAsync();
-            if (items.Count == 0)
+            DailyProfileSelectorItems = await App.dataStore.dailyProfiles.GetItemsAsync();
+            if (DailyProfileSelectorItems.Count == 0)
             {
-                items.Add(new DailyProfile() { Name = "Normal", ExtraKcal = 0 });
-                items.Add(new DailyProfile() { Name = "Sport", ExtraKcal = 800 });
-                await App.dataStore.dailyProfiles.AddItemsAsync(items);
+                DailyProfileSelectorItems.Add(new DailyProfile() { Name = "Normal", ExtraKcal = 0 });
+                DailyProfileSelectorItems.Add(new DailyProfile() { Name = "Sport", ExtraKcal = 800 });
+                await App.dataStore.dailyProfiles.AddItemsAsync(DailyProfileSelectorItems);
             }
 
             DailyProfileSelectorSource.Clear();
-            foreach (var item in items)
+            foreach (var item in DailyProfileSelectorItems)
             {
                 DailyProfileSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
             }
@@ -114,31 +130,23 @@ namespace FitMyFood.ViewModels
 
         async Task PopulateVariationSelector()
         {
-            if (MealSelectorPosition == null || DailyProfileSelectorPosition == null
-                || (MealSelectorPosition as Label).Text == null || (DailyProfileSelectorPosition as Label).Text == null)
+            if (MealSelectorItems.Count <1 || DailyProfileSelectorItems.Count < 1)
             {
                 return;
             }
-            string mealName = (MealSelectorPosition as Label).Text;
-            string dailyProfileName = (DailyProfileSelectorPosition as Label).Text;
-
-            Meal meal = await App.dataStore.meals.GetFirstItemByNameAsync(mealName);
-            DailyProfile dailyProfile = await App.dataStore.dailyProfiles.GetFirstItemByNameAsync(dailyProfileName);
             
-            if (meal == null || dailyProfile == null)
+            Meal meal = MealSelectorItems[MealSelectorIndex];
+            DailyProfile dailyProfile = DailyProfileSelectorItems[DailyProfileSelectorIndex];
+
+            VariationSelectorItems = await App.dataStore.GetVariationsAsync(dailyProfile, meal);
+            if (VariationSelectorItems.Count == 0)
             {
-                App.PrintWarning("Could not find Meal ("+mealName+") or DailyProfile("+dailyProfileName);
-                return;
-            }
-            var items = await App.dataStore.GetVariationsAsync(dailyProfile, meal);
-            if (items.Count == 0)
-            {
-                items.Add(new DailyProfileMealVariation() {Name="Variation A", DailyProfileId = dailyProfile.Id, MealId = meal.Id});
-                await App.dataStore.dailyProfileMealVariation.AddItemsAsync(items);
+                VariationSelectorItems.Add(new DailyProfileMealVariation() {Name="Variation A", DailyProfileId = dailyProfile.Id, MealId = meal.Id});
+                await App.dataStore.dailyProfileMealVariation.AddItemsAsync(VariationSelectorItems);
             }
 
             VariationSelectorSource.Clear();
-            foreach (var item in items)
+            foreach (var item in VariationSelectorItems)
             {
                 VariationSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
             }
