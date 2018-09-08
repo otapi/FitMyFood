@@ -32,6 +32,7 @@
                 Style="{StaticResource carouselStyle}"
                 Position="{Binding DailyProfileSelectorPosition}"
                 ItemsSource="{Binding DailyProfileSelectorSource}"
+                PositionSelectedCommand="{Binding UpdateVariantSelectorCommand}"
                 />
             <cv:CarouselViewControl 
                 Orientation="Horizontal" 

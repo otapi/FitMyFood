@@ -17,20 +17,8 @@ namespace FitMyFood.ViewModels
         public ObservableCollection<View> MealSelectorSource { get; set; }
         public ObservableCollection<View> VariationSelectorSource { get; set; }
 
-        View _dailyProfileSelectorPosition;
-        public View DailyProfileSelectorPosition
-        {
-            set
-            {
-                _dailyProfileSelectorPosition = value;
-                OnPropertyChanged("DailyProfileSelectorPosition");
-                PopulateVariationSelector().Wait();
-            }
-            get
-            {
-                return _dailyProfileSelectorPosition;
-            }
-        }
+        public View DailyProfileSelectorPosition { get; set; }
+
         View _mealSelectorPosition;
         public View MealSelectorPosition
         {
@@ -49,6 +37,7 @@ namespace FitMyFood.ViewModels
         public View VariationSelectorPosition { get; set; }
 
         public Command LoadSelectorsCommand { get; set; }
+        public Command UpdateVariantSelectorCommand { get; set; }
         public Command LoadItemsCommand { get; set; }
         public Command SaveFoodItemCommand { get; set; }
 
@@ -68,7 +57,7 @@ namespace FitMyFood.ViewModels
             LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             SaveFoodItemCommand = new Command<FoodItem>(async (foodItem) => await ExecuteSaveFoodItemCommand(foodItem));
-            
+            UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
 
             MessagingCenter.Subscribe<NewItemPage, FoodItem>(this, "AddItem", async (obj, item) =>
             {
