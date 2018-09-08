@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitMyFood.Views.MainListFoodItemPage"
-             xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
-              Title="{Binding Title}"
+             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+             Title="{Binding Title}"
              x:Name="BrowseItemsPage"
              xmlns:views="clr-namespace:FitMyFood.Views">
     <ContentPage.ToolbarItems>
@@ -26,26 +26,16 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <cv:CarouselViewControl 
-                Orientation="Horizontal" 
+            <cards:CarouselView 
                 Grid.Row="0" Grid.Column="0" 
-                Style="{StaticResource carouselStyle}"
-                Position="{Binding DailyProfileSelectorPosition}"
                 ItemsSource="{Binding DailyProfileSelectorSource}"
-                PositionSelectedCommand="{Binding UpdateVariantSelectorCommand}"
                 />
-            <cv:CarouselViewControl 
-                Orientation="Horizontal" 
+            <cards:CarouselView 
                 Grid.Row="1" Grid.Column="0" 
-                Style="{StaticResource carouselStyle}"
-                Position="{Binding MealSelectorPosition}"
                 ItemsSource="{Binding MealSelectorSource}"
                 />
-            <cv:CarouselViewControl 
-                Orientation="Horizontal" 
+            <cards:CarouselView 
                 Grid.Row="2" Grid.Column="0" 
-                Style="{StaticResource carouselStyle}"
-                Position="{Binding VariationSelectorPosition}"
                 ItemsSource="{Binding VariationSelectorSource}"
                 />
         </Grid>

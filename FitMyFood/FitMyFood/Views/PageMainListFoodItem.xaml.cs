@@ -10,7 +10,6 @@ using Xamarin.Forms.Xaml;
 using FitMyFood.Models;
 using FitMyFood.Views;
 using FitMyFood.ViewModels;
-using CarouselView.FormsPlugin.Abstractions;
 using System.Collections.ObjectModel;
 
 namespace FitMyFood.Views

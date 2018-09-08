@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
              
              x:Class="FitMyFood.App">
     <Application.Resources>
@@ -11,10 +10,6 @@
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
                 <Setter Property="BarTextColor" Value="White" />
-            </Style>
-
-            <Style x:Key="carouselStyle" TargetType="cv:CarouselViewControl">
-                <Setter Property="ShowArrows" Value="True" />
             </Style>
 
 
