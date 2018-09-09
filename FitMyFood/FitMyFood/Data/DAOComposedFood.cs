@@ -54,7 +54,7 @@ namespace FitMyFood.Data
             if (!owner.IsComposedFood)
             {
                 owner.IsComposedFood = true;
-                await datastore.foodItems.UpdateItemAsync(owner);
+                await datastore.foodItems.SaveItemAsync(owner);
             }
             return await database.InsertAsync(
                 new ComposedFoodItem
@@ -74,7 +74,7 @@ namespace FitMyFood.Data
             if ((await GetComposedFoodItemsAsync(owner)).Count == 1)
             {
                 owner.IsComposedFood = false;
-                await datastore.foodItems.UpdateItemAsync(owner);
+                await datastore.foodItems.SaveItemAsync(owner);
             }
             return await database.DeleteAsync(composedItem);
         }

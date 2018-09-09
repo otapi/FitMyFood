@@ -50,8 +50,6 @@ namespace FitMyFood.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            if (App.vmMainListFoodItem.Items.Count == 0)
-                App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
 
             App.vmMainListFoodItem.LoadSelectorsCommand.Execute(null);
         }

@@ -38,20 +38,24 @@ namespace FitMyFood.Data
             return await database.Table<T>().Where(i => i.Name == name).FirstOrDefaultAsync();
         }
 
-        public async Task<int> UpdateItemAsync(T item)
+        public async Task<int> SaveItemAsync(T item)
         {
-            return await database.UpdateAsync(item);
+            if (await GetItemAsync(item.Id) == null)
+            {
+                // Add as new
+                return await database.InsertAsync(item);
+            }
+            else
+            {
+                // Update the old one
+                return await database.UpdateAsync(item);
+            }
         }
-
-        public async Task<int> AddItemAsync(T item)
-        {
-            return await database.InsertAsync(item);
-        }
-        public async Task AddItemsAsync(List<T> items)
+        public async Task SaveItemsAsync(List<T> items)
         {
             foreach (var t in items)
             {
-                await AddItemAsync(t);
+                await SaveItemAsync(t);
             }
         }
         public async Task<int> DeleteItemAsync(T item)

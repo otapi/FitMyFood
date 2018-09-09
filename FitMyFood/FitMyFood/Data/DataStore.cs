@@ -5,6 +5,7 @@ using System.Text;
 using SQLite;
 using System.Threading.Tasks;
 using FitMyFood.Models;
+using System.Linq;
 
 namespace FitMyFood.Data
 {
@@ -40,11 +41,49 @@ namespace FitMyFood.Data
         // Custom DAOs
         public async Task<List<DailyProfileMealVariation>> GetVariationsAsync(DailyProfile dailyProfile, Meal meal)
         {
+            return await (
+                from i in database.Table<DailyProfileMealVariation>()
+                where i.DailyProfileId == dailyProfile.Id
+                    && i.MealId == meal.Id
+                select i
+              ).ToListAsync();
+            /*
             return await database.Table<DailyProfileMealVariation>().Where(
                 i => i.DailyProfileId == dailyProfile.Id
-                    && i.MealId == meal.Id).ToListAsync();
+                    && i.MealId == meal.Id).ToListAsync();*/
         }
 
+        public async Task<List<FoodItemWithQuantity>> GetFoodItemsForMainList(DailyProfile dailyProfile, Meal meal, DailyProfileMealVariation variation)
+        {
+            var filteredFoodItemRefs = await (
+                from i in database.Table<DailyProfileMealVariationFoodItem>()
+                where i.DailyProfile == dailyProfile.Id
+                    && i.Meal == meal.Id
+                    && i.Variation == variation.Id
+                select i
+              ).ToListAsync();
+
+            List<FoodItemWithQuantity> filteredFoodItems = new List<FoodItemWithQuantity>();
+            foreach (var itemRef in filteredFoodItemRefs)
+            {
+                FoodItemWithQuantity foodItemQ = (await foodItems.GetItemAsync(itemRef.FoodItem)) as FoodItemWithQuantity;
+                foodItemQ.Quantity = itemRef.Quantity;
+                filteredFoodItems.Add(foodItemQ);
+            }
+            return filteredFoodItems;
+        }
+
+        public async Task SaveFoodItemForVariation(DailyProfile dailyProfile, Meal meal, DailyProfileMealVariation variation, FoodItemWithQuantity foodItemQ)
+        {
+            await dailyProfileMealVariationFoodItem.SaveItemAsync(new DailyProfileMealVariationFoodItem()
+            {
+                DailyProfile = dailyProfile.Id,
+                FoodItem = foodItemQ.Id,
+                Meal = meal.Id,
+                Quantity = foodItemQ.Quantity,
+                Variation = variation.Id
+            });
+        }
 
     }
 }
