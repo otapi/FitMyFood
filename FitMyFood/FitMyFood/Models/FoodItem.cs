@@ -33,5 +33,9 @@ namespace FitMyFood.Models
         /// True if this is a composed food
         /// </summary>
         public bool IsComposedFood { get; set; }
+        /// <summary>
+        /// How many unit has? Or what is the default quantity?
+        /// </summary>
+        public double Quantity { get; set; }
     }
 }

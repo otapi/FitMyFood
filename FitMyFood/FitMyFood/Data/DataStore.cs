@@ -53,7 +53,7 @@ namespace FitMyFood.Data
                     && i.MealId == meal.Id).ToListAsync();*/
         }
 
-        public async Task<List<FoodItemWithQuantity>> GetFoodItemsForMainList(DailyProfile dailyProfile, Meal meal, DailyProfileMealVariation variation)
+        public async Task<List<FoodItem>> GetFoodItemsForMainList(DailyProfile dailyProfile, Meal meal, DailyProfileMealVariation variation)
         {
             var filteredFoodItemRefs = await (
                 from i in database.Table<DailyProfileMealVariationFoodItem>()
@@ -63,24 +63,29 @@ namespace FitMyFood.Data
                 select i
               ).ToListAsync();
 
-            List<FoodItemWithQuantity> filteredFoodItems = new List<FoodItemWithQuantity>();
+            List<FoodItem> filteredFoodItems = new List<FoodItem>();
             foreach (var itemRef in filteredFoodItemRefs)
             {
-                FoodItemWithQuantity foodItemQ = (await foodItems.GetItemAsync(itemRef.FoodItem)) as FoodItemWithQuantity;
+                FoodItem foodItemQ = await foodItems.GetItemAsync(itemRef.FoodItem);
+                if (foodItemQ == null)
+                {
+                    App.PrintWarning($"FoodItem {itemRef.FoodItem} not found in the foodItem table.");
+                    continue;
+                }
                 foodItemQ.Quantity = itemRef.Quantity;
                 filteredFoodItems.Add(foodItemQ);
             }
             return filteredFoodItems;
         }
 
-        public async Task SaveFoodItemForVariation(DailyProfile dailyProfile, Meal meal, DailyProfileMealVariation variation, FoodItemWithQuantity foodItemQ)
+        public async Task SaveFoodItemForVariation(DailyProfile dailyProfile, Meal meal, DailyProfileMealVariation variation, FoodItem foodItem)
         {
             await dailyProfileMealVariationFoodItem.SaveItemAsync(new DailyProfileMealVariationFoodItem()
             {
                 DailyProfile = dailyProfile.Id,
-                FoodItem = foodItemQ.Id,
+                FoodItem = foodItem.Id,
                 Meal = meal.Id,
-                Quantity = foodItemQ.Quantity,
+                Quantity = foodItem.Quantity,
                 Variation = variation.Id
             });
         }

@@ -14,12 +14,12 @@ namespace FitMyFood.Data
 
         }
 
-        public async Task<List<FoodItemWithQuantity>> GetComposedFoodItemsAsync(FoodItem Owner)
+        public async Task<List<FoodItem>> GetComposedFoodItemsAsync(FoodItem Owner)
         {
             if (!Owner.IsComposedFood) {
                 throw new Exception("Query the composed items of a non-composed food");
             }
-            return await database.QueryAsync<FoodItemWithQuantity>(@"
+            return await database.QueryAsync<FoodItem>(@"
                 SELECT FoodItem.*, ComposedFoodItem.Quantity FROM FoodItem
                 JOIN ComposedFoodItem ON FoodItem.Id = ComposedFoodItem.FoodItemId
                 WHERE ComposedFoodItem.OwnerFoodItemId = ?"

@@ -22,6 +22,8 @@ namespace FitMyFood.Views
             InitializeComponent();
 
             BindingContext = App.vmMainListFoodItem;
+            App.vmMainListFoodItem.LoadSelectorsCommand.Execute(null);
+
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -51,7 +53,6 @@ namespace FitMyFood.Views
         {
             base.OnAppearing();
 
-            App.vmMainListFoodItem.LoadSelectorsCommand.Execute(null);
         }
 
         void OnButtonClick(object sender, EventArgs e)

@@ -13,7 +13,7 @@ namespace FitMyFood.ViewModels
 {
     public class VMMainListFoodItem : VMBase
     {
-        public ObservableCollection<FoodItemWithQuantity> Items { get; set; }
+        public ObservableCollection<FoodItem> Items { get; set; }
         public ObservableCollection<View> DailyProfileSelectorSource { get; set; }
         public ObservableCollection<View> MealSelectorSource { get; set; }
         public ObservableCollection<View> VariationSelectorSource { get; set; }
@@ -90,7 +90,7 @@ namespace FitMyFood.ViewModels
     public VMMainListFoodItem()
         {
             Title = "Browse";
-            Items = new ObservableCollection<FoodItemWithQuantity>();
+            Items = new ObservableCollection<FoodItem>();
             DailyProfileSelectorSource = new ObservableCollection<View>();
             MealSelectorSource = new ObservableCollection<View>();
             VariationSelectorSource = new ObservableCollection<View>();
@@ -101,14 +101,14 @@ namespace FitMyFood.ViewModels
 
             LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            SaveFoodItemCommand = new Command<FoodItemWithQuantity>(async (foodItem) => await ExecuteSaveFoodItemCommand(foodItem));
+            SaveFoodItemCommand = new Command<FoodItem>(async (foodItem) => await ExecuteSaveFoodItemCommand(foodItem));
             UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
 
-            MessagingCenter.Subscribe<NewItemPage, FoodItemWithQuantity>(this, "AddItem", async (obj, item) =>
+            MessagingCenter.Subscribe<NewItemPage, FoodItem>(this, "AddItem", async (obj, item) =>
             {
-                Items.Add(item);
-                await App.dataStore.SaveFoodItemForVariation(DailyProfile, Meal, MealVariation, item);
-                await App.dataStore.foodItems.SaveItemAsync(item);
+                var newItem = await App.dataStore.foodItems.SaveItemAsync(item);
+                await App.dataStore.SaveFoodItemForVariation(DailyProfile, Meal, MealVariation, newItem);
+                App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
             });
         }
 
