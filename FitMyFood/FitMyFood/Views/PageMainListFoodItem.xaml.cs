@@ -23,7 +23,6 @@ namespace FitMyFood.Views
 
             BindingContext = App.vmMainListFoodItem;
             App.vmMainListFoodItem.LoadSelectorsCommand.Execute(null);
-
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -32,10 +31,11 @@ namespace FitMyFood.Views
             if (item == null)
                 return;
 
-            await Navigation.PushAsync(new ItemDetailPage(new VMItemDetail(item)));
+            //await Navigation.PushAsync(new ItemDetailPage(new VMItemDetail(item)));
 
             // Manually deselect item.
             ItemsListView.SelectedItem = null;
+            https://github.com/softlion/XamarinFormsGesture/
         }
 
         void OnStepperChanged(object sender, EventArgs e)
@@ -52,7 +52,6 @@ namespace FitMyFood.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
         }
 
         void OnButtonClick(object sender, EventArgs e)
