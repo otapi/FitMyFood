@@ -57,6 +57,7 @@ namespace FitMyFood.Views
         void OnButtonClick(object sender, EventArgs e)
         {
             var it = App.vmMainListFoodItem;
+            App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
         }
 
 
