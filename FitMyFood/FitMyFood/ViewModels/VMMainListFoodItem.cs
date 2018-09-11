@@ -13,6 +13,7 @@ namespace FitMyFood.ViewModels
 {
     public class VMMainListFoodItem : VMBase
     {
+        public INavigation navigation { get; set; }
         public ObservableCollection<FoodItem> Items { get; set; }
         public ObservableCollection<View> DailyProfileSelectorSource { get; set; }
         public ObservableCollection<View> MealSelectorSource { get; set; }
@@ -117,8 +118,8 @@ namespace FitMyFood.ViewModels
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             SaveFoodItemCommand = new Command<FoodItem>(async (foodItem) => await ExecuteSaveFoodItemCommand(foodItem));
             UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
-            ViewFoodItemDetailCommand = new Command(async () => await ExecuteViewFoodItemDetailCommand());
-            DeleteFoodItemCommand = new Command(async () => await ExecuteDeleteFoodItemCommand());
+            ViewFoodItemDetailCommand = new Command<FoodItem>(async (foodItem) => await ExecuteViewFoodItemDetailCommand(foodItem));
+            DeleteFoodItemCommand = new Command<FoodItem>(async (foodItem) => await ExecuteDeleteFoodItemCommand(foodItem));
         }
 
         async Task ExecuteLoadSelectorsCommand()
@@ -209,13 +210,16 @@ namespace FitMyFood.ViewModels
         async Task ExecuteViewFoodItemDetailCommand(FoodItem foodItem)
         {
             IsBusy = true;
-            await Navigation.PushAsync(new ItemDetailPage(new VMItemDetail(foodItem)));
+            await navigation.PushAsync(new ItemDetailPage(new VMItemDetail(foodItem)));
+            //await ExecuteLoadItemsCommand();
             IsBusy = false;
         }
         async Task ExecuteDeleteFoodItemCommand(FoodItem foodItem)
         {
             IsBusy = true;
             // TODO
+
+            await ExecuteLoadItemsCommand();
             IsBusy = false;
         }
     }

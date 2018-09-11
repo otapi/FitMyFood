@@ -22,6 +22,7 @@ namespace FitMyFood.Views
             InitializeComponent();
 
             BindingContext = App.vmMainListFoodItem;
+            App.vmMainListFoodItem.navigation = Navigation;
             App.vmMainListFoodItem.LoadSelectorsCommand.Execute(null);
         }
 

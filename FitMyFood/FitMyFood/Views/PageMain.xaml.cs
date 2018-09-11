@@ -21,6 +21,7 @@ namespace FitMyFood.Views
             MasterBehavior = MasterBehavior.Popover;
             
             MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
+
         }
 
         protected override void OnAppearing()
