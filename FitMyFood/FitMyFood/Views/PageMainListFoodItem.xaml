@@ -58,9 +58,9 @@
                             <MenuItem Command="{Binding Path=BindingContext.ViewFoodItemDetailCommand, Source={x:Reference Name=BrowseItemsPage}}"
                                 CommandParameter="{Binding .}"
                                 Text="View Details" />
-                            <MenuItem Command="{Binding Path=BindingContext.DeleteFoodItemCommand, Source={x:Reference Name=BrowseItemsPage}}"
-                                Clicked="OnDelete" CommandParameter="{Binding .}"
-                                Text="Delete" IsDestructive="True" />
+                            <MenuItem Command="{Binding Path=BindingContext.RemoveItemFromMainList, Source={x:Reference Name=BrowseItemsPage}}"
+                                CommandParameter="{Binding .}"
+                                Text="Remove" IsDestructive="True" />
                         </ViewCell.ContextActions>
                         <StackLayout Padding="10">
                             <Label Text="{Binding Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" 

@@ -88,8 +88,17 @@ namespace FitMyFood.ViewModels
         public Command LoadItemsCommand { get; set; }
         public Command SaveFoodItemCommand { get; set; }
         public Command ViewFoodItemDetailCommand { get; set; }
-        public Command DeleteFoodItemCommand { get; set; }
+        public Command RemoveItemFromMainList { get; set; }
 
+        void defineCommands()
+        {
+            LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            SaveFoodItemCommand = new Command<FoodItem>(async (foodItem) => await ExecuteSaveFoodItemCommand(foodItem));
+            UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
+            ViewFoodItemDetailCommand = new Command<FoodItem>(async (foodItem) => await ExecuteViewFoodItemDetailCommand(foodItem));
+            RemoveItemFromMainList = new Command<FoodItem>(async (foodItem) => await ExecuteRemoveItemFromMainListCommand(foodItem));
+        }
         public VMMainListFoodItem()
         {
             Title = "Browse";
@@ -112,15 +121,7 @@ namespace FitMyFood.ViewModels
             });
         }
 
-        void defineCommands()
-        {
-            LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            SaveFoodItemCommand = new Command<FoodItem>(async (foodItem) => await ExecuteSaveFoodItemCommand(foodItem));
-            UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
-            ViewFoodItemDetailCommand = new Command<FoodItem>(async (foodItem) => await ExecuteViewFoodItemDetailCommand(foodItem));
-            DeleteFoodItemCommand = new Command<FoodItem>(async (foodItem) => await ExecuteDeleteFoodItemCommand(foodItem));
-        }
+        
 
         async Task ExecuteLoadSelectorsCommand()
         {
@@ -211,15 +212,13 @@ namespace FitMyFood.ViewModels
         {
             IsBusy = true;
             await navigation.PushAsync(new ItemDetailPage(new VMItemDetail(foodItem)));
-            //await ExecuteLoadItemsCommand();
             IsBusy = false;
         }
-        async Task ExecuteDeleteFoodItemCommand(FoodItem foodItem)
+        async Task ExecuteRemoveItemFromMainListCommand(FoodItem foodItem)
         {
             IsBusy = true;
-            // TODO
-
-            await ExecuteLoadItemsCommand();
+            await App.dataStore.RemoveFoodItemsFromMainList(DailyProfile, Meal, MealVariation, foodItem);
+            Items.Remove(foodItem);
             IsBusy = false;
         }
     }

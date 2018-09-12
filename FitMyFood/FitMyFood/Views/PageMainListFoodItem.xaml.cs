@@ -43,7 +43,10 @@ namespace FitMyFood.Views
         void OnStepperChanged(object sender, EventArgs e)
         {
             FoodItem foodItem = (sender as Stepper).BindingContext as FoodItem;
-            App.vmMainListFoodItem.SaveFoodItemCommand.Execute(foodItem);
+            if (foodItem != null)
+            {
+                App.vmMainListFoodItem.SaveFoodItemCommand.Execute(foodItem);
+            }
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)

@@ -90,5 +90,27 @@ namespace FitMyFood.Data
             });
         }
 
+        public async Task RemoveFoodItemsFromMainList(DailyProfile dailyProfile, Meal meal, DailyProfileMealVariation variation, FoodItem foodItem)
+        {
+
+            var filteredFoodItemRefs = await (
+                from i in database.Table<DailyProfileMealVariationFoodItem>()
+                where i.DailyProfile == dailyProfile.Id
+                    && i.Meal == meal.Id
+                    && i.Variation == variation.Id
+                    && i.FoodItem == foodItem.Id
+                select i
+              ).ToListAsync();
+
+            if (filteredFoodItemRefs.Count == 0)
+            {
+                App.PrintWarning($"You want to remove it, but the reference for food ({foodItem.Id}) is already missing from dailyProfile {dailyProfile.Id}, meal {meal.Id} and variation {variation.Id}.");
+            }
+            foreach (var itemRef in filteredFoodItemRefs)
+            {
+                await dailyProfileMealVariationFoodItem.DeleteItemAsync(itemRef);
+            }
+        }
+
     }
 }
