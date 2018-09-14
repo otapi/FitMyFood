@@ -37,5 +37,7 @@ namespace FitMyFood.Models
         /// How many unit has? Or what is the default quantity?
         /// </summary>
         public double Quantity { get; set; }
+
+
     }
 }
