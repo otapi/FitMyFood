@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FitMyFood.ViewModels;
 
 namespace FitMyFood.Models
 {
@@ -37,7 +38,38 @@ namespace FitMyFood.Models
         /// How many unit has? Or what is the default quantity?
         /// </summary>
         public double Quantity { get; set; }
-
-
+        /// <summary>
+        /// Get Energy in kcal aka Calorie
+        /// </summary>
+        public double Energy
+        {
+            get
+            {
+                return (Protein * VMMainListFoodItem.ENERGYPROTEIN
+                        + Carbo * VMMainListFoodItem.ENERGYCARBO
+                        + Fat * VMMainListFoodItem.ENERGYFAT
+                       ) * Weight / 100;
+            }
+        }
+        /// <summary>
+        /// Get weight in gramm
+        /// </summary>
+        public double Weight
+        {
+            get
+            {
+                return UnitWeight * Quantity;
+            }
+        }
+        /// <summary>
+        /// Item descriptor
+        /// </summary>
+        public string Descriptor
+        {
+            get
+            {
+                return $"{Quantity} item(s) have {Energy} Calories and weight {Weight} gramm.";
+            }
+        }
     }
 }

@@ -13,6 +13,11 @@ namespace FitMyFood.ViewModels
 {
     public class VMMainListFoodItem : VMBase
     {
+        public static double ENERGYFAT = 9.3;
+        public static double ENERGYPROTEIN = 4.2;
+        public static double ENERGYCARBO = 4.1;
+        public static double ENERGYBODYFAT = 7;
+
         public INavigation navigation { get; set; }
         public ObservableCollection<FoodItem> Items { get; set; }
         public ObservableCollection<View> DailyProfileSelectorSource { get; set; }

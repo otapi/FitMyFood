@@ -11,22 +11,13 @@
     
     <StackLayout Spacing="20" Padding="15">
         <Label Text="{Binding Item.Name}" Style="{DynamicResource TitleStyle}"/>
+        <Label Text="{Binding Item.Descriptor}" Style="{DynamicResource BodyStyle}" />
+        <Label Text="Nutrition facts:" Style="{DynamicResource SubTitleStyle}"/>
+
         <Label Text="{Binding Item.Fat, StringFormat='Fat: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}" TextColor="{StaticResource FatColor}"/>
         <Label Text="{Binding Item.Carbo, StringFormat='Carbo: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource CarboColor}"/>
         <Label Text="{Binding Item.Protein, StringFormat='Protein: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource ProteinColor}"/>
         <Label Text="in 100g" Style="{DynamicResource ListItemDetailTextStyle}" HorizontalOptions="End"/>
-        <Label Style="{DynamicResource BodyStyle}">
-            <Label.FormattedText>
-                <FormattedString>
-                    <FormattedString.Spans>
-                        <Span Text="1 " />
-                        <Span Text="{Binding Item.UnitDescription}" />
-                        <Span Text=" is " />
-                        <Span Text="{Binding Item.UnitWeight}" />
-                        <Span Text=" gramm." />
-                    </FormattedString.Spans>
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>
+        
     </StackLayout>
 </ContentPage>
