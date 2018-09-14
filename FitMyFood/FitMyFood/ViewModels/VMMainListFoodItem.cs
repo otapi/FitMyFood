@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using FitMyFood.Models;
 using FitMyFood.Views;
 using System.Collections.Generic;
+using FitMyFood.Data;
 
 namespace FitMyFood.ViewModels
 {
@@ -141,11 +142,7 @@ namespace FitMyFood.ViewModels
             MealSelectorItems = await App.dataStore.meals.GetItemsAsync();
             if (MealSelectorItems.Count == 0)
             {
-                MealSelectorItems.Add(new Meal() { Name = "Breakfast", KcalRatio = 20 });
-                MealSelectorItems.Add(new Meal() { Name = "1st Snack", KcalRatio = 10 });
-                MealSelectorItems.Add(new Meal() { Name = "Lunch", KcalRatio = 35 });
-                MealSelectorItems.Add(new Meal() { Name = "2nd Snack", KcalRatio = 10 });
-                MealSelectorItems.Add(new Meal() { Name = "Dinner", KcalRatio = 25 });
+                MealSelectorItems.AddRange(DefaultValues.MealSelectorItems);
                 await App.dataStore.meals.SaveItemsAsync(MealSelectorItems);
             }
 
@@ -161,8 +158,7 @@ namespace FitMyFood.ViewModels
             DailyProfileSelectorItems = await App.dataStore.dailyProfiles.GetItemsAsync();
             if (DailyProfileSelectorItems.Count == 0)
             {
-                DailyProfileSelectorItems.Add(new DailyProfile() { Name = "Normal", ExtraKcal = 0 });
-                DailyProfileSelectorItems.Add(new DailyProfile() { Name = "Sport", ExtraKcal = 800 });
+                DailyProfileSelectorItems.AddRange(DefaultValues.DailyProfileSelectorItems);
                 await App.dataStore.dailyProfiles.SaveItemsAsync(DailyProfileSelectorItems);
             }
 
@@ -183,7 +179,7 @@ namespace FitMyFood.ViewModels
             VariationSelectorItems = await App.dataStore.GetVariationsAsync(DailyProfile, Meal);
             if (VariationSelectorItems.Count == 0)
             {
-                VariationSelectorItems.Add(new DailyProfileMealVariation() {Name="Variation A", DailyProfileId = DailyProfile.Id, MealId = Meal.Id});
+                VariationSelectorItems.Add(new DailyProfileMealVariation() {Name=DefaultValues.VariationSelectorItem, DailyProfileId = DailyProfile.Id, MealId = Meal.Id});
                 await App.dataStore.dailyProfileMealVariation.SaveItemsAsync(VariationSelectorItems);
             }
 

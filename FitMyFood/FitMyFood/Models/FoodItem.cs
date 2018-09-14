@@ -13,20 +13,20 @@ namespace FitMyFood.Models
         /// </summary>
         public string UnitDescription { get; set; }
         /// <summary>
-        /// x gram in a unit
+        /// x gramm in a unit
         /// </summary>
         public double UnitWeight { get; set; }
 
         /// <summary>
-        /// x gram in 100g
+        /// x gramm in 100g
         /// </summary>
         public double Fat { get; set; }
         /// <summary>
-        /// x gram in 100g
+        /// x gramm in 100g
         /// </summary>
         public double Carbo { get; set; }
         /// <summary>
-        /// x gram in 100g
+        /// x gramm in 100g
         /// </summary>
         public double Protein { get; set; }
 
@@ -68,7 +68,7 @@ namespace FitMyFood.Models
         {
             get
             {
-                return $"{Quantity} item(s) have {Energy} Calories and weight {Weight} gramm.";
+                return $"{Quantity} {UnitDescription}(s) give {Energy} Calories with {Weight} gramm.";
             }
         }
     }
