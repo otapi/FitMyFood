@@ -9,16 +9,16 @@ using FitMyFood.ViewModels;
 namespace FitMyFood.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ItemDetailPage : ContentPage
+    public partial class ItemViewPage : ContentPage
     {
-        public ItemDetailPage(VMItemDetail viewModel)
+        public ItemViewPage(VMItemDetail viewModel)
         {
             InitializeComponent();
 
             BindingContext = viewModel;
         }
 
-        public ItemDetailPage()
+        public ItemViewPage()
         {
             InitializeComponent();
         }

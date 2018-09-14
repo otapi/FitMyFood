@@ -113,7 +113,7 @@ namespace FitMyFood.ViewModels
 
             defineCommands();
 
-            MessagingCenter.Subscribe<NewItemPage, FoodItem>(this, "AddItem", async (obj, item) =>
+            MessagingCenter.Subscribe<ItemEditPage, FoodItem>(this, "AddItem", async (obj, item) =>
             {
                 var newItem = await App.dataStore.foodItems.SaveItemAsync(item);
                 await App.dataStore.SaveFoodItemForVariation(DailyProfile, Meal, MealVariation, newItem);
@@ -211,7 +211,7 @@ namespace FitMyFood.ViewModels
         async Task ExecuteViewFoodItemDetailCommand(FoodItem foodItem)
         {
             IsBusy = true;
-            await navigation.PushAsync(new ItemDetailPage(new VMItemDetail(foodItem)));
+            await navigation.PushAsync(new ItemViewPage(new VMItemDetail(foodItem)));
             IsBusy = false;
         }
         async Task ExecuteRemoveItemFromMainListCommand(FoodItem foodItem)

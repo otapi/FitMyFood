@@ -9,11 +9,11 @@ using FitMyFood.Models;
 namespace FitMyFood.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class NewItemPage : ContentPage
+    public partial class ItemEditPage : ContentPage
     {
         public FoodItem Item { get; set; }
 
-        public NewItemPage()
+        public ItemEditPage()
         {
             InitializeComponent();
 
