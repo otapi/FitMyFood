@@ -69,22 +69,22 @@ namespace FitMyFood.ViewModels
                 return _MealSelectorIndex;
             }
         }
-        int _VariationSelectorindex;
-        public int VariationSelectorindex
+        int _VariationSelectorIndex;
+        public int VariationSelectorIndex
         {
             set
             {
-                _VariationSelectorindex = value;
+                _VariationSelectorIndex = value;
                 OnPropertyChanged("VariationSelectorindex");
-                if (VariationSelectorItems.Count > 0 && VariationSelectorindex > -1)
+                if (VariationSelectorItems.Count > 0 && VariationSelectorIndex > -1)
                 {
-                    MealVariation = VariationSelectorItems[VariationSelectorindex];
+                    MealVariation = VariationSelectorItems[VariationSelectorIndex];
                 }
                 App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
             }
             get
             {
-                return _VariationSelectorindex;
+                return _VariationSelectorIndex;
             }
         }
 
@@ -188,7 +188,7 @@ namespace FitMyFood.ViewModels
             {
                 VariationSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
             }
-            MealVariation = VariationSelectorItems[VariationSelectorindex];
+            MealVariation = VariationSelectorItems[VariationSelectorIndex];
             App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
         }
         async Task ExecuteLoadItemsCommand()

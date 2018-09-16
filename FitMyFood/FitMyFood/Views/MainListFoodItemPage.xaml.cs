@@ -51,7 +51,7 @@ namespace FitMyFood.Views
 
         async void AddItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new NavigationPage(new ItemEditPage()));
+            await Navigation.PushModalAsync(new NavigationPage(new ItemEditPage(new VMItemDetail())));
         }
 
         protected override void OnAppearing()
