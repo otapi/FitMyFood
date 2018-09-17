@@ -3,17 +3,29 @@ using Xamarin.Forms;
 
 namespace FitMyFood.CustomControls
 {
+        public interface ISwipeCallBack
+    {
+
+        void onLeftSwipe(View view);
+        void onRightSwipe(View view);
+        void onTopSwipe(View view);
+        void onBottomSwipe(View view);
+        void onNothingSwiped(View view);
+
+        void onLeftSwipeProcess(View view, double delta);
+    }
+
     public class SwipeListener : PanGestureRecognizer
     {
         private ISwipeCallBack mISwipeCallback;
         private double translatedX = 0, translatedY = 0;
 
-        public SwipeListener(View view, ISwipeCallBack iSwipeCallBack)
+        public SwipeListener(SwipeStackLayout swiper)
         {
-            mISwipeCallback = iSwipeCallBack;
+            mISwipeCallback = swiper as ISwipeCallBack;
             var panGesture = new PanGestureRecognizer();
             panGesture.PanUpdated += OnPanUpdated;
-            view.GestureRecognizers.Add(panGesture);
+            swiper.GestureRecognizers.Add(panGesture);
         }
 
         void OnPanUpdated(object sender, PanUpdatedEventArgs e)

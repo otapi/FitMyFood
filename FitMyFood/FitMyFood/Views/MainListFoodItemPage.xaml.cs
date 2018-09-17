@@ -16,7 +16,7 @@ using FitMyFood.CustomControls;
 namespace FitMyFood.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainListFoodItemPage : ContentPage, ISwipeCallBack
+    public partial class MainListFoodItemPage : ContentPage
     {
         public MainListFoodItemPage()
         {
@@ -26,7 +26,6 @@ namespace FitMyFood.Views
             App.vmMainListFoodItem.navigation = Navigation;
             App.vmMainListFoodItem.LoadSelectorsCommand.Execute(null);
 
-            SwipeListener swipeListener = new SwipeListener(lbl_swipe, this);
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -82,54 +81,6 @@ namespace FitMyFood.Views
             DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
         }
 
-        public void onBottomSwipe(View view)
-        {
-            if (view == lbl_swipe)
-            {
-                lbl_result.Text = "OnBottomSwipe";
-            }
-        }
-
-        public void onLeftSwipe(View view)
-        {
-            if (view == lbl_swipe)
-            {
-                lbl_result.Text = "onLeftSwipe";
-            }
-        }
-
-        public void onNothingSwiped(View view)
-        {
-            if (view == lbl_swipe)
-            {
-                lbl_result.Text = "onNothingSwiped";
-            }
-        }
-
-        public void onRightSwipe(View view)
-        {
-            if (view == lbl_swipe)
-            {
-                lbl_result.Text = "onRightSwipe";
-            }
-        }
-
-        public void onTopSwipe(View view)
-        {
-            if (view == lbl_swipe)
-            {
-                lbl_result.Text = "onTopSwipe";
-            }
-        }
-
-        public void onLeftSwipeProcess(View view, double delta)
-        {
-            if (view == lbl_swipe)
-            {
-                lbl_result.Text = "onLeftSwipe running";
-                view.BackgroundColor = Color.CadetBlue;
-                view.TranslateTo(delta, 0);
-            }
-        }
+       
     }
 }

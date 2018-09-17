@@ -5,7 +5,7 @@
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
              Title="{Binding Title}"
              x:Name="BrowseItemsPage"
-             xmlns:views="clr-namespace:FitMyFood.Views">
+             xmlns:Swiper="clr-namespace:FitMyFood.CustomControls">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddItem_Clicked">
             <ToolbarItem.Icon>
@@ -85,29 +85,29 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackLayout Padding="10" x:Name="lbl_swipe">
-            <Label 
+        <Swiper:SwipeStackLayout Padding="10">
+                <Label 
 		
-		Text="Welcome to Xamarin Forms! Drag it" 
-		WidthRequest="300" 
-		HeightRequest="200" 
-		BackgroundColor="Yellow"
-		TextColor="Black"
-		FontSize="20"
-		VerticalOptions="Center" 
-		HorizontalOptions="Center">
-        </Label>
-        <Label 
-		x:Name="lbl_result"
-		WidthRequest="300" 
-		HeightRequest="100" 
-		BackgroundColor="Purple"
-		TextColor="White"
-		FontSize="20"
-		VerticalOptions="End" 
-		HorizontalOptions="Center">
-        </Label>
-            </StackLayout>
+		    Text="Welcome to Xamarin Forms! Drag it" 
+		    WidthRequest="300" 
+		    HeightRequest="200" 
+		    BackgroundColor="Yellow"
+		    TextColor="Black"
+		    FontSize="20"
+		    VerticalOptions="Center" 
+		    HorizontalOptions="Center">
+            </Label>
+            <Label 
+		    x:Name="lbl_result"
+		    WidthRequest="300" 
+		    HeightRequest="100" 
+		    BackgroundColor="Purple"
+		    TextColor="White"
+		    FontSize="20"
+		    VerticalOptions="End" 
+		    HorizontalOptions="Center">
+            </Label>
+        </Swiper:SwipeStackLayout>
         <Button Text="Button!" Clicked="OnButtonClick" />
     </StackLayout>
 </ContentPage>
