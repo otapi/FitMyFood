@@ -171,7 +171,7 @@ namespace FitMyFood.ViewModels
 
         async Task PopulateVariationSelector()
         {
-            if (MealSelectorItems.Count <1 || DailyProfileSelectorItems.Count < 1)
+            if (MealSelectorItems.Count <1 || DailyProfileSelectorItems.Count < 1 || DailyProfile == null || Meal == null)
             {
                 return;
             }
@@ -193,6 +193,10 @@ namespace FitMyFood.ViewModels
         }
         async Task ExecuteLoadItemsCommand()
         {
+            if (DailyProfile == null || Meal == null || MealVariation == null)
+            {
+                return;
+            }
             IsBusy = true;
             Items.Clear();
             var items = await App.dataStore.GetFoodItemsForMainList(DailyProfile, Meal, MealVariation);
