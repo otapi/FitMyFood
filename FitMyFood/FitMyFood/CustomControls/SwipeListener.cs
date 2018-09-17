@@ -6,21 +6,21 @@ namespace FitMyFood.CustomControls
         public interface ISwipeCallBack
     {
 
-        void onLeftSwipe(View view);
-        void onRightSwipe(View view);
-        void onTopSwipe(View view);
-        void onBottomSwipe(View view);
-        void onNothingSwiped(View view);
+        void onLeftSwipe();
+        void onRightSwipe();
+        void onNothingSwiped();
 
-        void onLeftSwipeProcess(View view, double delta);
+        void onLeftSwipeProcess(double delta);
+        void onRightSwipeProcess(double delta);
     }
 
     public class SwipeListener : PanGestureRecognizer
     {
         private ISwipeCallBack mISwipeCallback;
-        private double translatedX = 0, translatedY = 0;
+        private double translatedX = 0;
+        
 
-        public SwipeListener(SwipeStackLayout swiper)
+        public SwipeListener(SwiperStackLayout swiper)
         {
             mISwipeCallback = swiper as ISwipeCallBack;
             var panGesture = new PanGestureRecognizer();
@@ -41,42 +41,32 @@ namespace FitMyFood.CustomControls
                     try
                     {
                         translatedX = e.TotalX;
-                        translatedY = e.TotalY;
-                        if (translatedX < 0 && Math.Abs(translatedX) > Math.Abs(translatedY))
+                        if (translatedX < 0)
                         {
-                            mISwipeCallback.onLeftSwipeProcess(Content, translatedX);
+                            mISwipeCallback.onLeftSwipeProcess(translatedX);
+                        } else if (translatedX > 0)
+                        {
+                            mISwipeCallback.onRightSwipeProcess(translatedX);
                         }
                     }
                     catch (Exception err)
                     {
-                        System.Diagnostics.Debug.WriteLine("" + err.Message);
+                        App.PrintWarning("" + err.Message);
                     }
                     break;
 
                 case GestureStatus.Completed:
-
-                    System.Diagnostics.Debug.WriteLine("translatedX : " + translatedX);
-                    System.Diagnostics.Debug.WriteLine("translatedY : " + translatedY);
-
-                    if (translatedX < 0 && Math.Abs(translatedX) > Math.Abs(translatedY))
+                    if (translatedX < (-Content.Width*SwiperStackLayout.Threshold))
                     {
-                        mISwipeCallback.onLeftSwipe(Content);
+                        mISwipeCallback.onLeftSwipe();
                     }
-                    else if (translatedX > 0 && translatedX > Math.Abs(translatedY))
+                    else if (translatedX > (Content.Width * SwiperStackLayout.Threshold))
                     {
-                        mISwipeCallback.onRightSwipe(Content);
-                    }
-                    else if (translatedY < 0 && Math.Abs(translatedY) > Math.Abs(translatedX))
-                    {
-                        mISwipeCallback.onTopSwipe(Content);
-                    }
-                    else if (translatedY > 0 && translatedY > Math.Abs(translatedX))
-                    {
-                        mISwipeCallback.onBottomSwipe(Content);
+                        mISwipeCallback.onRightSwipe();
                     }
                     else
                     {
-                        mISwipeCallback.onNothingSwiped(Content);
+                        mISwipeCallback.onNothingSwiped();
                     }
 
                     break;
