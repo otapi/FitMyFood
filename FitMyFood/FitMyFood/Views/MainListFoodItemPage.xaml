@@ -85,7 +85,27 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
+        <Label 
+		x:Name="lbl_swipe"
+		Text="Welcome to Xamarin Forms! Drag it" 
+		WidthRequest="300" 
+		HeightRequest="200" 
+		BackgroundColor="Yellow"
+		TextColor="Black"
+		FontSize="20"
+		VerticalOptions="Center" 
+		HorizontalOptions="Center">
+        </Label>
+        <Label 
+		x:Name="lbl_result"
+		WidthRequest="300" 
+		HeightRequest="100" 
+		BackgroundColor="Purple"
+		TextColor="White"
+		FontSize="20"
+		VerticalOptions="End" 
+		HorizontalOptions="Center">
+        </Label>
         <Button Text="Button!" Clicked="OnButtonClick" />
     </StackLayout>
 </ContentPage>
