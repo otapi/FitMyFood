@@ -11,7 +11,7 @@ namespace FitMyFood.CustomControls
         void onBottomSwipe(View view);
         void onNothingSwiped(View view);
 
-        void onLeftSwipeProcess(View view);
+        void onLeftSwipeProcess(View view, double delta);
 
     }
 }

@@ -32,7 +32,7 @@ namespace FitMyFood.CustomControls
                         translatedY = e.TotalY;
                         if (translatedX < 0 && Math.Abs(translatedX) > Math.Abs(translatedY))
                         {
-                            mISwipeCallback.onLeftSwipeProcess(Content);
+                            mISwipeCallback.onLeftSwipeProcess(Content, translatedX);
                         }
                     }
                     catch (Exception err)

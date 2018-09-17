@@ -122,12 +122,13 @@ namespace FitMyFood.Views
             }
         }
 
-        public void onLeftSwipeProcess(View view)
+        public void onLeftSwipeProcess(View view, double delta)
         {
             if (view == lbl_swipe)
             {
                 lbl_result.Text = "onLeftSwipe running";
                 view.BackgroundColor = Color.CadetBlue;
+                view.TranslateTo(delta, 0);
             }
         }
     }
