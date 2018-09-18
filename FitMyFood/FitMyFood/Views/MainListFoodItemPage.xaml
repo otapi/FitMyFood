@@ -5,7 +5,7 @@
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
              Title="{Binding Title}"
              x:Name="BrowseItemsPage"
-             xmlns:Swiper="clr-namespace:FitMyFood.CustomControls">
+            >
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddItem_Clicked">
             <ToolbarItem.Icon>
@@ -50,11 +50,10 @@
                     IsPullToRefreshEnabled="False"
                     IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                     CachingStrategy="RecycleElement"
-                    SelectionMode="None">
+                    SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <!-- 
                         <ViewCell.ContextActions>
                             <MenuItem Command="{Binding Path=BindingContext.ViewFoodItemDetailCommand, Source={x:Reference Name=BrowseItemsPage}}"
                                 CommandParameter="{Binding .}"
@@ -62,8 +61,8 @@
                             <MenuItem Command="{Binding Path=BindingContext.RemoveItemFromMainList, Source={x:Reference Name=BrowseItemsPage}}"
                                 CommandParameter="{Binding .}"
                                 Text="Remove" IsDestructive="True" />
-                        </ViewCell.ContextActions> -->
-                        <Swiper:SwiperStackLayout Padding="10">
+                        </ViewCell.ContextActions> 
+                        <StackLayout Padding="10">
                             <Label Text="{Binding Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" 
                                             FontSize="16" 
                                         />
@@ -81,7 +80,7 @@
                                             LineBreakMode="NoWrap" 
                                         />
 
-                        </Swiper:SwiperStackLayout>
+                        </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
