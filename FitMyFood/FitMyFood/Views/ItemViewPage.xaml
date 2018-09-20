@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitMyFood.Views.ItemViewPage"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             x:Name="ItemViewPager">
 
     <StackLayout Spacing="20" Padding="15">
         <Label Text="{Binding Item.Name}" Style="{DynamicResource TitleStyle}"/>
@@ -13,6 +14,6 @@
         <Label Text="{Binding Item.Carbo, StringFormat='Carbo: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource CarboColor}"/>
         <Label Text="{Binding Item.Protein, StringFormat='Protein: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource ProteinColor}"/>
         <Label Text="in 100g" Style="{DynamicResource ListItemDetailTextStyle}" HorizontalOptions="End"/>
-        <Button Text="Edit" />
+        <Button Text="Edit" Command="{Binding Path=BindingContext.EditFoodItemDetailCommand, Source={x:Reference Name=ItemViewPager}}" />
     </StackLayout>
 </ContentPage>

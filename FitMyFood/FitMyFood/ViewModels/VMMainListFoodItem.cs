@@ -102,7 +102,7 @@ namespace FitMyFood.ViewModels
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             SaveFoodItemCommand = new Command<FoodItem>(async (foodItem) => await ExecuteSaveFoodItemCommand(foodItem));
             UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
-            ViewFoodItemDetailCommand = new Command<FoodItem>(async (foodItem) => await ExecuteViewFoodItemDetailCommand(foodItem));
+            ViewFoodItemDetailCommand = new Command<FoodItem>(async (foodItem) => await ExecuteViewFoodItemViewCommand(foodItem));
             RemoveItemFromMainList = new Command<FoodItem>(async (foodItem) => await ExecuteRemoveItemFromMainListCommand(foodItem));
         }
         public VMMainListFoodItem()
@@ -119,7 +119,7 @@ namespace FitMyFood.ViewModels
 
             defineCommands();
 
-            MessagingCenter.Subscribe<ItemEditPage, FoodItem>(this, "AddItem", async (obj, item) =>
+            MessagingCenter.Subscribe<VMItemEdit, FoodItem>(this, "AddItem", async (obj, item) =>
             {
                 var newItem = await App.dataStore.foodItems.SaveItemAsync(item);
                 await App.dataStore.SaveFoodItemForVariation(DailyProfile, Meal, MealVariation, newItem);
@@ -213,10 +213,10 @@ namespace FitMyFood.ViewModels
             IsBusy = false;
         }
 
-        async Task ExecuteViewFoodItemDetailCommand(FoodItem foodItem)
+        async Task ExecuteViewFoodItemViewCommand(FoodItem foodItem)
         {
             IsBusy = true;
-            await navigation.PushAsync(new ItemViewPage(new VMItemDetail(foodItem)));
+            await navigation.PushAsync(new ItemViewPage(foodItem));
             IsBusy = false;
         }
         async Task ExecuteRemoveItemFromMainListCommand(FoodItem foodItem)

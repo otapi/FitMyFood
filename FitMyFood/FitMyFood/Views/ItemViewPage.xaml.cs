@@ -11,16 +11,11 @@ namespace FitMyFood.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ItemViewPage : ContentPage
     {
-        public ItemViewPage(VMItemDetail viewModel)
+        public ItemViewPage(FoodItem foodItem)
         {
             InitializeComponent();
 
-            BindingContext = viewModel;
-        }
-
-        public ItemViewPage()
-        {
-            InitializeComponent();
+            BindingContext = new VMItemView(Navigation, foodItem);
         }
     }
 }

@@ -4,7 +4,7 @@
              x:Class="FitMyFood.Views.MainListFoodItemPage"
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
              Title="{Binding Title}"
-             x:Name="BrowseItemsPage"
+             x:Name="MainListFoodItemPager"
             >
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddItem_Clicked">
@@ -50,15 +50,15 @@
                     IsPullToRefreshEnabled="False"
                     IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                     CachingStrategy="RecycleElement"
-                    SelectionMode="Single">
+                    SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <ViewCell.ContextActions>
-                            <MenuItem Command="{Binding Path=BindingContext.ViewFoodItemDetailCommand, Source={x:Reference Name=BrowseItemsPage}}"
+                            <MenuItem Command="{Binding Path=BindingContext.ViewFoodItemDetailCommand, Source={x:Reference Name=MainListFoodItemPager}}"
                                 CommandParameter="{Binding .}"
                                 Text="View Details" />
-                            <MenuItem Command="{Binding Path=BindingContext.RemoveItemFromMainList, Source={x:Reference Name=BrowseItemsPage}}"
+                            <MenuItem Command="{Binding Path=BindingContext.RemoveItemFromMainList, Source={x:Reference Name=MainListFoodItemPager}}"
                                 CommandParameter="{Binding .}"
                                 Text="Remove" IsDestructive="True" />
                         </ViewCell.ContextActions> 
