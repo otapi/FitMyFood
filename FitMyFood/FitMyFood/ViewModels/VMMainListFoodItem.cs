@@ -25,6 +25,13 @@ namespace FitMyFood.ViewModels
         public ObservableCollection<View> MealSelectorSource { get; set; }
         public ObservableCollection<View> VariationSelectorSource { get; set; }
 
+        public FoodItem targetFood { get; set; }
+        public FoodItem totalFood { get; set; }
+        public string summaryEnergy { get; set; }
+        public string summaryFat { get; set; }
+        public string summaryCarbo { get; set; }
+        public string summaryProtein { get; set; }
+
         Meal Meal { get; set; }
         DailyProfile DailyProfile { get; set; }
         DailyProfileMealVariation MealVariation { get; set; }
@@ -108,6 +115,8 @@ namespace FitMyFood.ViewModels
         public VMMainListFoodItem()
         {
             Title = "Browse";
+            defineCommands();
+
             Items = new ObservableCollection<FoodItem>();
             DailyProfileSelectorSource = new ObservableCollection<View>();
             MealSelectorSource = new ObservableCollection<View>();
@@ -116,8 +125,9 @@ namespace FitMyFood.ViewModels
             DailyProfileSelectorItems = new List<DailyProfile>();
             MealSelectorItems = new List<Meal>();
             VariationSelectorItems = new List<DailyProfileMealVariation>();
-
-            defineCommands();
+            
+            targetFood = new FoodItem();
+            totalFood = new FoodItem();
 
             MessagingCenter.Subscribe<VMItemEdit, FoodItem>(this, "AddItem", async (obj, item) =>
             {
@@ -127,7 +137,28 @@ namespace FitMyFood.ViewModels
             });
         }
 
-        
+        void calcTargetFood()
+        {
+            // TODO: implement
+        }
+        public void calcSummary()
+        {
+            totalFood = new FoodItem();
+            totalFood.Fat = 0;
+            totalFood.Carbo = 0;
+            totalFood.Protein = 0;
+
+            foreach (var food in Items)
+            {
+                totalFood.Fat += food.Fat * food.Weight/100;
+                totalFood.Carbo += food.Carbo * food.Weight/100;
+                totalFood.Protein += food.Protein * food.Weight/100;
+            }
+            summaryEnergy = $"Energy: {totalFood.Energy} / {targetFood.Energy} kcal";
+            summaryFat = $"Fat: {totalFood.Energy} / {targetFood.Energy} gramm";
+            summaryCarbo = $"Carbo: {totalFood.Energy} / {targetFood.Energy} gramm";
+            summaryProtein = $"Protein: {totalFood.Energy} / {targetFood.Energy} gramm";
+        }
 
         async Task ExecuteLoadSelectorsCommand()
         {
@@ -204,6 +235,7 @@ namespace FitMyFood.ViewModels
             {
                 Items.Add(item);
             }
+            calcSummary();
             IsBusy = false;
         }
         async Task ExecuteSaveFoodItemCommand(FoodItem foodItem)

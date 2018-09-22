@@ -49,6 +49,7 @@ namespace FitMyFood.Views
             {
                 App.vmMainListFoodItem.SaveFoodItemCommand.Execute(foodItem);
             }
+            App.vmMainListFoodItem.calcSummary();
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)
@@ -65,20 +66,6 @@ namespace FitMyFood.Views
         {
             var it = App.vmMainListFoodItem;
             App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
-        }
-
-        public void OnEdit(object sender, EventArgs e)
-        {
-            ViewCell aa = new ViewCell();
-            
-            var mi = ((MenuItem)sender);
-            DisplayAlert("More Context Action", mi.CommandParameter + " more context action", "OK");
-        }
-
-        public void OnDelete(object sender, EventArgs e)
-        {
-            var mi = ((MenuItem)sender);
-            DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
         }
 
        

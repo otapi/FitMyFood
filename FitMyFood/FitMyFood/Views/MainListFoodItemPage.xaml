@@ -42,6 +42,11 @@
                 SelectedIndex="{Binding VariationSelectorIndex}"
                 />
         </Grid>
+        <Label Text="{Binding summaryEnergy}" Style="{DynamicResource BodyStyle}" />
+        <Label Text="{Binding summaryFat}" Style="{DynamicResource ListItemTextStyle}" TextColor="{StaticResource FatColor}"/>
+        <Label Text="{Binding summaryCarbo}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource CarboColor}"/>
+        <Label Text="{Binding summaryProtein}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource ProteinColor}"/>
+
         <ListView x:Name="ItemsListView"
                     ItemsSource="{Binding Items}"
                     VerticalOptions="FillAndExpand"
