@@ -14,6 +14,14 @@ namespace FitMyFood.ViewModels
 {
     public class VMMainListFoodItem : VMBase
     {
+        public class Summary
+        {
+            public string summaryEnergy { get; set; }
+            public string summaryFat { get; set; }
+            public string summaryCarbo { get; set; }
+            public string summaryProtein { get; set; }
+
+        }
         public static double ENERGYFAT = 9.3;
         public static double ENERGYPROTEIN = 4.2;
         public static double ENERGYCARBO = 4.1;
@@ -27,11 +35,32 @@ namespace FitMyFood.ViewModels
 
         public FoodItem targetFood { get; set; }
         public FoodItem totalFood { get; set; }
-        public string summaryEnergy { get; set; }
-        public string summaryFat { get; set; }
-        public string summaryCarbo { get; set; }
-        public string summaryProtein { get; set; }
 
+        string _summaryEnergy = string.Empty;
+        public string summaryEnergy
+        {
+            get { return _summaryEnergy; }
+            set { SetProperty(ref _summaryEnergy, value); }
+        }
+        string _summaryFat = string.Empty;
+        public string summaryFat
+        {
+            get { return _summaryFat; }
+            set { SetProperty(ref _summaryFat, value); }
+        }
+        string _summaryCarbo = string.Empty;
+        public string summaryCarbo
+        {
+            get { return _summaryCarbo; }
+            set { SetProperty(ref _summaryCarbo, value); }
+        }
+        string _summaryProtein = string.Empty;
+        public string summaryProtein
+        {
+            get { return _summaryProtein; }
+            set { SetProperty(ref _summaryProtein, value); }
+        }
+        
         Meal Meal { get; set; }
         DailyProfile DailyProfile { get; set; }
         DailyProfileMealVariation MealVariation { get; set; }
@@ -116,6 +145,7 @@ namespace FitMyFood.ViewModels
         {
             Title = "Browse";
             defineCommands();
+
 
             Items = new ObservableCollection<FoodItem>();
             DailyProfileSelectorSource = new ObservableCollection<View>();
