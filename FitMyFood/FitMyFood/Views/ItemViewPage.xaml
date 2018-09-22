@@ -7,6 +7,11 @@
 
     <StackLayout Spacing="20" Padding="15">
         <Label Text="{Binding Item.Name}" Style="{DynamicResource TitleStyle}"/>
+        <Label Text="Quantity:" />
+        <Editor Text="{Binding Item.Quantity}" TextChanged="OnStepperChanged" />
+        
+        <Label Text="{Binding Item.UnitDescription}" />
+
         <Label Text="{Binding Item.Descriptor}" Style="{DynamicResource BodyStyle}" />
         <Label Text="Nutrition facts:" Style="{DynamicResource SubTitleStyle}"/>
 

@@ -47,7 +47,7 @@ namespace FitMyFood.Views
             FoodItem foodItem = (sender as Stepper).BindingContext as FoodItem;
             if (foodItem != null)
             {
-                App.vmMainListFoodItem.SaveFoodItemCommand.Execute(foodItem);
+                App.vmMainListFoodItem.SaveFoodItemForVariationCommand.Execute(foodItem);
             }
             App.vmMainListFoodItem.calcSummary();
         }

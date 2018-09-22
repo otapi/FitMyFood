@@ -128,7 +128,7 @@ namespace FitMyFood.ViewModels
         public Command LoadSelectorsCommand { get; set; }
         public Command UpdateVariantSelectorCommand { get; set; }
         public Command LoadItemsCommand { get; set; }
-        public Command SaveFoodItemCommand { get; set; }
+        public Command SaveFoodItemForVariationCommand { get; set; }
         public Command ViewFoodItemDetailCommand { get; set; }
         public Command RemoveItemFromMainList { get; set; }
 
@@ -136,7 +136,7 @@ namespace FitMyFood.ViewModels
         {
             LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            SaveFoodItemCommand = new Command<FoodItem>(async (foodItem) => await ExecuteSaveFoodItemCommand(foodItem));
+            SaveFoodItemForVariationCommand = new Command<FoodItem>(async (foodItem) => await ExecuteSaveFoodItemForVariationCommand(foodItem));
             UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
             ViewFoodItemDetailCommand = new Command<FoodItem>(async (foodItem) => await ExecuteViewFoodItemViewCommand(foodItem));
             RemoveItemFromMainList = new Command<FoodItem>(async (foodItem) => await ExecuteRemoveItemFromMainListCommand(foodItem));
@@ -268,10 +268,10 @@ namespace FitMyFood.ViewModels
             calcSummary();
             IsBusy = false;
         }
-        async Task ExecuteSaveFoodItemCommand(FoodItem foodItem)
+        async Task ExecuteSaveFoodItemForVariationCommand(FoodItem foodItem)
         {
             IsBusy = true;
-            await App.dataStore.foodItems.SaveItemAsync(foodItem);
+            await App.dataStore.SaveFoodItemForVariation(DailyProfile, Meal, MealVariation, foodItem);
             IsBusy = false;
         }
 
@@ -279,6 +279,7 @@ namespace FitMyFood.ViewModels
         {
             IsBusy = true;
             await navigation.PushAsync(new ItemViewPage(foodItem));
+            App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
             IsBusy = false;
         }
         async Task ExecuteRemoveItemFromMainListCommand(FoodItem foodItem)

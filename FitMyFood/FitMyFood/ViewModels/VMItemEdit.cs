@@ -13,6 +13,7 @@ namespace FitMyFood.ViewModels
 
         public Command SaveCommand { get; set; }
         public Command CancelCommand { get; set; }
+        public bool newitem;
         FoodItem _Item;
         public FoodItem Item {
             get
@@ -23,7 +24,8 @@ namespace FitMyFood.ViewModels
             set
             {
                 Title = value?.Name;
-                _Item = value;
+                SetProperty(ref _Item, value);
+
             }
         }
 
@@ -32,7 +34,11 @@ namespace FitMyFood.ViewModels
             this.navigation = navigation;
             if (foodItem == null)
             {
+                newitem = true;
                 foodItem = Data.DefaultValues.FoodItem();
+            } else
+            {
+                newitem = false;
             }
 
             this.Item = foodItem;
@@ -43,7 +49,15 @@ namespace FitMyFood.ViewModels
         async Task ExecuteSaveCommand()
         {
             IsBusy = true;
-            MessagingCenter.Send(this, "AddItem", Item);
+            if (newitem)
+            {
+                MessagingCenter.Send(this, "AddItem", Item);
+            } else
+            {
+                await App.dataStore.foodItems.SaveItemAsync(Item);
+                App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
+                MessagingCenter.Send(this, "ChangeItem", Item);
+            }
             IsBusy = false;
             await navigation.PopModalAsync();
         }

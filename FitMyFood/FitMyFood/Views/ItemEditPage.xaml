@@ -23,11 +23,24 @@
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15">
-            <Label Text="Text" FontSize="Medium" />
-            <Entry Text="{Binding Item.Name}" FontSize="Small" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor Text="{Binding Item.UnitDescription}" FontSize="Small" Margin="0" />
+        <StackLayout>
+            <Label Text="Name:" FontSize="Medium" />
+            <Entry Text="{Binding Item.Name}"/>
+            <Label Text="Nutrition facts in 100 gramm:" Style="{DynamicResource SubTitleStyle}"/>
+
+            <Label Text="Fat:" />
+            <Editor Text="{Binding Item.Fat}"/>
+            <Label Text="Carbo:" />
+            <Editor Text="{Binding Item.Carbo}"/>
+            <Label Text="Protein:" />
+            <Editor Text="{Binding Item.Protein}"/>
+            
+            <Label Text="Name of a unit:" />
+            <Editor Text="{Binding Item.UnitDescription}"/>
+            <Label Text="Weight (gramm) of one unit:" />
+            <Editor Text="{Binding Item.UnitWeight}"/>
+            
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
