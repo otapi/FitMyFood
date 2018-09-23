@@ -131,6 +131,7 @@ namespace FitMyFood.ViewModels
         public Command SaveFoodItemForVariationCommand { get; set; }
         public Command ViewFoodItemDetailCommand { get; set; }
         public Command RemoveItemFromMainList { get; set; }
+        public Command AddItemPageCommand { get; set; }
 
         void defineCommands()
         {
@@ -140,6 +141,8 @@ namespace FitMyFood.ViewModels
             UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
             ViewFoodItemDetailCommand = new Command<FoodItem>(async (foodItem) => await ExecuteViewFoodItemViewCommand(foodItem));
             RemoveItemFromMainList = new Command<FoodItem>(async (foodItem) => await ExecuteRemoveItemFromMainListCommand(foodItem));
+            AddItemPageCommand = new Command(async () => await ExecuteAddItemPageCommand());
+
         }
         public VMMainListFoodItem()
         {
@@ -163,7 +166,7 @@ namespace FitMyFood.ViewModels
             {
                 var newItem = await App.dataStore.foodItems.SaveItemAsync(item);
                 await App.dataStore.SaveFoodItemForVariation(DailyProfile, Meal, MealVariation, newItem);
-                App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
+                LoadItemsCommand.Execute(null);
             });
         }
 
@@ -287,6 +290,12 @@ namespace FitMyFood.ViewModels
             IsBusy = true;
             await App.dataStore.RemoveFoodItemsFromMainList(DailyProfile, Meal, MealVariation, foodItem);
             Items.Remove(foodItem);
+            IsBusy = false;
+        }
+        async Task ExecuteAddItemPageCommand()
+        {
+            IsBusy = true;
+            await navigation.PushModalAsync(new NavigationPage(new ItemEditPage(null)));
             IsBusy = false;
         }
     }

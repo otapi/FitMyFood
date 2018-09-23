@@ -7,7 +7,7 @@
              x:Name="MainListFoodItemPager"
             >
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Clicked="AddItem_Clicked">
+        <ToolbarItem Text="Add" Command="{Binding Path=BindingContext.AddItemPageCommand, Source={x:Reference Name=MainListFoodItemPager}}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="UWP" Value="add.png"/>
