@@ -21,11 +21,10 @@ namespace FitMyFood.Views
         public MainListFoodItemPage()
         {
             InitializeComponent();
+            App.MainListFoodItemVM = new MainListFoodItemVM(Navigation);
 
-            BindingContext = App.vmMainListFoodItem;
-            App.vmMainListFoodItem.navigation = Navigation;
-            App.vmMainListFoodItem.LoadSelectorsCommand.Execute(null);
-
+            BindingContext = App.MainListFoodItemVM;
+            App.MainListFoodItemVM.LoadSelectorsCommand.Execute(null);
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -47,9 +46,9 @@ namespace FitMyFood.Views
             FoodItem foodItem = (sender as Stepper).BindingContext as FoodItem;
             if (foodItem != null)
             {
-                App.vmMainListFoodItem.SaveFoodItemForVariationCommand.Execute(foodItem);
+                App.MainListFoodItemVM.SaveFoodItemForVariationCommand.Execute(foodItem);
             }
-            App.vmMainListFoodItem.calcSummary();
+            App.MainListFoodItemVM.calcSummary();
         }
 
         protected override void OnAppearing()
@@ -59,8 +58,8 @@ namespace FitMyFood.Views
 
         void OnButtonClick(object sender, EventArgs e)
         {
-            var it = App.vmMainListFoodItem;
-            App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
+            var it = App.MainListFoodItemVM;
+            App.MainListFoodItemVM.LoadItemsCommand.Execute(null);
         }
 
        

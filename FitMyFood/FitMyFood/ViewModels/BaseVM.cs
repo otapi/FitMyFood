@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace FitMyFood.ViewModels
 {
-    public class VMBase : INotifyPropertyChanged
+    public class BaseVM : INotifyPropertyChanged
     {
         bool isBusy = false;
         public bool IsBusy
@@ -26,6 +26,7 @@ namespace FitMyFood.ViewModels
             get { return title; }
             set { SetProperty(ref title, value); }
         }
+        public INavigation Navigation { get; set; }
 
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName]string propertyName = "",
@@ -38,6 +39,11 @@ namespace FitMyFood.ViewModels
             onChanged?.Invoke();
             OnPropertyChanged(propertyName);
             return true;
+        }
+
+        public BaseVM(INavigation navigation)
+        {
+            Navigation = navigation;
         }
 
         #region INotifyPropertyChanged

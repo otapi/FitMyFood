@@ -13,9 +13,7 @@ namespace FitMyFood.Views
         Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
         public MainPage()
         {
-            App.dataStore = new Data.DataStore();
-            App.vmMainListFoodItem = new ViewModels.VMMainListFoodItem();
-
+            App.DataStore = new Data.DataStore();
             InitializeComponent();
 
             MasterBehavior = MasterBehavior.Popover;

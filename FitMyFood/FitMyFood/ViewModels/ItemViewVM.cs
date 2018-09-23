@@ -7,10 +7,8 @@ using FitMyFood.Views;
 
 namespace FitMyFood.ViewModels
 {
-    public class VMItemView : VMBase
+    public class ItemViewVM : BaseVM
     {
-        INavigation navigation { get; set; }
-
         public Command EditFoodItemDetailCommand { get; set; }
         
         FoodItem _Item;
@@ -21,28 +19,26 @@ namespace FitMyFood.ViewModels
                 
             }
         }
-        public VMItemView(INavigation navigation, FoodItem foodItem)
+        public ItemViewVM(INavigation navigation, FoodItem foodItem) : base(navigation)
         {
-            this.navigation = navigation;
             Item = foodItem;
             EditFoodItemDetailCommand = new Command(async () => await ExecuteEditFoodItemDetailCommand());
-
-            MessagingCenter.Subscribe<VMItemEdit, FoodItem>(this, "ChangeItem", async (obj, item) =>
-            {
-                Item = item;
-            });
         }
 
+        public void ChangeItem(FoodItem item)
+        {
+            Item = item;
+        }
         async Task ExecuteEditFoodItemDetailCommand()
         {
             IsBusy = true;
-            await navigation.PushModalAsync(new NavigationPage(new ItemEditPage(Item)));
+            await Navigation.PushModalAsync(new NavigationPage(new ItemEditPage(Item)));
             IsBusy = false;
         }
 
         public void changeQuantity()
         {
-            App.vmMainListFoodItem.SaveFoodItemForVariationCommand.Execute(Item);
+            App.MainListFoodItemVM.SaveFoodItemForVariationCommand.Execute(Item);
         }
     }
 }

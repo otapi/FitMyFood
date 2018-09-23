@@ -7,10 +7,8 @@ using FitMyFood.Views;
 
 namespace FitMyFood.ViewModels
 {
-    public class VMItemEdit : VMBase
+    public class ItemEditVM : BaseVM
     {
-        INavigation navigation { get; set; }
-
         public Command SaveCommand { get; set; }
         public Command CancelCommand { get; set; }
         public bool newitem;
@@ -29,9 +27,8 @@ namespace FitMyFood.ViewModels
             }
         }
 
-        public VMItemEdit(INavigation navigation, FoodItem foodItem)
+        public ItemEditVM(INavigation navigation, FoodItem foodItem) : base(navigation)
         {
-            this.navigation = navigation;
             if (foodItem == null)
             {
                 newitem = true;
@@ -51,19 +48,19 @@ namespace FitMyFood.ViewModels
             IsBusy = true;
             if (newitem)
             {
-                MessagingCenter.Send(this, "AddItem", Item);
+                await App.MainListFoodItemVM.AddNewItem(Item);
             } else
             {
-                await App.dataStore.foodItems.SaveItemAsync(Item);
-                App.vmMainListFoodItem.LoadItemsCommand.Execute(null);
-                MessagingCenter.Send(this, "ChangeItem", Item);
+                await App.DataStore.foodItems.SaveItemAsync(Item);
+                App.MainListFoodItemVM.LoadItemsCommand.Execute(null);
+                App.ItemViewVM.ChangeItem(Item);
             }
             IsBusy = false;
-            await navigation.PopModalAsync();
+            await Navigation.PopModalAsync();
         }
         async Task ExecuteCancelCommand()
         {
-            await navigation.PopModalAsync();
+            await Navigation.PopModalAsync();
         }
     }
 }

@@ -5,10 +5,6 @@
              xmlns:vm="clr-namespace:FitMyFood.ViewModels"
              Title="{Binding Title}">
     
-    <ContentPage.BindingContext>
-        <vm:VMAbout />
-    </ContentPage.BindingContext>
-    
     <ContentPage.Resources>
         <ResourceDictionary>
             <!--Page Level Resources: Compatibile with Xamarin Live Player -->

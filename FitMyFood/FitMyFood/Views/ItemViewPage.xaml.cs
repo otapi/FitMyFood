@@ -15,7 +15,8 @@ namespace FitMyFood.Views
         {
             InitializeComponent();
 
-            BindingContext = new VMItemView(Navigation, foodItem);
+            App.ItemViewVM = new ItemViewVM(Navigation, foodItem);
+            BindingContext = App.ItemViewVM;
         }
 
         void OnQuantityChanged(object sender, EventArgs e)
@@ -23,7 +24,7 @@ namespace FitMyFood.Views
             Editor quant = (sender as Editor);
             if (quant.Text != null)
             {
-                (BindingContext as VMItemView).changeQuantity();
+                App.ItemViewVM.changeQuantity();
             }
         }
     }

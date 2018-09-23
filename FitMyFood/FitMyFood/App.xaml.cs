@@ -8,8 +8,10 @@ namespace FitMyFood
 {
     public partial class App : Application
     {
-        public static ViewModels.VMMainListFoodItem vmMainListFoodItem { get; set; }
-        public static Data.DataStore dataStore { get; set; }
+        public static ViewModels.MainListFoodItemVM MainListFoodItemVM { get; set; }
+        public static ViewModels.ItemEditVM ItemEditVM { get; set; }
+        public static ViewModels.ItemViewVM ItemViewVM { get; set; }
+        public static Data.DataStore DataStore { get; set; }
         
         public static void PrintWarning(string message)
         {

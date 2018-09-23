@@ -15,8 +15,8 @@ namespace FitMyFood.Views
         public ItemEditPage(FoodItem foodItem)
         {
             InitializeComponent();
-
-            BindingContext = new VMItemEdit(Navigation, foodItem);
+            App.ItemEditVM = new ItemEditVM(Navigation, foodItem);
+            BindingContext = App.ItemEditVM;
         }
 
     }
