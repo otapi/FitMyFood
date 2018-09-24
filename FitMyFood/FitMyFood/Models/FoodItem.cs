@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FitMyFood.ViewModels;
+using SQLiteNetExtensions.Attributes;
 
 namespace FitMyFood.Models
 {
@@ -8,6 +9,9 @@ namespace FitMyFood.Models
     /// </summary>
     public class FoodItem : BaseModel
     {
+        [ManyToMany(typeof(Variation))]
+        public List<Variation> Variations { get; set; }
+
         /// <summary>
         /// Default unit
         /// </summary>
@@ -34,6 +38,11 @@ namespace FitMyFood.Models
         /// True if this is a composed food
         /// </summary>
         public bool IsComposedFood { get; set; }
+        /// <summary>
+        /// Sub-FoodItems if this is a composed item
+        /// </summary>
+        [OneToMany]
+        public List<ComposedFoodItem> ComposedFoodItems { get; set; }
         /// <summary>
         /// How many unit has? Or what is the default quantity?
         /// </summary>

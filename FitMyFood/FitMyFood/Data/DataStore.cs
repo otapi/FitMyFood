@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using SQLite;
 using System.Threading.Tasks;
 using FitMyFood.Models;
 using System.Linq;
+using SQLiteNetExtensions.Extensions;
 
 namespace FitMyFood.Data
 {
     public class DataStore
     {
-        public readonly SQLiteAsyncConnection database;
+        public readonly SQLiteNetExtensionsAsync.Extensions.SqliteConnectionExtensions database;
 
         public DAOComposedFood<ComposedFoodItem> composedFoodItems;
         public DAOGeneral<FoodItem> foodItems;
         public DAOGeneral<DailyProfile> dailyProfiles;
         public DAOGeneral<Meal> meals;
-        public DAOGeneral<DailyProfileMealVariation> dailyProfileMealVariation;
-        public DAOGeneral<DailyProfileMealVariationFoodItem> dailyProfileMealVariationFoodItem;
+        public DAOGeneral<Variation> Variation;
+        public DAOGeneral<VariationFoodItem> VariationFoodItem;
         public DAOGeneral<WeightTrack> weightTracks;
 
         public DAOGeneral<Settings> settings;
@@ -26,37 +26,38 @@ namespace FitMyFood.Data
         public DataStore()
         {
             database = new SQLiteAsyncConnection(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FitMyFoodSQLite.db3"));
-
+            
             composedFoodItems = new DAOComposedFood<ComposedFoodItem>(this);
 
             foodItems = new DAOGeneral<FoodItem>(this);
             dailyProfiles = new DAOGeneral<DailyProfile>(this);
             meals = new DAOGeneral<Meal>(this);
-            dailyProfileMealVariation = new DAOGeneral<DailyProfileMealVariation>(this);
-            dailyProfileMealVariationFoodItem = new DAOGeneral<DailyProfileMealVariationFoodItem>(this);
+            Variation = new DAOGeneral<Variation>(this);
+            VariationFoodItem = new DAOGeneral<VariationFoodItem>(this);
             settings = new DAOGeneral<Settings>(this);
             weightTracks = new DAOGeneral<WeightTrack>(this);
         }
 
         // Custom DAOs
-        public async Task<List<DailyProfileMealVariation>> GetVariationsAsync(DailyProfile dailyProfile, Meal meal)
+        public async Task<List<Variation>> GetVariationsAsync(DailyProfile dailyProfile, Meal meal)
         {
             return await (
-                from i in database.Table<DailyProfileMealVariation>()
+                from i in database.Table<Variation>()
                 where i.DailyProfileId == dailyProfile.Id
                     && i.MealId == meal.Id
                 select i
               ).ToListAsync();
             /*
-            return await database.Table<DailyProfileMealVariation>().Where(
+            return await database.Table<Variation>().Where(
                 i => i.DailyProfileId == dailyProfile.Id
                     && i.MealId == meal.Id).ToListAsync();*/
         }
 
-        public async Task<List<FoodItem>> GetFoodItemsForMainList(DailyProfile dailyProfile, Meal meal, DailyProfileMealVariation variation)
+        public async Task<List<FoodItem>> GetFoodItemsForMainList(DailyProfile dailyProfile, Meal meal, Variation variation)
         {
+            
             var filteredFoodItemRefs = await (
-                from i in database.Table<DailyProfileMealVariationFoodItem>()
+                from i in database.Table<VariationFoodItem>()
                 where i.DailyProfile == dailyProfile.Id
                     && i.Meal == meal.Id
                     && i.Variation == variation.Id
@@ -78,9 +79,9 @@ namespace FitMyFood.Data
             return filteredFoodItems;
         }
 
-        public async Task SaveFoodItemForVariation(DailyProfile dailyProfile, Meal meal, DailyProfileMealVariation variation, FoodItem foodItem)
+        public async Task SaveFoodItemForVariation(DailyProfile dailyProfile, Meal meal, Variation variation, FoodItem foodItem)
         {
-            await dailyProfileMealVariationFoodItem.SaveItemAsync(new DailyProfileMealVariationFoodItem()
+            await VariationFoodItem.SaveItemAsync(new VariationFoodItem()
             {
                 DailyProfile = dailyProfile.Id,
                 FoodItem = foodItem.Id,
@@ -90,11 +91,11 @@ namespace FitMyFood.Data
             });
         }
 
-        public async Task RemoveFoodItemsFromMainList(DailyProfile dailyProfile, Meal meal, DailyProfileMealVariation variation, FoodItem foodItem)
+        public async Task RemoveFoodItemsFromMainList(DailyProfile dailyProfile, Meal meal, Variation variation, FoodItem foodItem)
         {
 
             var filteredFoodItemRefs = await (
-                from i in database.Table<DailyProfileMealVariationFoodItem>()
+                from i in database.Table<VariationFoodItem>()
                 where i.DailyProfile == dailyProfile.Id
                     && i.Meal == meal.Id
                     && i.Variation == variation.Id
@@ -108,7 +109,7 @@ namespace FitMyFood.Data
             }
             foreach (var itemRef in filteredFoodItemRefs)
             {
-                await dailyProfileMealVariationFoodItem.DeleteItemAsync(itemRef);
+                await VariationFoodItem.DeleteItemAsync(itemRef);
             }
         }
 

@@ -1,70 +1,97 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="FitMyFood.Models.ComposedFoodItem">
-    <Position X="5.25" Y="2.75" Width="1.5" />
+    <Position X="0.5" Y="4.25" Width="1.75" />
+    <AssociationLine Name="SubFoodItem" Type="FitMyFood.Models.FoodItem">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.119" Y="0.434" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAgAAAEAA=</HashCode>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAQBAAAAAAAAAAAAgAAAAAA=</HashCode>
       <FileName>Models\ComposedFoodItem.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SubFoodItem" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="FitMyFood.Models.DailyProfile">
-    <Position X="12" Y="2.75" Width="1.5" />
+    <Position X="6" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\DailyProfile.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FitMyFood.Models.DailyProfileMealVariation">
-    <Position X="16.5" Y="2.75" Width="1.5" />
+  <Class Name="FitMyFood.Models.Variation">
+    <Position X="3.25" Y="1" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgACAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\DailyProfileMealVariation.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAgICAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Variation.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Meal" />
+      <Property Name="DailyProfile" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="VariationFoodItems" />
+    </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="FitMyFood.Models.DailyProfileMealVariationFoodItem">
-    <Position X="0.5" Y="0.5" Width="2" />
+  <Class Name="FitMyFood.Models.VariationFoodItem">
+    <Position X="3.25" Y="3" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAAAAAAAAAAQAAAAAAAAAQAQAAAAgAAAAAA=</HashCode>
-      <FileName>Models\DailyProfileMealVariationFoodItem.cs</FileName>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAQAAAAAAgAAAEAA=</HashCode>
+      <FileName>Models\VariationFoodItem.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FoodItem" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="FitMyFood.Models.FoodItem">
-    <Position X="7.5" Y="2.75" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="1.75" />
+    <AssociationLine Name="ComposedFoodItems" Type="FitMyFood.Models.ComposedFoodItem">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.077" Y="0.226" Height="0.182" Width="1.518" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAgEAABAAAAAAEAAAAACABAIAKAAAAgAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAgEAABAAAAAAEAAAAACgBAIAKAAAAgABAAAA=</HashCode>
       <FileName>Models\FoodItem.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Variations" />
+      <Property Name="ComposedFoodItems" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="FitMyFood.Models.HomeMenuItem" Collapsed="true">
-    <Position X="19" Y="1.5" Width="1.5" />
+    <Position X="7.75" Y="4" Width="2" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\HomeMenuItem.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FitMyFood.Models.Meal">
-    <Position X="4" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\Meal.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="FitMyFood.Models.Settings">
-    <Position X="9.75" Y="2.75" Width="1.5" />
+    <Position X="7.75" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAABAAAJEAAAEAACACAAAAAAAAAAAQIAAAAAAA=</HashCode>
       <FileName>Models\Settings.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FitMyFood.Models.WeightTrack">
-    <Position X="14.25" Y="2.75" Width="1.5" />
+    <Position X="6" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Models\WeightTrack.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="FitMyFood.Models.MenuItemType" Collapsed="true">
-    <Position X="19" Y="2.75" Width="1.5" />
+  <Class Name="FitMyFood.Models.Meal">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Meal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="FitMyFood.Models.MenuItemType">
+    <Position X="7.75" Y="4.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>Models\HomeMenuItem.cs</FileName>

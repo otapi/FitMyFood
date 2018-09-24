@@ -62,11 +62,11 @@ namespace FitMyFood.ViewModels
         
         Meal Meal { get; set; }
         DailyProfile DailyProfile { get; set; }
-        DailyProfileMealVariation MealVariation { get; set; }
+        Variation MealVariation { get; set; }
 
         List<DailyProfile> DailyProfileSelectorItems;
         List<Meal> MealSelectorItems;
-        List<DailyProfileMealVariation> VariationSelectorItems;
+        List<Variation> VariationSelectorItems;
 
         int _DailyProfileSelectorIndex;
         public int DailyProfileSelectorIndex
@@ -155,7 +155,7 @@ namespace FitMyFood.ViewModels
 
             DailyProfileSelectorItems = new List<DailyProfile>();
             MealSelectorItems = new List<Meal>();
-            VariationSelectorItems = new List<DailyProfileMealVariation>();
+            VariationSelectorItems = new List<Variation>();
             
             targetFood = new FoodItem();
             totalFood = new FoodItem();
@@ -241,8 +241,8 @@ namespace FitMyFood.ViewModels
             VariationSelectorItems = await App.DataStore.GetVariationsAsync(DailyProfile, Meal);
             if (VariationSelectorItems.Count == 0)
             {
-                VariationSelectorItems.Add(new DailyProfileMealVariation() {Name=DefaultValues.VariationSelectorItem, DailyProfileId = DailyProfile.Id, MealId = Meal.Id});
-                await App.DataStore.dailyProfileMealVariation.SaveItemsAsync(VariationSelectorItems);
+                VariationSelectorItems.Add(new Variation() {Name=DefaultValues.VariationSelectorItem, DailyProfileId = DailyProfile.Id, MealId = Meal.Id});
+                await App.DataStore.Variation.SaveItemsAsync(VariationSelectorItems);
             }
 
             VariationSelectorSource.Clear();

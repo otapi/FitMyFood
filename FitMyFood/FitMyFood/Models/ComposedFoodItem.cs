@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System.Collections.Generic;
 
 namespace FitMyFood.Models
@@ -8,10 +9,13 @@ namespace FitMyFood.Models
     /// </summary>
     public class ComposedFoodItem : BaseModel
     {
-        // ForeignKey
+        [ForeignKey(typeof(FoodItem))]
         public int OwnerFoodItemId { get; set; }
-        // ForeignKey
-        public int FoodItemId { get; set; }
+
+        [ForeignKey(typeof(FoodItem))]
+        public int SubFoodItemId { get; set; }
+        [OneToOne]
+        public FoodItem SubFoodItem { get; set; }
 
         /// <summary>
         /// How many unit has?
