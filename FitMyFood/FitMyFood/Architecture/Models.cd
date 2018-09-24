@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FitMyFood.Models.ComposedFoodItem">
+    <Position X="5.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAgAAAEAA=</HashCode>
+      <FileName>Models\ComposedFoodItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FitMyFood.Models.DailyProfile">
+    <Position X="12" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DailyProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FitMyFood.Models.DailyProfileMealVariation">
+    <Position X="16.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DailyProfileMealVariation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FitMyFood.Models.DailyProfileMealVariationFoodItem">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAQAAAAAAAAAQAQAAAAgAAAAAA=</HashCode>
+      <FileName>Models\DailyProfileMealVariationFoodItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FitMyFood.Models.FoodItem">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgEAABAAAAAAEAAAAACABAIAKAAAAgAAAAAA=</HashCode>
+      <FileName>Models\FoodItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FitMyFood.Models.HomeMenuItem" Collapsed="true">
+    <Position X="19" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\HomeMenuItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FitMyFood.Models.Meal">
+    <Position X="4" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Meal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FitMyFood.Models.Settings">
+    <Position X="9.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAJEAAAEAACACAAAAAAAAAAAQIAAAAAAA=</HashCode>
+      <FileName>Models\Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FitMyFood.Models.WeightTrack">
+    <Position X="14.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Models\WeightTrack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="FitMyFood.Models.MenuItemType" Collapsed="true">
+    <Position X="19" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\HomeMenuItem.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

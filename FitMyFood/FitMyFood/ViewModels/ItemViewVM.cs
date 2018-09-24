@@ -7,7 +7,7 @@ using FitMyFood.Views;
 
 namespace FitMyFood.ViewModels
 {
-    public class ItemViewVM : BaseVM
+    public class ItemViewVM : BaseVM, Architecture.IItemView
     {
         public Command EditFoodItemDetailCommand { get; set; }
         

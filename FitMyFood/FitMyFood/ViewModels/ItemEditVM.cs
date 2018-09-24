@@ -7,7 +7,7 @@ using FitMyFood.Views;
 
 namespace FitMyFood.ViewModels
 {
-    public class ItemEditVM : BaseVM
+    public class ItemEditVM : BaseVM, Architecture.IItemEdit
     {
         public Command SaveCommand { get; set; }
         public Command CancelCommand { get; set; }
@@ -48,7 +48,7 @@ namespace FitMyFood.ViewModels
             IsBusy = true;
             if (newitem)
             {
-                await App.MainListFoodItemVM.AddNewItem(Item);
+                await App.MainListFoodItemVM.AddNewItemAsync(Item);
             } else
             {
                 await App.DataStore.foodItems.SaveItemAsync(Item);

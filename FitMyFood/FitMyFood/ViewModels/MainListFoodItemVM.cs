@@ -12,7 +12,7 @@ using FitMyFood.Data;
 
 namespace FitMyFood.ViewModels
 {
-    public class MainListFoodItemVM : BaseVM
+    public class MainListFoodItemVM : BaseVM, Architecture.IMainListFoodItem
     {
         public class Summary
         {
@@ -162,7 +162,7 @@ namespace FitMyFood.ViewModels
 
         }
 
-        async public Task AddNewItem(FoodItem item)
+        async public Task AddNewItemAsync(FoodItem item)
         {
             var newItem = await App.DataStore.foodItems.SaveItemAsync(item);
             await App.DataStore.SaveFoodItemForVariation(DailyProfile, Meal, MealVariation, newItem);
