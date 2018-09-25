@@ -4,6 +4,7 @@ using FitMyFood.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using FitMyFood.Views;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace FitMyFood.ViewModels
 {
@@ -19,16 +20,31 @@ namespace FitMyFood.ViewModels
                 
             }
         }
+
+        VariationFoodItem VariationFoodItem;
         public ItemViewVM(INavigation navigation, FoodItem foodItem) : base(navigation)
         {
             Item = foodItem;
             EditFoodItemDetailCommand = new Command(async () => await ExecuteEditFoodItemDetailCommand());
         }
 
-        public void ChangeItem(FoodItem item)
+        async Task getVariationFoodItem()
         {
-            Item = item;
+            var variationFoodItems = await App.DB.GetAllWithChildrenAsync<VariationFoodItem>(v => v.FoodItem == Item);
+
+            if (variationFoodItems.Count == 0)
+            {
+                App.PrintWarning($"Zero references found for food ({Item.Id}).");
+                return;
+            }
+
+            if (variationFoodItems.Count > 1)
+            {
+                App.PrintWarning($"More than one references found for food ({Item.Id}).");
+            }
+            VariationFoodItem = variationFoodItems[0];
         }
+
         async Task ExecuteEditFoodItemDetailCommand()
         {
             IsBusy = true;
@@ -36,9 +52,15 @@ namespace FitMyFood.ViewModels
             IsBusy = false;
         }
 
+        // TODO: convert this to an async Command
         public void changeQuantity()
         {
-            App.MainListFoodItemVM.SaveFoodItemForVariationCommand.Execute(Item);
+            if (VariationFoodItem == null)
+            {
+                getVariationFoodItem().Wait();
+            }
+            VariationFoodItem.Quantity = Item.Quantity;
+            App.DB.InsertOrReplaceAsync(VariationFoodItem).Wait();
         }
     }
 }

@@ -9,10 +9,12 @@ using FitMyFood.Models;
 using FitMyFood.Views;
 using System.Collections.Generic;
 using FitMyFood.Data;
+using SQLite;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace FitMyFood.ViewModels
 {
-    public class MainListFoodItemVM : BaseVM, Architecture.IMainListFoodItem
+    public class MainListFoodItemVM : BaseVM
     {
         public class Summary
         {
@@ -62,7 +64,7 @@ namespace FitMyFood.ViewModels
         
         Meal Meal { get; set; }
         DailyProfile DailyProfile { get; set; }
-        Variation MealVariation { get; set; }
+        public Variation MealVariation { get; set; }
 
         List<DailyProfile> DailyProfileSelectorItems;
         List<Meal> MealSelectorItems;
@@ -127,7 +129,7 @@ namespace FitMyFood.ViewModels
         public Command LoadSelectorsCommand { get; set; }
         public Command UpdateVariantSelectorCommand { get; set; }
         public Command LoadItemsCommand { get; set; }
-        public Command SaveFoodItemForVariationCommand { get; set; }
+        public Command ItemStepperChangedCommand { get; set; }
         public Command ViewFoodItemDetailCommand { get; set; }
         public Command RemoveItemFromMainList { get; set; }
         public Command AddItemPageCommand { get; set; }
@@ -136,7 +138,7 @@ namespace FitMyFood.ViewModels
         {
             LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            SaveFoodItemForVariationCommand = new Command<FoodItem>(async (foodItem) => await ExecuteSaveFoodItemForVariationCommand(foodItem));
+            ItemStepperChangedCommand = new Command<FoodItem>(async (foodItem) => await ExecuteItemStepperChangedCommand(foodItem));
             UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
             ViewFoodItemDetailCommand = new Command<FoodItem>(async (foodItem) => await ExecuteViewFoodItemViewCommand(foodItem));
             RemoveItemFromMainList = new Command<FoodItem>(async (foodItem) => await ExecuteRemoveItemFromMainListCommand(foodItem));
@@ -162,17 +164,11 @@ namespace FitMyFood.ViewModels
 
         }
 
-        async public Task AddNewItemAsync(FoodItem item)
-        {
-            var newItem = await App.DataStore.foodItems.SaveItemAsync(item);
-            await App.DataStore.SaveFoodItemForVariation(DailyProfile, Meal, MealVariation, newItem);
-            LoadItemsCommand.Execute(null);
-        }
         void calcTargetFood()
         {
             // TODO: implement
         }
-        public void calcSummary()
+        void calcSummary()
         {
             totalFood = new FoodItem();
             totalFood.Fat = 0;
@@ -201,11 +197,11 @@ namespace FitMyFood.ViewModels
 
         async Task PopulateMealSelector()
         {
-            MealSelectorItems = await App.DataStore.meals.GetItemsAsync();
+            MealSelectorItems = await App.DB.Table<Meal>().ToListAsync();
             if (MealSelectorItems.Count == 0)
             {
                 MealSelectorItems.AddRange(DefaultValues.MealSelectorItems);
-                await App.DataStore.meals.SaveItemsAsync(MealSelectorItems);
+                await App.DB.InsertAllAsync(MealSelectorItems);
             }
 
             MealSelectorSource.Clear();
@@ -217,11 +213,11 @@ namespace FitMyFood.ViewModels
 
         async Task PopulateDailyProfileSelector()
         {
-            DailyProfileSelectorItems = await App.DataStore.dailyProfiles.GetItemsAsync();
+            DailyProfileSelectorItems = await App.DB.Table<DailyProfile>().ToListAsync();
             if (DailyProfileSelectorItems.Count == 0)
             {
                 DailyProfileSelectorItems.AddRange(DefaultValues.DailyProfileSelectorItems);
-                await App.DataStore.dailyProfiles.SaveItemsAsync(DailyProfileSelectorItems);
+                await App.DB.InsertAllAsync(DailyProfileSelectorItems);
             }
 
             DailyProfileSelectorSource.Clear();
@@ -237,12 +233,18 @@ namespace FitMyFood.ViewModels
             {
                 return;
             }
-            
-            VariationSelectorItems = await App.DataStore.GetVariationsAsync(DailyProfile, Meal);
+
+            VariationSelectorItems = await App.DB.GetAllWithChildrenAsync<Variation>(v => v.Meal == Meal && v.DailyProfile == DailyProfile);
             if (VariationSelectorItems.Count == 0)
             {
-                VariationSelectorItems.Add(new Variation() {Name=DefaultValues.VariationSelectorItem, DailyProfileId = DailyProfile.Id, MealId = Meal.Id});
-                await App.DataStore.Variation.SaveItemsAsync(VariationSelectorItems);
+                var variation = new Variation()
+                {
+                    Name = DefaultValues.VariationSelectorItem,
+                    DailyProfile = DailyProfile,
+                    Meal = Meal
+                };
+                VariationSelectorItems.Add(variation);
+                await App.DB.InsertAsync(variation);
             }
 
             VariationSelectorSource.Clear();
@@ -251,50 +253,68 @@ namespace FitMyFood.ViewModels
                 VariationSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
             }
             MealVariation = VariationSelectorItems[VariationSelectorIndex];
-            App.MainListFoodItemVM.LoadItemsCommand.Execute(null);
+            LoadItemsCommand.Execute(null);
         }
         async Task ExecuteLoadItemsCommand()
         {
-            if (DailyProfile == null || Meal == null || MealVariation == null)
+            if (MealVariation == null)
             {
                 return;
             }
             IsBusy = true;
             Items.Clear();
-            var items = await App.DataStore.GetFoodItemsForMainList(DailyProfile, Meal, MealVariation);
-            foreach (var item in items)
+
+            var variationFoodItems = await App.DB.GetAllWithChildrenAsync<VariationFoodItem>(v => v.Variation == MealVariation);
+            foreach (var variationFoodItem in variationFoodItems)
             {
-                Items.Add(item);
+                var foodItem = variationFoodItem.FoodItem;
+                foodItem.Quantity = variationFoodItem.Quantity;
+                Items.Add(foodItem);
             }
             calcSummary();
             IsBusy = false;
         }
-        async Task ExecuteSaveFoodItemForVariationCommand(FoodItem foodItem)
+        async Task ExecuteItemStepperChangedCommand(FoodItem foodItem)
         {
-            IsBusy = true;
-            await App.DataStore.SaveFoodItemForVariation(DailyProfile, Meal, MealVariation, foodItem);
-            IsBusy = false;
+            if (foodItem == null)
+            {
+                return;
+            }
+            await App.DB.InsertOrReplaceAsync(foodItem);
+            calcSummary();
         }
 
         async Task ExecuteViewFoodItemViewCommand(FoodItem foodItem)
         {
-            IsBusy = true;
+            // TODO: PushModalAsync?
             await Navigation.PushAsync(new ItemViewPage(foodItem));
-            App.MainListFoodItemVM.LoadItemsCommand.Execute(null);
-            IsBusy = false;
+            await ExecuteLoadItemsCommand();
         }
+
         async Task ExecuteRemoveItemFromMainListCommand(FoodItem foodItem)
         {
             IsBusy = true;
-            await App.DataStore.RemoveFoodItemsFromMainList(DailyProfile, Meal, MealVariation, foodItem);
-            Items.Remove(foodItem);
+            var variationFoodItem = await App.DB.GetAllWithChildrenAsync<VariationFoodItem>(v => v.FoodItem == foodItem);
+
+            if (variationFoodItem.Count == 0)
+            {
+                App.PrintWarning($"You want to remove it, but the reference for food ({foodItem.Id}) is already missing.");
+                IsBusy = false;
+                return;
+            }
+
+            if (variationFoodItem.Count > 1)
+            {
+                App.PrintWarning($"More than one references found for food ({foodItem.Id}).");
+            }
+
+            await App.DB.DeleteAllAsync(variationFoodItem);
             IsBusy = false;
         }
         async Task ExecuteAddItemPageCommand()
         {
-            IsBusy = true;
             await Navigation.PushModalAsync(new NavigationPage(new ItemEditPage(null)));
-            IsBusy = false;
+            await ExecuteLoadItemsCommand();
         }
     }
 }

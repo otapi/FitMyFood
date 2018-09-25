@@ -8,10 +8,9 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using FitMyFood.Models;
-using FitMyFood.Views;
 using FitMyFood.ViewModels;
-using System.Collections.ObjectModel;
-using FitMyFood.CustomControls;
+using SQLite;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace FitMyFood.Views
 {
@@ -21,10 +20,12 @@ namespace FitMyFood.Views
         public MainListFoodItemPage()
         {
             InitializeComponent();
+            // TODO: make it a command?
+            Task<SQLiteAsyncConnection> task = Task.Run(() => Data.DataStore.GetDataStore());
+            App.DB = task.Result;
             App.MainListFoodItemVM = new MainListFoodItemVM(Navigation);
-
             BindingContext = App.MainListFoodItemVM;
-            App.MainListFoodItemVM.LoadSelectorsCommand.Execute(null);
+            
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -44,16 +45,13 @@ namespace FitMyFood.Views
         void OnStepperChanged(object sender, EventArgs e)
         {
             FoodItem foodItem = (sender as Stepper).BindingContext as FoodItem;
-            if (foodItem != null)
-            {
-                App.MainListFoodItemVM.SaveFoodItemForVariationCommand.Execute(foodItem);
-            }
-            App.MainListFoodItemVM.calcSummary();
+            App.MainListFoodItemVM.ItemStepperChangedCommand.Execute(foodItem);
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            App.MainListFoodItemVM.LoadSelectorsCommand.Execute(null);
         }
 
         void OnButtonClick(object sender, EventArgs e)

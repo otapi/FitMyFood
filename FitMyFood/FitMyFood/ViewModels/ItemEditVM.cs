@@ -4,6 +4,9 @@ using FitMyFood.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using FitMyFood.Views;
+using SQLite;
+using SQLiteNetExtensionsAsync.Extensions;
+
 
 namespace FitMyFood.ViewModels
 {
@@ -48,12 +51,26 @@ namespace FitMyFood.ViewModels
             IsBusy = true;
             if (newitem)
             {
-                await App.MainListFoodItemVM.AddNewItemAsync(Item);
-            } else
-            {
-                await App.DataStore.foodItems.SaveItemAsync(Item);
+                // Came from the MainList - Insert new FoodItem to DB
+                // and go back to the MainList - so that needs to be updated as well
+                var variationFoodItem = new VariationFoodItem()
+                {
+                    Quantity = Item.Quantity,
+                };
+                await App.DB.InsertAsync(variationFoodItem);
+
+                App.MainListFoodItemVM.MealVariation.VariationFoodItems.Add(variationFoodItem);
+                await App.DB.UpdateWithChildrenAsync(variationFoodItem);
+
+                Item.VariationFoodItems.Add(variationFoodItem);
+                await App.DB.InsertOrReplaceWithChildrenAsync(Item);
                 App.MainListFoodItemVM.LoadItemsCommand.Execute(null);
-                App.ItemViewVM.ChangeItem(Item);
+            }
+            else
+            {
+                // Came from the ItemView, FoodItem already existed
+                await App.DB.InsertOrReplaceWithChildrenAsync(Item);
+                App.ItemViewVM.Item = Item;
             }
             IsBusy = false;
             await Navigation.PopModalAsync();

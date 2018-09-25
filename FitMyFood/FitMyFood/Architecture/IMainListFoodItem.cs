@@ -16,7 +16,5 @@ namespace FitMyFood.Architecture
         Command ViewFoodItemDetailCommand { get; set; }
         Command RemoveItemFromMainList { get; set; }
         Command AddItemPageCommand { get; set; }
-
-        Task AddNewItemAsync(FoodItem item);
     }
 }

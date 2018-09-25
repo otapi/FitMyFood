@@ -51,8 +51,6 @@
                     ItemsSource="{Binding Items}"
                     VerticalOptions="FillAndExpand"
                     HasUnevenRows="true"
-                    RefreshCommand="{Binding LoadItemsCommand}"
-                    IsPullToRefreshEnabled="False"
                     IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                     CachingStrategy="RecycleElement"
                     SelectionMode="None">

@@ -2,6 +2,8 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using FitMyFood.Views;
+using SQLite;
+using SQLiteNetExtensionsAsync.Extensions;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace FitMyFood
@@ -11,7 +13,7 @@ namespace FitMyFood
         public static ViewModels.MainListFoodItemVM MainListFoodItemVM { get; set; }
         public static ViewModels.ItemEditVM ItemEditVM { get; set; }
         public static ViewModels.ItemViewVM ItemViewVM { get; set; }
-        public static Data.DataStore DataStore { get; set; }
+        public static SQLiteAsyncConnection DB { get; set; }
         
         public static void PrintWarning(string message)
         {

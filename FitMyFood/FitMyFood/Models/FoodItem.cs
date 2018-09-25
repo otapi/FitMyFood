@@ -13,9 +13,9 @@ namespace FitMyFood.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string Name { get; set; }
-        [ManyToMany(typeof(Variation))]
-        public List<Variation> Variations { get; set; }
 
+        [OneToMany]
+        public List<VariationFoodItem> VariationFoodItems { get; set; }
         /// <summary>
         /// Default unit
         /// </summary>

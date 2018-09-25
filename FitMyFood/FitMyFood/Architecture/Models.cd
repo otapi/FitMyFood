@@ -17,7 +17,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="FitMyFood.Models.DailyProfile">
-    <Position X="6" Y="2.5" Width="1.5" />
+    <Position X="5.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\DailyProfile.cs</FileName>
@@ -25,7 +25,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="FitMyFood.Models.Variation">
-    <Position X="3.25" Y="1" Width="1.75" />
+    <Position X="3" Y="3.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAQAAQAAgICAAAQAAAAAAAAAAA=</HashCode>
       <FileName>Models\Variation.cs</FileName>
@@ -40,13 +40,13 @@
     <Lollipop Position="0.249" />
   </Class>
   <Class Name="FitMyFood.Models.VariationFoodItem">
-    <Position X="3.25" Y="3.25" Width="1.75" />
+    <Position X="3" Y="1" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAABAAAAAAAAAAQAAAAAAQAAAAAAgAAAEAA=</HashCode>
+      <HashCode>AAACACAAAAABAAAAAAAAAAQAAAAAAQAAAAAAgAAAEAA=</HashCode>
       <FileName>Models\VariationFoodItem.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="FoodItem" />
+      <Property Name="Variation" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
@@ -57,13 +57,20 @@
         <Position X="0.077" Y="0.226" Height="0.182" Width="1.518" />
       </MemberNameLabel>
     </AssociationLine>
+    <AssociationLine Name="VariationFoodItems" Type="FitMyFood.Models.VariationFoodItem" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.25" Y="0.625" />
+        <Point X="4.125" Y="0.625" />
+        <Point X="4.125" Y="1" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACAAAAgEAABAAAAAAEAAQAACgBAIAKAAAAgABAAAA=</HashCode>
+      <HashCode>AAACAAAAgEAABAAAAAAEAAQAACoBAIAKAAAAgAAAAAA=</HashCode>
       <FileName>Models\FoodItem.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="Variations" />
       <Property Name="ComposedFoodItems" />
+      <Property Name="VariationFoodItems" />
     </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" />
   </Class>
@@ -83,7 +90,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="FitMyFood.Models.WeightTrack">
-    <Position X="6" Y="4.5" Width="1.5" />
+    <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAQAACAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Models\WeightTrack.cs</FileName>
@@ -91,7 +98,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="FitMyFood.Models.Meal">
-    <Position X="6" Y="0.5" Width="1.5" />
+    <Position X="5.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Meal.cs</FileName>

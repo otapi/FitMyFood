@@ -7,8 +7,6 @@ namespace FitMyFood.Architecture
 {
     interface IItemView
     {
-
-        void ChangeItem(FoodItem item);
         void changeQuantity();
     }
 }

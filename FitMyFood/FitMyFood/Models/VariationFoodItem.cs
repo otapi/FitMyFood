@@ -16,12 +16,14 @@ namespace FitMyFood.Models
         public string Name { get; set; }
         [ForeignKey(typeof(Variation))]
         public int VariationId { get; set; }
+        [ManyToOne]
+        public Variation Variation { get; set; }
 
         [ForeignKey(typeof(FoodItem))]
         public int FoodItemId { get; set; }
-        [OneToOne]
+        [ManyToOne]
         public FoodItem FoodItem { get; set; }
-        
+
         /// <summary>
         /// How many unit has?
         /// </summary>
