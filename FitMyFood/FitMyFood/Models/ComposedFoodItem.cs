@@ -2,13 +2,18 @@
 using SQLiteNetExtensions.Attributes;
 using System.Collections.Generic;
 
+
 namespace FitMyFood.Models
 {
     /// <summary>
     /// Datasheet for a food with it's ingredients
     /// </summary>
-    public class ComposedFoodItem : BaseModel
+    public class ComposedFoodItem : IBase
     {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public string Name { get; set; }
+
         [ForeignKey(typeof(FoodItem))]
         public int OwnerFoodItemId { get; set; }
 

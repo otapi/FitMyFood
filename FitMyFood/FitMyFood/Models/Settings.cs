@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Text;
+using SQLite;
 
 namespace FitMyFood.Models
 {
     /// <summary>
     /// Personal settings of the app and of the user
     /// </summary>
-    public class Settings : BaseModel
+    public class Settings : IBase
     {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public string Name { get; set; }
         public double ActualWeight { get; set; }
         public int Height { get; set; }
         /// <summary>

@@ -2,14 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SQLite;
 
 namespace FitMyFood.Models
 {
     /// <summary>
     /// FoodItem for a given DailyProfile, Meal and Variaton
     /// </summary>
-    public class VariationFoodItem : BaseModel
+    public class VariationFoodItem : IBase
     {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public string Name { get; set; }
         [ForeignKey(typeof(Variation))]
         public int VariationId { get; set; }
 

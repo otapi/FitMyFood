@@ -10,11 +10,9 @@ using SQLite;
  */
 namespace FitMyFood.Models
 {
-    public class BaseModel
+    public interface IBase
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        public string Name { get; set; }
-
+        int Id { get; set; }
+        string Name { get; set; }
     }
 }

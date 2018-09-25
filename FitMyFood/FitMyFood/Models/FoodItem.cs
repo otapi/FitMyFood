@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
 using FitMyFood.ViewModels;
 using SQLiteNetExtensions.Attributes;
+using SQLite;
 
 namespace FitMyFood.Models
 {
     /// <summary>
     /// Datasheet for a food with it's ingredients
     /// </summary>
-    public class FoodItem : BaseModel
+    public class FoodItem : IBase
     {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public string Name { get; set; }
         [ManyToMany(typeof(Variation))]
         public List<Variation> Variations { get; set; }
 

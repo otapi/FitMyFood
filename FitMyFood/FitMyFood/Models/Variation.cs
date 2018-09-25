@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using SQLiteNetExtensionsAsync.Extensions;
 using SQLiteNetExtensions.Attributes;
+using SQLite;
 
 namespace FitMyFood.Models
 {
     /// <summary>
     /// Variation for a given DailyProfile and Meal
     /// </summary>
-    public class Variation : BaseModel
+    public class Variation : IBase
     {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public string Name { get; set; }
         [ForeignKey(typeof(DailyProfile))]
         public int DailyProfileId { get; set; }
         [OneToOne]

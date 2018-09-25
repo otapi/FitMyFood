@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FitMyFood.Data
 {
-    public class DAOGeneral<T> where T : Models.BaseModel, new()
+    public class DAOGeneral<T> where T : Models.IBase, new()
     {
         protected readonly SQLiteAsyncConnection database;
         protected readonly DataStore datastore;

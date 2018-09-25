@@ -7,7 +7,7 @@ using FitMyFood.Models;
 
 namespace FitMyFood.Data
 {
-    public class DAOComposedFood<T> : DAOGeneral<T> where T : Models.BaseModel, new()
+    public class DAOComposedFood<T> : DAOGeneral<T> where T : Models.IBase, new()
     {
         public DAOComposedFood(DataStore datastore) : base(datastore)
         {

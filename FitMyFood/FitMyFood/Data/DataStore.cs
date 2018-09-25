@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using FitMyFood.Models;
 using System.Linq;
 using SQLiteNetExtensions.Extensions;
+using SQLite;
 
 namespace FitMyFood.Data
 {
     public class DataStore
     {
-        public readonly SQLiteNetExtensionsAsync.Extensions.SqliteConnectionExtensions database;
+        public readonly SQLiteAsyncConnection database;
 
         public DAOComposedFood<ComposedFoodItem> composedFoodItems;
         public DAOGeneral<FoodItem> foodItems;
