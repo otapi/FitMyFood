@@ -1,21 +1,30 @@
 ﻿using System.Collections.Generic;
 using FitMyFood.ViewModels;
-using SQLiteNetExtensions.Attributes;
-using SQLite;
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace FitMyFood.Models
 {
     /// <summary>
     /// Datasheet for a food with it's ingredients
     /// </summary>
-    public class FoodItem : IBase
+    public class FoodItem
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int FoodItemId { get; set; }
         public string Name { get; set; }
 
-        [OneToMany]
-        public List<VariationFoodItem> VariationFoodItems { get; set; }
+        public ICollection<VariationFoodItem> VariationFoodItems { get; set; }
+
+        /// <summary>
+        /// True if this is a composed food
+        /// </summary>
+        public bool IsComposedFood { get; set; }
+        /// <summary>
+        /// Sub-FoodItems if this is a composed item
+        /// </summary>
+        public ICollection<ComposedFoodItem> ComposedFoodItems { get; set; }
+
         /// <summary>
         /// Default unit
         /// </summary>
@@ -38,15 +47,7 @@ namespace FitMyFood.Models
         /// </summary>
         public double Protein { get; set; }
 
-        /// <summary>
-        /// True if this is a composed food
-        /// </summary>
-        public bool IsComposedFood { get; set; }
-        /// <summary>
-        /// Sub-FoodItems if this is a composed item
-        /// </summary>
-        [OneToMany]
-        public List<ComposedFoodItem> ComposedFoodItems { get; set; }
+        
         /// <summary>
         /// How many unit has? Or what is the default quantity?
         /// </summary>

@@ -1,33 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="FitMyFood.Models.ComposedFoodItem">
-    <Position X="0.5" Y="4.25" Width="1.75" />
-    <AssociationLine Name="SubFoodItem" Type="FitMyFood.Models.FoodItem">
-      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="-1.723" Y="0.17" Height="0.182" Width="1.08" />
-      </MemberNameLabel>
-    </AssociationLine>
+    <Position X="0.5" Y="4.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>EAACAAAAAAAAAAAAAAAAAAQBAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAQAAAAAAgAAAEAA=</HashCode>
       <FileName>Models\ComposedFoodItem.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="SubFoodItem" />
-    </ShowAsAssociation>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FitMyFood.Models.DailyProfile">
     <Position X="5.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAACAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\DailyProfile.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FitMyFood.Models.Variation">
     <Position X="3" Y="3.75" Width="1.75" />
+    <AssociationLine Name="DailyProfile" Type="FitMyFood.Models.DailyProfile">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.02" Y="0.129" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="VariationFoodItems" Type="FitMyFood.Models.VariationFoodItem" FixedToPoint="true">
+      <Path>
+        <Point X="3.438" Y="3.75" />
+        <Point X="3.438" Y="3.065" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.473" Y="0.282" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAQAAQAAgICAAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAABAAAAAAAQAAQAAAIAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>Models\Variation.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -37,42 +41,43 @@
     <ShowAsCollectionAssociation>
       <Property Name="VariationFoodItems" />
     </ShowAsCollectionAssociation>
-    <Lollipop Position="0.249" />
   </Class>
   <Class Name="FitMyFood.Models.VariationFoodItem">
     <Position X="3" Y="1" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAACACAAAAABAAAAAAAAAAQAAAAAAQAAAAAAgAAAEAA=</HashCode>
+      <HashCode>AAAAACAAAAABAAAAAAAAAAAAAAAAAQAAAAgAgAAAEAA=</HashCode>
       <FileName>Models\VariationFoodItem.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Variation" />
-    </ShowAsAssociation>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FitMyFood.Models.FoodItem">
-    <Position X="0.5" Y="0.5" Width="1.75" />
-    <AssociationLine Name="ComposedFoodItems" Type="FitMyFood.Models.ComposedFoodItem">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <AssociationLine Name="ComposedFoodItems" Type="FitMyFood.Models.ComposedFoodItem" FixedToPoint="true">
+      <Path>
+        <Point X="0.857" Y="3.719" />
+        <Point X="0.857" Y="4.25" />
+      </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="0.077" Y="0.226" Height="0.182" Width="1.518" />
+        <Position X="-1.659" Y="0.073" Height="0.182" Width="1.518" />
       </MemberNameLabel>
     </AssociationLine>
     <AssociationLine Name="VariationFoodItems" Type="FitMyFood.Models.VariationFoodItem" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.25" Y="0.625" />
-        <Point X="4.125" Y="0.625" />
-        <Point X="4.125" Y="1" />
+        <Point X="2.5" Y="0.75" />
+        <Point X="3.875" Y="0.75" />
+        <Point X="3.875" Y="1" />
       </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.239" Y="0.339" />
+      </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACAAAAgEAABAAAAAAEAAQAACoBAIAKAAAAgAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAgEAABAAAAAAEAAQAACoBAIAKAAAAgAAAEAA=</HashCode>
       <FileName>Models\FoodItem.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="ComposedFoodItems" />
       <Property Name="VariationFoodItems" />
     </ShowAsCollectionAssociation>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FitMyFood.Models.HomeMenuItem" Collapsed="true">
     <Position X="7.75" Y="4" Width="2" />
@@ -84,26 +89,23 @@
   <Class Name="FitMyFood.Models.Settings">
     <Position X="7.75" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAAAABAAAJEAAAEAACASAAAAAAAAAAAQIAAAAAAA=</HashCode>
+      <HashCode>AAACAAAABAAAJEAAAEAACACAAAAAAAAAAAQIAAAAAAA=</HashCode>
       <FileName>Models\Settings.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FitMyFood.Models.WeightTrack">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAACAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Models\WeightTrack.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FitMyFood.Models.Meal">
     <Position X="5.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIQAAgAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Meal.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Enum Name="FitMyFood.Models.MenuItemType">
     <Position X="7.75" Y="4.75" Width="2" />

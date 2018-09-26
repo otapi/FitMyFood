@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitMyFood.iOS", "FitMyFood\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitMyFood.UWP", "FitMyFood\FitMyFood.UWP\FitMyFood.UWP.csproj", "{E600954A-B212-4522-B31B-A38F470860F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitMyFood", "FitMyFood\FitMyFood\FitMyFood.csproj", "{7ECC36F3-8BBF-4564-9B8E-EC543FCAA498}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitMyFood", "FitMyFood\FitMyFood\FitMyFood.csproj", "{7ECC36F3-8BBF-4564-9B8E-EC543FCAA498}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

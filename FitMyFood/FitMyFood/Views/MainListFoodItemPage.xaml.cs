@@ -9,8 +9,7 @@ using Xamarin.Forms.Xaml;
 
 using FitMyFood.Models;
 using FitMyFood.ViewModels;
-using SQLite;
-using SQLiteNetExtensionsAsync.Extensions;
+
 
 namespace FitMyFood.Views
 {
@@ -20,11 +19,7 @@ namespace FitMyFood.Views
         public MainListFoodItemPage()
         {
             InitializeComponent();
-            // TODO: make it a command?
-            Task<SQLiteAsyncConnection> task = Task.Run(() => Data.DataStore.GetDataStore());
-            task.Wait();
-            App.DB = task.Result;
-            
+            App.DB = new Data.DatabaseHelper();
             App.MainListFoodItemVM = new MainListFoodItemVM(Navigation);
             BindingContext = App.MainListFoodItemVM;
             
@@ -60,8 +55,6 @@ namespace FitMyFood.Views
         {
             var it = App.MainListFoodItemVM;
             App.MainListFoodItemVM.LoadItemsCommand.Execute(null);
-        }
-
-       
+        }      
     }
 }

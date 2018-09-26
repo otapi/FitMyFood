@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SQLite;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitMyFood.Models
 {
     /// <summary>
     /// Settings of a daily profile. Basically what is the extra KCal to be consumed
     /// </summary>
-    public class DailyProfile : IBase
+    public class DailyProfile
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int DailyProfileId { get; set; }
         public string Name { get; set; }
         public int ExtraKcal { get; set; }
     }

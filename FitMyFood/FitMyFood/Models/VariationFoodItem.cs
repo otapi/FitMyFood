@@ -1,27 +1,24 @@
-﻿using SQLiteNetExtensions.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SQLite;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitMyFood.Models
 {
     /// <summary>
     /// FoodItem for a given DailyProfile, Meal and Variaton
     /// </summary>
-    public class VariationFoodItem : IBase
+    public class VariationFoodItem
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        public string Name { get; set; }
-        [ForeignKey(typeof(Variation))]
-        public int VariationId { get; set; }
-        [ManyToOne]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int VariationFoodItemId { get; set; }
+
+        public int? VariationId { get; set; }
         public Variation Variation { get; set; }
 
-        [ForeignKey(typeof(FoodItem))]
-        public int FoodItemId { get; set; }
-        [ManyToOne]
+        public int? FoodItemId { get; set; }
         public FoodItem FoodItem { get; set; }
 
         /// <summary>

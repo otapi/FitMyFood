@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SQLite;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitMyFood.Models
 {
     /// <summary>
     /// Entry of measured weight for the user per days
     /// </summary>
-    public class WeightTrack : IBase
+    public class WeightTrack
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        public string Name { get; set; }
+        [Key]
         public DateTime Date { get; set; }
         /// <summary>
         /// Kg

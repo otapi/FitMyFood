@@ -9,8 +9,7 @@ using FitMyFood.Models;
 using FitMyFood.Views;
 using System.Collections.Generic;
 using FitMyFood.Data;
-using SQLite;
-using SQLiteNetExtensionsAsync.Extensions;
+
 
 namespace FitMyFood.ViewModels
 {
@@ -197,13 +196,7 @@ namespace FitMyFood.ViewModels
 
         async Task PopulateMealSelector()
         {
-            MealSelectorItems = await App.DB.Table<Meal>().ToListAsync();
-            if (MealSelectorItems.Count == 0)
-            {
-                MealSelectorItems.AddRange(DefaultValues.MealSelectorItems);
-                await App.DB.InsertAllAsync(MealSelectorItems);
-            }
-
+            MealSelectorItems = await App.DB.getMealsAsync();
             MealSelectorSource.Clear();
             foreach (var item in MealSelectorItems)
             {
@@ -213,13 +206,7 @@ namespace FitMyFood.ViewModels
 
         async Task PopulateDailyProfileSelector()
         {
-            DailyProfileSelectorItems = await App.DB.Table<DailyProfile>().ToListAsync();
-            if (DailyProfileSelectorItems.Count == 0)
-            {
-                DailyProfileSelectorItems.AddRange(DefaultValues.DailyProfileSelectorItems);
-                await App.DB.InsertAllAsync(DailyProfileSelectorItems);
-            }
-
+            DailyProfileSelectorItems = await App.DB.getDailyProfilesAsync();
             DailyProfileSelectorSource.Clear();
             foreach (var item in DailyProfileSelectorItems)
             {
@@ -234,19 +221,7 @@ namespace FitMyFood.ViewModels
                 return;
             }
 
-            VariationSelectorItems = await App.DB.GetAllWithChildrenAsync<Variation>(v => v.Meal == Meal && v.DailyProfile == DailyProfile);
-            if (VariationSelectorItems.Count == 0)
-            {
-                var variation = new Variation()
-                {
-                    Name = DefaultValues.VariationSelectorItem,
-                    DailyProfile = DailyProfile,
-                    Meal = Meal
-                };
-                VariationSelectorItems.Add(variation);
-                await App.DB.InsertAsync(variation);
-            }
-
+            VariationSelectorItems = await App.DB.getVariationsAsync(DailyProfile, Meal);
             VariationSelectorSource.Clear();
             foreach (var item in VariationSelectorItems)
             {
@@ -264,7 +239,7 @@ namespace FitMyFood.ViewModels
             IsBusy = true;
             Items.Clear();
 
-            var variationFoodItems = await App.DB.GetAllWithChildrenAsync<VariationFoodItem>(v => v.Variation == MealVariation);
+            var variationFoodItems = await App.DB.getVariationFoodItemsNoTrackingAsync(MealVariation);
             foreach (var variationFoodItem in variationFoodItems)
             {
                 var foodItem = variationFoodItem.FoodItem;
@@ -276,11 +251,14 @@ namespace FitMyFood.ViewModels
         }
         async Task ExecuteItemStepperChangedCommand(FoodItem foodItem)
         {
-            if (foodItem == null)
+            if (foodItem == null || MealVariation == null)
             {
                 return;
             }
-            await App.DB.InsertOrReplaceAsync(foodItem);
+            // TODO: cache it to avoid repetative DB get
+            var variationFoodItem = await App.DB.getVariationFoodItem(foodItem, MealVariation);
+            variationFoodItem.Quantity = foodItem.Quantity;
+            await App.DB.updateQuantityOnVariationFoodItem(variationFoodItem);
             calcSummary();
         }
 
