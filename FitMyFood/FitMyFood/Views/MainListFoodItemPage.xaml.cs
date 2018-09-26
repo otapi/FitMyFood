@@ -22,7 +22,9 @@ namespace FitMyFood.Views
             InitializeComponent();
             // TODO: make it a command?
             Task<SQLiteAsyncConnection> task = Task.Run(() => Data.DataStore.GetDataStore());
+            task.Wait();
             App.DB = task.Result;
+            
             App.MainListFoodItemVM = new MainListFoodItemVM(Navigation);
             BindingContext = App.MainListFoodItemVM;
             
