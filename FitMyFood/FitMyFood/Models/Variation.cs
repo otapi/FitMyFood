@@ -17,7 +17,7 @@ namespace FitMyFood.Models
         public DailyProfile DailyProfile { get; set; }
         public Meal Meal { get; set; }
 
-        public ICollection<VariationFoodItem> VariationFoodItems { get; set; }
+        public ICollection<VariationFoodItem> VariationFoodItems { get; } = new List<VariationFoodItem>();
 
 
     }

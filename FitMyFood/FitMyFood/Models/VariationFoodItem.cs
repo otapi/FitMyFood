@@ -11,8 +11,6 @@ namespace FitMyFood.Models
     /// </summary>
     public class VariationFoodItem
     {
-        public int VariationFoodItemId { get; set; }
-
         public int VariationId { get; set; }
         public Variation Variation { get; set; }
 

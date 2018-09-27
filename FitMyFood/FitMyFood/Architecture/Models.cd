@@ -24,7 +24,7 @@
     <AssociationLine Name="VariationFoodItems" Type="FitMyFood.Models.VariationFoodItem" FixedToPoint="true">
       <Path>
         <Point X="3.438" Y="3.75" />
-        <Point X="3.438" Y="3.065" />
+        <Point X="3.438" Y="2.873" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="-1.473" Y="0.282" />
@@ -45,12 +45,22 @@
   <Class Name="FitMyFood.Models.VariationFoodItem">
     <Position X="3" Y="1" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAABAAAAAAAAAAAAAAAAAQAAAAgAgAAAEAA=</HashCode>
+      <HashCode>AAAAACAAAAABAAAAAAAAAAAAAAAAAQAAAAAAgAAAEAA=</HashCode>
       <FileName>Models\VariationFoodItem.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FitMyFood.Models.FoodItem">
     <Position X="0.5" Y="0.5" Width="2" />
+    <AssociationLine Name="VariationFoodItems" Type="FitMyFood.Models.VariationFoodItem" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.5" Y="0.75" />
+        <Point X="3.438" Y="0.75" />
+        <Point X="3.438" Y="1" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.649" Y="0.339" Height="0.182" Width="1.452" />
+      </MemberNameLabel>
+    </AssociationLine>
     <AssociationLine Name="ComposedFoodItems" Type="FitMyFood.Models.ComposedFoodItem" FixedToPoint="true">
       <Path>
         <Point X="0.857" Y="3.719" />
@@ -60,23 +70,13 @@
         <Position X="-1.659" Y="0.073" Height="0.182" Width="1.518" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="VariationFoodItems" Type="FitMyFood.Models.VariationFoodItem" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="2.5" Y="0.75" />
-        <Point X="3.875" Y="0.75" />
-        <Point X="3.875" Y="1" />
-      </Path>
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-0.239" Y="0.339" />
-      </MemberNameLabel>
-    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAgEAABAAAAAAEAAQAACoBAIAKAAAAgAAAEAA=</HashCode>
       <FileName>Models\FoodItem.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="ComposedFoodItems" />
       <Property Name="VariationFoodItems" />
+      <Property Name="ComposedFoodItems" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="FitMyFood.Models.HomeMenuItem" Collapsed="true">
@@ -89,7 +89,7 @@
   <Class Name="FitMyFood.Models.Settings">
     <Position X="7.75" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAAAABAAAJEAAAEAACACAAAAAAAAAAAQIAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAABCAAJEAAAEAACACAAAAAAAAAAAQIAAAAAAA=</HashCode>
       <FileName>Models\Settings.cs</FileName>
     </TypeIdentifier>
   </Class>

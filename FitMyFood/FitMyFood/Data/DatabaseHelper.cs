@@ -19,6 +19,7 @@ namespace FitMyFood.Data
         protected DatabaseContext CrateContext()
         {
             DatabaseContext databaseContext = new DatabaseContext();
+            databaseContext.Database.EnsureDeleted();
             databaseContext.Database.EnsureCreated();
             databaseContext.Database.Migrate();
             return databaseContext;
@@ -77,11 +78,11 @@ namespace FitMyFood.Data
             return variations;
         }
 
-        public async Task<List<VariationFoodItem>> getVariationFoodItemsNoTrackingAsync(Variation variation)
+        public async Task<List<VariationFoodItem>> getVariationFoodItemsIncludeFoodItem(Variation variation)
         {
             List<VariationFoodItem> variationFoodItems;
             variationFoodItems = await context.VariationFoodItems
-                                        .AsNoTracking()
+                                        .Include(v => v.FoodItem)
                                         .Where(v => v.Variation == variation)
                                         .ToListAsync();
             return variationFoodItems;
@@ -116,8 +117,9 @@ namespace FitMyFood.Data
 
         public async Task addNewVariationFoodItemAsync(double Quantity, Variation variation, FoodItem foodItem)
         {
+            
             //var realFoodItem = await context.FoodItems
-            //                        .Where(f => f.FoodItemId == foodItemNotTracked.FoodItemId)
+            //                        .Where(f => f.FoodItemId == foodItemNotAttached.FoodItemId)
             //                        .FirstAsync();
 
             var variationFoodItem = new VariationFoodItem()
@@ -126,6 +128,7 @@ namespace FitMyFood.Data
                 Variation = variation,
                 FoodItem = foodItem
             };
+            await context.AddAsync(variationFoodItem);
             await context.SaveChangesAsync();
         }
         #endregion

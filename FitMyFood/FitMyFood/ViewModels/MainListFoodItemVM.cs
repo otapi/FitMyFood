@@ -240,7 +240,7 @@ namespace FitMyFood.ViewModels
             IsBusy = true;
             Items.Clear();
 
-            var variationFoodItems = await App.DB.getVariationFoodItemsNoTrackingAsync(MealVariation);
+            var variationFoodItems = await App.DB.getVariationFoodItemsIncludeFoodItem(MealVariation);
             foreach (var variationFoodItem in variationFoodItems)
             {
                 var foodItem = variationFoodItem.FoodItem;
@@ -269,7 +269,6 @@ namespace FitMyFood.ViewModels
             var variationFoodItem = await App.DB.getVariationFoodItemAsync(foodItem, MealVariation);
             // TODO: PushModalAsync?
             await Navigation.PushAsync(new ItemViewPage(foodItem, variationFoodItem));
-            await ExecuteLoadItemsCommand();
         }
 
         async Task ExecuteRemoveItemFromMainListCommand(FoodItem foodItem)
@@ -283,7 +282,6 @@ namespace FitMyFood.ViewModels
         async Task ExecuteAddItemPageCommand()
         {
             await Navigation.PushModalAsync(new NavigationPage(new ItemEditPage(null, MealVariation)));
-            await ExecuteLoadItemsCommand();
         }
     }
 }

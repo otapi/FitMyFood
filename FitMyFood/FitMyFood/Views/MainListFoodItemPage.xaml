@@ -73,7 +73,7 @@
                                                 Minimum="0"
                                                 Maximum="10"
                                                 Increment="0.1"
-                                                Value="{Binding Fat}"
+                                                Value="{Binding Quantity}"
                                                 ValueChanged="OnStepperChanged"
                                         />
                             <Label Text="{Binding Source={x:Reference stepper},

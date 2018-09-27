@@ -9,6 +9,7 @@ namespace FitMyFood.Data
     public class DatabaseContext : DbContext
     {
         // TODO: OnModelCreating?
+        // https://blog.oneunicorn.com/2017/09/25/many-to-many-relationships-in-ef-core-2-0-part-1-the-basics/
         public DbSet<ComposedFoodItem> ComposedFoodItems { get; set; }
         public DbSet<FoodItem> FoodItems { get; set; }
         public DbSet<DailyProfile> DailyProfiles { get; set; }
@@ -40,6 +41,12 @@ namespace FitMyFood.Data
             // Specify that we will use sqlite and the path of the database here
             optionsBuilder.UseSqlite($"Filename={databasePath}");
             App.PrintNote($"Path to database is: {databasePath}");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<VariationFoodItem>()
+                .HasKey(t => new { t.FoodItemId, t.VariationId });
         }
     }
 }

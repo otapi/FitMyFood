@@ -12,7 +12,7 @@ namespace FitMyFood.Models
         public int FoodItemId { get; set; }
         public string Name { get; set; }
 
-        public ICollection<VariationFoodItem> VariationFoodItems { get; set; }
+        public ICollection<VariationFoodItem> VariationFoodItems { get; } = new List<VariationFoodItem>();
 
         /// <summary>
         /// True if this is a composed food
@@ -21,7 +21,7 @@ namespace FitMyFood.Models
         /// <summary>
         /// Sub-FoodItems if this is a composed item
         /// </summary>
-        public ICollection<ComposedFoodItem> ComposedFoodItems { get; set; }
+        public ICollection<ComposedFoodItem> ComposedFoodItems { get; set; } = new List<ComposedFoodItem>();
 
         /// <summary>
         /// Default unit
