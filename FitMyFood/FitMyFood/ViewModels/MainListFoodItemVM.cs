@@ -35,7 +35,25 @@ namespace FitMyFood.ViewModels
 
         public FoodItem TargetFood { get; set; }
         public FoodItem TotalFood { get; set; }
-        public FoodItem SelectedItem { get; set; }
+        FoodItem _SelectedItem;
+        public FoodItem SelectedItem
+        {
+            get
+            {
+                return _SelectedItem;
+            }
+            set
+            {
+                SetProperty(ref _SelectedItem, value);
+                
+                if (_SelectedItem == null)
+                    return;
+
+                ViewFoodItemDetailCommand.Execute(null);
+                
+                SelectedItem = null;
+            }
+        }
 
         string _summaryEnergy = string.Empty;
         public string SummaryEnergy
@@ -127,21 +145,16 @@ namespace FitMyFood.ViewModels
         public Command LoadSelectorsCommand { get; set; }
         public Command UpdateVariantSelectorCommand { get; set; }
         public Command LoadItemsCommand { get; set; }
-        public Command ItemStepperChangedCommand { get; set; }
         public Command ViewFoodItemDetailCommand { get; set; }
-        public Command RemoveItemFromMainList { get; set; }
-        public Command AddItemPageCommand { get; set; }
+
 
         void DefineCommands()
         {
             LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            ItemStepperChangedCommand = new Command<FoodItem>(async (foodItem) => await ExecuteItemStepperChangedCommand(foodItem));
             UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
             ViewFoodItemDetailCommand = new Command(async () => await ExecuteViewFoodItemViewCommand());
-            RemoveItemFromMainList = new Command(async () => await ExecuteRemoveItemFromMainListCommand());
-            AddItemPageCommand = new Command(async () => await ExecuteAddItemPageCommand());
-
+            
         }
         public MainListFoodItemVM(INavigation navigation) : base(navigation)
         {
@@ -249,19 +262,7 @@ namespace FitMyFood.ViewModels
             CalcSummary();
             IsBusy = false;
         }
-        async Task ExecuteItemStepperChangedCommand(FoodItem foodItem)
-        {
-            if (foodItem == null || MealVariation == null)
-            {
-                return;
-            }
-            // TODO: cache it to avoid repetative DB get
-            var variationFoodItem = await App.DB.GetVariationFoodItemAsync(foodItem, MealVariation);
-            variationFoodItem.Quantity = foodItem.Quantity;
-            await App.DB.UpdateQuantityOnVariationFoodItemAsync(variationFoodItem);
-            CalcSummary();
-        }
-
+        
         async Task ExecuteViewFoodItemViewCommand()
         {
             if (SelectedItem == null)
@@ -270,26 +271,9 @@ namespace FitMyFood.ViewModels
             }
             // TODO: cache it to avoid repetative DB get
             var variationFoodItem = await App.DB.GetVariationFoodItemAsync(SelectedItem, MealVariation);
-            // TODO: PushModalAsync?
             await Navigation.PushAsync(new ItemViewPage(SelectedItem, variationFoodItem));
         }
 
-        async Task ExecuteRemoveItemFromMainListCommand()
-        {
-            if (SelectedItem == null)
-            {
-                return;
-            }
-            IsBusy = true;
-            // TODO: cache it to avoid repetative DB get
-            var variationFoodItem = await App.DB.GetVariationFoodItemAsync(SelectedItem, MealVariation);
-            await App.DB.RemoveVariationFoodItemAsync(variationFoodItem);
-            Items.Remove(SelectedItem);
-            IsBusy = false;
-        }
-        async Task ExecuteAddItemPageCommand()
-        {
-            await Navigation.PushModalAsync(new NavigationPage(new ItemEditPage(null, MealVariation)));
-        }
+        
     }
 }

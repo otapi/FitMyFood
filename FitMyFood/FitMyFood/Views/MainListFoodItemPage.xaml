@@ -9,24 +9,6 @@
     <ContentPage.ToolbarItems>
         
 
-        <ToolbarItem Command="{Binding Path=BindingContext.ViewFoodItemDetailCommand, Source={x:Reference Name=MainListFoodItemPager}}"
-                                CommandParameter="{Binding SelectedItem}"
-                                Text="Details" >
-            <ToolbarItem.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="UWP" Value="save.png"/>
-                </OnPlatform>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
-        <ToolbarItem Command="{Binding Path=BindingContext.RemoveItemFromMainList, Source={x:Reference Name=MainListFoodItemPager}}"
-                                CommandParameter="{Binding SelectedItem}"
-                                Text="Remove" IsDestructive="True">
-            <ToolbarItem.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="UWP" Value="cancel.png"/>
-                </OnPlatform>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
         <ToolbarItem Text="Add" Command="{Binding Path=BindingContext.AddItemPageCommand, Source={x:Reference Name=MainListFoodItemPager}}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -90,25 +72,18 @@
                         </ViewCell.ContextActions>
                         -->
                         <StackLayout Padding="10" Orientation="Horizontal">
-                            <Label Text="{Binding Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" 
-                                            FontSize="16" 
+                            <Label Text="{Binding Name}" Style="{DynamicResource ListItemTextStyle}" 
+                                            LineBreakMode="TailTruncation" 
                                         />
-                            <Stepper x:Name="stepper"
-                                                Minimum="0"
-                                                Maximum="10"
-                                                Increment="0.1"
-                                                Value="{Binding Quantity}"
-                                                ValueChanged="OnStepperChanged"
-                                        />
-                            <Label Text="{Binding Source={x:Reference stepper},
-                                          Path=Value,
-                                          StringFormat=' {0:F1}'}"/>
+                            <Label Text="{Binding Quantity,
+                                          StringFormat=' {0:F1}'}"
+                                   LineBreakMode="NoWrap"
+                                   HorizontalOptions="End"/>
                             <Label Text="{Binding UnitDescription}" 
                                             LineBreakMode="NoWrap" 
-                                        />
-
+                                        HorizontalOptions="End"/>
                         </StackLayout>
-                    </ViewCell>
+                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

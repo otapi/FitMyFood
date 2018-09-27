@@ -10,6 +10,7 @@ namespace FitMyFood.ViewModels
     public class ItemViewVM : BaseVM, Architecture.IItemView
     {
         public Command EditFoodItemDetailCommand { get; set; }
+        public Command RemoveItemFromMainList { get; set; }
 
         FoodItem _Item;
         public FoodItem Item
@@ -26,6 +27,9 @@ namespace FitMyFood.ViewModels
         {
             Item = foodItem;
             EditFoodItemDetailCommand = new Command(async () => await ExecuteEditFoodItemDetailCommand());
+            RemoveItemFromMainList = new Command(async () => await ExecuteRemoveItemFromMainListCommand());
+
+
             VariationFoodItem = variationFoodItem;
         }
 
@@ -43,5 +47,13 @@ namespace FitMyFood.ViewModels
             App.DB.SaveChangesAsync().Wait();
 
         }
+
+        async Task ExecuteRemoveItemFromMainListCommand()
+        {
+            await App.DB.RemoveVariationFoodItemAsync(VariationFoodItem);
+            IsBusy = false;
+            await Navigation.PopAsync(true);
+        }
+
     }
 }

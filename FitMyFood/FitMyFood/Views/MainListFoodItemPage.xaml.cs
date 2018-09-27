@@ -25,26 +25,6 @@ namespace FitMyFood.Views
             
         }
 
-        async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
-        {
-            /*
-            var item = args.SelectedItem as FoodItem;
-            if (item == null)
-                return;
-
-            await Navigation.PushAsync(new ItemDetailPage(new VMItemDetail(item)));
-
-            // Manually deselect item.
-            ItemsListView.SelectedItem = null;
-            */
-        }
-
-        void OnStepperChanged(object sender, EventArgs e)
-        {
-            FoodItem foodItem = (sender as Stepper).BindingContext as FoodItem;
-            App.MainListFoodItemVM.ItemStepperChangedCommand.Execute(foodItem);
-        }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();

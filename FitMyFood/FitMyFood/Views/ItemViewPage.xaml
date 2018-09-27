@@ -3,8 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitMyFood.Views.ItemViewPage"
              Title="{Binding Title}"
-             x:Name="ItemViewPager">
+             x:Name="ItemViewPager"
+             >
+    <ContentPage.ToolbarItems>
 
+
+        <ToolbarItem Text="Remove" 
+                     Command="{Binding Path=BindingContext.RemoveItemFromMainList, Source={x:Reference Name=ItemViewPager}}"
+                     CommandParameter="{Binding SelectedItem}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="cancel.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Edit" Command="{Binding Path=BindingContext.EditFoodItemDetailCommand, Source={x:Reference Name=ItemViewPager}}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="save.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <StackLayout Spacing="20" Padding="15">
         <Label Text="{Binding Item.Name}" Style="{DynamicResource TitleStyle}"/>
         <Label Text="Quantity:" />
