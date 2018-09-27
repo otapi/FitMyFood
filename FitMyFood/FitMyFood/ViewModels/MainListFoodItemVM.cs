@@ -17,10 +17,10 @@ namespace FitMyFood.ViewModels
     {
         public class Summary
         {
-            public string summaryEnergy { get; set; }
-            public string summaryFat { get; set; }
-            public string summaryCarbo { get; set; }
-            public string summaryProtein { get; set; }
+            public string SummaryEnergy { get; set; }
+            public string SummaryFat { get; set; }
+            public string SummaryCarbo { get; set; }
+            public string SummaryProtein { get; set; }
 
         }
         public static double ENERGYFAT = 9.3;
@@ -33,29 +33,29 @@ namespace FitMyFood.ViewModels
         public ObservableCollection<View> MealSelectorSource { get; set; }
         public ObservableCollection<View> VariationSelectorSource { get; set; }
 
-        public FoodItem targetFood { get; set; }
-        public FoodItem totalFood { get; set; }
+        public FoodItem TargetFood { get; set; }
+        public FoodItem TotalFood { get; set; }
 
         string _summaryEnergy = string.Empty;
-        public string summaryEnergy
+        public string SummaryEnergy
         {
             get { return _summaryEnergy; }
             set { SetProperty(ref _summaryEnergy, value); }
         }
         string _summaryFat = string.Empty;
-        public string summaryFat
+        public string SummaryFat
         {
             get { return _summaryFat; }
             set { SetProperty(ref _summaryFat, value); }
         }
         string _summaryCarbo = string.Empty;
-        public string summaryCarbo
+        public string SummaryCarbo
         {
             get { return _summaryCarbo; }
             set { SetProperty(ref _summaryCarbo, value); }
         }
         string _summaryProtein = string.Empty;
-        public string summaryProtein
+        public string SummaryProtein
         {
             get { return _summaryProtein; }
             set { SetProperty(ref _summaryProtein, value); }
@@ -134,7 +134,7 @@ namespace FitMyFood.ViewModels
         public Command RemoveItemFromMainList { get; set; }
         public Command AddItemPageCommand { get; set; }
 
-        void defineCommands()
+        void DefineCommands()
         {
             LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
@@ -148,7 +148,7 @@ namespace FitMyFood.ViewModels
         public MainListFoodItemVM(INavigation navigation) : base(navigation)
         {
             Title = "Browse";
-            defineCommands();
+            DefineCommands();
 
             Items = new ObservableCollection<FoodItem>();
             DailyProfileSelectorSource = new ObservableCollection<View>();
@@ -159,32 +159,34 @@ namespace FitMyFood.ViewModels
             MealSelectorItems = new List<Meal>();
             VariationSelectorItems = new List<Variation>();
             
-            targetFood = new FoodItem();
-            totalFood = new FoodItem();
+            TargetFood = new FoodItem();
+            TotalFood = new FoodItem();
 
         }
 
-        void calcTargetFood()
+        void CalcTargetFood()
         {
             // TODO: implement
         }
-        void calcSummary()
+        void CalcSummary()
         {
-            totalFood = new FoodItem();
-            totalFood.Fat = 0;
-            totalFood.Carbo = 0;
-            totalFood.Protein = 0;
+            TotalFood = new FoodItem
+            {
+                Fat = 0,
+                Carbo = 0,
+                Protein = 0
+            };
 
             foreach (var food in Items)
             {
-                totalFood.Fat += food.Fat * food.Weight/100;
-                totalFood.Carbo += food.Carbo * food.Weight/100;
-                totalFood.Protein += food.Protein * food.Weight/100;
+                TotalFood.Fat += food.Fat * food.Weight/100;
+                TotalFood.Carbo += food.Carbo * food.Weight/100;
+                TotalFood.Protein += food.Protein * food.Weight/100;
             }
-            summaryEnergy = $"Energy: {totalFood.Energy} / {targetFood.Energy} kcal";
-            summaryFat = $"Fat: {totalFood.Energy} / {targetFood.Energy} gramm";
-            summaryCarbo = $"Carbo: {totalFood.Energy} / {targetFood.Energy} gramm";
-            summaryProtein = $"Protein: {totalFood.Energy} / {targetFood.Energy} gramm";
+            SummaryEnergy = $"Energy: {TotalFood.Energy} / {TargetFood.Energy} kcal";
+            SummaryFat = $"Fat: {TotalFood.Energy} / {TargetFood.Energy} gramm";
+            SummaryCarbo = $"Carbo: {TotalFood.Energy} / {TargetFood.Energy} gramm";
+            SummaryProtein = $"Protein: {TotalFood.Energy} / {TargetFood.Energy} gramm";
         }
 
         async Task ExecuteLoadSelectorsCommand()
@@ -197,7 +199,7 @@ namespace FitMyFood.ViewModels
 
         async Task PopulateMealSelector()
         {
-            MealSelectorItems = await App.DB.getMealsAsync();
+            MealSelectorItems = await App.DB.GetMealsAsync();
             MealSelectorSource.Clear();
             foreach (var item in MealSelectorItems)
             {
@@ -207,7 +209,7 @@ namespace FitMyFood.ViewModels
 
         async Task PopulateDailyProfileSelector()
         {
-            DailyProfileSelectorItems = await App.DB.getDailyProfilesAsync();
+            DailyProfileSelectorItems = await App.DB.GetDailyProfilesAsync();
             DailyProfileSelectorSource.Clear();
             foreach (var item in DailyProfileSelectorItems)
             {
@@ -222,7 +224,7 @@ namespace FitMyFood.ViewModels
                 return;
             }
 
-            VariationSelectorItems = await App.DB.getVariationsAsync(DailyProfile, Meal);
+            VariationSelectorItems = await App.DB.GetVariationsAsync(DailyProfile, Meal);
             VariationSelectorSource.Clear();
             foreach (var item in VariationSelectorItems)
             {
@@ -240,14 +242,14 @@ namespace FitMyFood.ViewModels
             IsBusy = true;
             Items.Clear();
 
-            var variationFoodItems = await App.DB.getVariationFoodItemsIncludeFoodItem(MealVariation);
+            var variationFoodItems = await App.DB.GetVariationFoodItemsIncludeFoodItem(MealVariation);
             foreach (var variationFoodItem in variationFoodItems)
             {
                 var foodItem = variationFoodItem.FoodItem;
                 foodItem.Quantity = variationFoodItem.Quantity;
                 Items.Add(foodItem);
             }
-            calcSummary();
+            CalcSummary();
             IsBusy = false;
         }
         async Task ExecuteItemStepperChangedCommand(FoodItem foodItem)
@@ -257,16 +259,16 @@ namespace FitMyFood.ViewModels
                 return;
             }
             // TODO: cache it to avoid repetative DB get
-            var variationFoodItem = await App.DB.getVariationFoodItemAsync(foodItem, MealVariation);
+            var variationFoodItem = await App.DB.GetVariationFoodItemAsync(foodItem, MealVariation);
             variationFoodItem.Quantity = foodItem.Quantity;
-            await App.DB.updateQuantityOnVariationFoodItemAsync(variationFoodItem);
-            calcSummary();
+            await App.DB.UpdateQuantityOnVariationFoodItemAsync(variationFoodItem);
+            CalcSummary();
         }
 
         async Task ExecuteViewFoodItemViewCommand(FoodItem foodItem)
         {
             // TODO: cache it to avoid repetative DB get
-            var variationFoodItem = await App.DB.getVariationFoodItemAsync(foodItem, MealVariation);
+            var variationFoodItem = await App.DB.GetVariationFoodItemAsync(foodItem, MealVariation);
             // TODO: PushModalAsync?
             await Navigation.PushAsync(new ItemViewPage(foodItem, variationFoodItem));
         }
@@ -275,8 +277,8 @@ namespace FitMyFood.ViewModels
         {
             IsBusy = true;
             // TODO: cache it to avoid repetative DB get
-            var variationFoodItem = await App.DB.getVariationFoodItemAsync(foodItem, MealVariation);
-            await App.DB.removeVariationFoodItemAsync(variationFoodItem);
+            var variationFoodItem = await App.DB.GetVariationFoodItemAsync(foodItem, MealVariation);
+            await App.DB.RemoveVariationFoodItemAsync(variationFoodItem);
             IsBusy = false;
         }
         async Task ExecuteAddItemPageCommand()

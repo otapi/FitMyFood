@@ -42,10 +42,10 @@
                 SelectedIndex="{Binding VariationSelectorIndex}"
                 />
         </Grid>
-        <Label Text="{Binding summaryEnergy}" Style="{DynamicResource BodyStyle}" />
-        <Label Text="{Binding summaryFat}" Style="{DynamicResource ListItemTextStyle}" TextColor="{StaticResource FatColor}"/>
-        <Label Text="{Binding summaryCarbo}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource CarboColor}"/>
-        <Label Text="{Binding summaryProtein}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource ProteinColor}"/>
+        <Label Text="{Binding SummaryEnergy}" Style="{DynamicResource BodyStyle}" />
+        <Label Text="{Binding SummaryFat}" Style="{DynamicResource ListItemTextStyle}" TextColor="{StaticResource FatColor}"/>
+        <Label Text="{Binding SummaryCarbo}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource CarboColor}"/>
+        <Label Text="{Binding SummaryProtein}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource ProteinColor}"/>
 
         <ListView x:Name="ItemsListView"
                     ItemsSource="{Binding Items}"
@@ -64,8 +64,8 @@
                             <MenuItem Command="{Binding Path=BindingContext.RemoveItemFromMainList, Source={x:Reference Name=MainListFoodItemPager}}"
                                 CommandParameter="{Binding .}"
                                 Text="Remove" IsDestructive="True" />
-                        </ViewCell.ContextActions> 
-                        <StackLayout Padding="10">
+                        </ViewCell.ContextActions>
+                        <StackLayout Padding="10" Orientation="Horizontal">
                             <Label Text="{Binding Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" 
                                             FontSize="16" 
                                         />
@@ -78,7 +78,7 @@
                                         />
                             <Label Text="{Binding Source={x:Reference stepper},
                                           Path=Value,
-                                          StringFormat='Value: {0:F1}'}"/>
+                                          StringFormat=' {0:F1}'}"/>
                             <Label Text="{Binding UnitDescription}" 
                                             LineBreakMode="NoWrap" 
                                         />

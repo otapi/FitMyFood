@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using FitMyFood.Models;
+using Xamarin.Forms;
 
 namespace FitMyFood.Data
 {
@@ -19,14 +20,17 @@ namespace FitMyFood.Data
         protected DatabaseContext CrateContext()
         {
             DatabaseContext databaseContext = new DatabaseContext();
-            databaseContext.Database.EnsureDeleted();
+            if (Device.RuntimePlatform == Device.Android)
+            {
+                databaseContext.Database.EnsureDeleted();
+            }
             databaseContext.Database.EnsureCreated();
             databaseContext.Database.Migrate();
             return databaseContext;
         }
 
         #region MainListFoodItem
-        public async Task<List<Meal>> getMealsAsync()
+        public async Task<List<Meal>> GetMealsAsync()
         {
             List<Meal> meals;
             meals = await context.Meals
@@ -41,7 +45,7 @@ namespace FitMyFood.Data
             return meals;
         }
 
-        public async Task<List<DailyProfile>> getDailyProfilesAsync()
+        public async Task<List<DailyProfile>> GetDailyProfilesAsync()
         {
             List<DailyProfile> dailyProfiles;
             dailyProfiles = await context.DailyProfiles
@@ -56,7 +60,7 @@ namespace FitMyFood.Data
             return dailyProfiles;
         }
 
-        public async Task<List<Variation>> getVariationsAsync(DailyProfile dailyProfile, Meal meal)
+        public async Task<List<Variation>> GetVariationsAsync(DailyProfile dailyProfile, Meal meal)
         {
             List<Variation> variations;
             variations = await context.Variations
@@ -78,7 +82,7 @@ namespace FitMyFood.Data
             return variations;
         }
 
-        public async Task<List<VariationFoodItem>> getVariationFoodItemsIncludeFoodItem(Variation variation)
+        public async Task<List<VariationFoodItem>> GetVariationFoodItemsIncludeFoodItem(Variation variation)
         {
             List<VariationFoodItem> variationFoodItems;
             variationFoodItems = await context.VariationFoodItems
@@ -89,7 +93,7 @@ namespace FitMyFood.Data
         }
 
 
-        public async Task<VariationFoodItem> getVariationFoodItemAsync(FoodItem foodItem, Variation variation)
+        public async Task<VariationFoodItem> GetVariationFoodItemAsync(FoodItem foodItem, Variation variation)
         {
             VariationFoodItem variationFoodItem;
             variationFoodItem = await context.VariationFoodItems
@@ -102,20 +106,20 @@ namespace FitMyFood.Data
             await context.SaveChangesAsync();
         }
 
-        public async Task updateQuantityOnVariationFoodItemAsync(VariationFoodItem variationFoodItem)
+        public async Task UpdateQuantityOnVariationFoodItemAsync(VariationFoodItem variationFoodItem)
         {
             context.Attach(variationFoodItem);
             context.Entry(variationFoodItem).Property("Quantity").IsModified = true;
             await context.SaveChangesAsync();
         }
 
-        public async Task removeVariationFoodItemAsync(VariationFoodItem variationFoodItem)
+        public async Task RemoveVariationFoodItemAsync(VariationFoodItem variationFoodItem)
         {
             context.Remove(variationFoodItem);
             await context.SaveChangesAsync();
         }
 
-        public async Task addNewVariationFoodItemAsync(double Quantity, Variation variation, FoodItem foodItem)
+        public async Task AddNewVariationFoodItemAsync(double Quantity, Variation variation, FoodItem foodItem)
         {
             
             //var realFoodItem = await context.FoodItems

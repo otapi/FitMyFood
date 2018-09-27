@@ -53,7 +53,7 @@ namespace FitMyFood.ViewModels
             {
                 // Came from the MainList - Insert new FoodItem to DB
                 // and go back to the MainList - so that needs to be updated as well
-                await App.DB.addNewVariationFoodItemAsync(Item.Quantity, Variation, Item);
+                await App.DB.AddNewVariationFoodItemAsync(Item.Quantity, Variation, Item);
                 App.MainListFoodItemVM.LoadItemsCommand.Execute(null);
             }
             else
