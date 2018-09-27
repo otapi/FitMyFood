@@ -11,8 +11,6 @@ namespace FitMyFood.Models
     /// </summary>
     public class Meal
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MealId { get; set; }
         public string Name { get; set; }
         public int KcalRatio { get; set; }

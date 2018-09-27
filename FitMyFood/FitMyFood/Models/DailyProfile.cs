@@ -11,8 +11,6 @@ namespace FitMyFood.Models
     /// </summary>
     public class DailyProfile
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DailyProfileId { get; set; }
         public string Name { get; set; }
         public int ExtraKcal { get; set; }

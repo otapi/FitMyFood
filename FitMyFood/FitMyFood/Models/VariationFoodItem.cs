@@ -11,14 +11,12 @@ namespace FitMyFood.Models
     /// </summary>
     public class VariationFoodItem
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int VariationFoodItemId { get; set; }
 
-        public int? VariationId { get; set; }
+        public int VariationId { get; set; }
         public Variation Variation { get; set; }
 
-        public int? FoodItemId { get; set; }
+        public int FoodItemId { get; set; }
         public FoodItem FoodItem { get; set; }
 
         /// <summary>

@@ -63,6 +63,7 @@ namespace FitMyFood.ViewModels
         
         Meal Meal { get; set; }
         DailyProfile DailyProfile { get; set; }
+        // TODO: rename to Variation
         public Variation MealVariation { get; set; }
 
         List<DailyProfile> DailyProfileSelectorItems;
@@ -256,42 +257,32 @@ namespace FitMyFood.ViewModels
                 return;
             }
             // TODO: cache it to avoid repetative DB get
-            var variationFoodItem = await App.DB.getVariationFoodItem(foodItem, MealVariation);
+            var variationFoodItem = await App.DB.getVariationFoodItemAsync(foodItem, MealVariation);
             variationFoodItem.Quantity = foodItem.Quantity;
-            await App.DB.updateQuantityOnVariationFoodItem(variationFoodItem);
+            await App.DB.updateQuantityOnVariationFoodItemAsync(variationFoodItem);
             calcSummary();
         }
 
         async Task ExecuteViewFoodItemViewCommand(FoodItem foodItem)
         {
+            // TODO: cache it to avoid repetative DB get
+            var variationFoodItem = await App.DB.getVariationFoodItemAsync(foodItem, MealVariation);
             // TODO: PushModalAsync?
-            await Navigation.PushAsync(new ItemViewPage(foodItem));
+            await Navigation.PushAsync(new ItemViewPage(foodItem, variationFoodItem));
             await ExecuteLoadItemsCommand();
         }
 
         async Task ExecuteRemoveItemFromMainListCommand(FoodItem foodItem)
         {
             IsBusy = true;
-            var variationFoodItem = await App.DB.GetAllWithChildrenAsync<VariationFoodItem>(v => v.FoodItem == foodItem);
-
-            if (variationFoodItem.Count == 0)
-            {
-                App.PrintWarning($"You want to remove it, but the reference for food ({foodItem.Id}) is already missing.");
-                IsBusy = false;
-                return;
-            }
-
-            if (variationFoodItem.Count > 1)
-            {
-                App.PrintWarning($"More than one references found for food ({foodItem.Id}).");
-            }
-
-            await App.DB.DeleteAllAsync(variationFoodItem);
+            // TODO: cache it to avoid repetative DB get
+            var variationFoodItem = await App.DB.getVariationFoodItemAsync(foodItem, MealVariation);
+            await App.DB.removeVariationFoodItemAsync(variationFoodItem);
             IsBusy = false;
         }
         async Task ExecuteAddItemPageCommand()
         {
-            await Navigation.PushModalAsync(new NavigationPage(new ItemEditPage(null)));
+            await Navigation.PushModalAsync(new NavigationPage(new ItemEditPage(null, MealVariation)));
             await ExecuteLoadItemsCommand();
         }
     }

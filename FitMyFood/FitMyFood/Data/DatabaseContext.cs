@@ -8,6 +8,7 @@ namespace FitMyFood.Data
 {
     public class DatabaseContext : DbContext
     {
+        // TODO: OnModelCreating?
         public DbSet<ComposedFoodItem> ComposedFoodItems { get; set; }
         public DbSet<FoodItem> FoodItems { get; set; }
         public DbSet<DailyProfile> DailyProfiles { get; set; }
@@ -17,7 +18,7 @@ namespace FitMyFood.Data
         public DbSet<WeightTrack> WeightTracks { get; set; }
         public DbSet<Settings> Settings { get; set; }
 
-        private const string databaseName = "database.db";
+        private const string databaseName = "database1.db";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             String databasePath = "";
@@ -38,6 +39,7 @@ namespace FitMyFood.Data
             }
             // Specify that we will use sqlite and the path of the database here
             optionsBuilder.UseSqlite($"Filename={databasePath}");
+            App.PrintNote($"Path to database is: {databasePath}");
         }
     }
 }

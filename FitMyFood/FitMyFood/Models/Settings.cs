@@ -10,9 +10,7 @@ namespace FitMyFood.Models
     /// </summary>
     public class Settings
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int SettingsId { get; set; }
 
         public double ActualWeight { get; set; }
         public int Height { get; set; }

@@ -4,8 +4,6 @@ using FitMyFood.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using FitMyFood.Views;
-using SQLite;
-using SQLiteNetExtensionsAsync.Extensions;
 
 
 namespace FitMyFood.ViewModels
@@ -29,8 +27,9 @@ namespace FitMyFood.ViewModels
 
             }
         }
+        public Variation Variation { get; set; }
 
-        public ItemEditVM(INavigation navigation, FoodItem foodItem) : base(navigation)
+        public ItemEditVM(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
         {
             if (foodItem == null)
             {
@@ -42,6 +41,7 @@ namespace FitMyFood.ViewModels
             }
 
             this.Item = foodItem;
+            Variation = variation;
             SaveCommand = new Command(async () => await ExecuteSaveCommand());
             CancelCommand = new Command(async () => await ExecuteCancelCommand());
         }
@@ -53,23 +53,13 @@ namespace FitMyFood.ViewModels
             {
                 // Came from the MainList - Insert new FoodItem to DB
                 // and go back to the MainList - so that needs to be updated as well
-                var variationFoodItem = new VariationFoodItem()
-                {
-                    Quantity = Item.Quantity,
-                };
-                await App.DB.InsertAsync(variationFoodItem);
-
-                App.MainListFoodItemVM.MealVariation.VariationFoodItems.Add(variationFoodItem);
-                await App.DB.UpdateWithChildrenAsync(variationFoodItem);
-
-                Item.VariationFoodItems.Add(variationFoodItem);
-                await App.DB.InsertOrReplaceWithChildrenAsync(Item);
+                await App.DB.addNewVariationFoodItemAsync(Item.Quantity, Variation, Item);
                 App.MainListFoodItemVM.LoadItemsCommand.Execute(null);
             }
             else
             {
                 // Came from the ItemView, FoodItem already existed
-                await App.DB.InsertOrReplaceWithChildrenAsync(Item);
+                await App.DB.SaveChangesAsync();
                 App.ItemViewVM.Item = Item;
             }
             IsBusy = false;

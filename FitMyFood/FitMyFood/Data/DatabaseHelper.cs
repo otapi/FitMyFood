@@ -9,6 +9,12 @@ namespace FitMyFood.Data
 {
     public class DatabaseHelper
     {
+        DatabaseContext context;
+
+        public DatabaseHelper()
+        {
+            context = CrateContext();
+        }
         // TODO: why: There are many strategies for handling the lifecycle of a context object. I prefer to create a context when I need one and then dispose it at the end of the operation. 
         protected DatabaseContext CrateContext()
         {
@@ -22,17 +28,14 @@ namespace FitMyFood.Data
         public async Task<List<Meal>> getMealsAsync()
         {
             List<Meal> meals;
-            using (var context = CrateContext())
+            meals = await context.Meals
+                                //.AsNoTracking()
+                                .ToListAsync();
+            if (meals.Count == 0)
             {
-                meals = await context.Meals
-                                    //.AsNoTracking()
-                                    .ToListAsync();
-                if (meals.Count == 0)
-                {
-                    meals.AddRange(DefaultValues.MealSelectorItems);
-                    await context.Meals.AddRangeAsync(meals);
-                    await context.SaveChangesAsync();
-                }
+                meals.AddRange(DefaultValues.MealSelectorItems);
+                await context.Meals.AddRangeAsync(meals);
+                await context.SaveChangesAsync();
             }
             return meals;
         }
@@ -40,17 +43,14 @@ namespace FitMyFood.Data
         public async Task<List<DailyProfile>> getDailyProfilesAsync()
         {
             List<DailyProfile> dailyProfiles;
-            using (var context = CrateContext())
+            dailyProfiles = await context.DailyProfiles
+                                //.AsNoTracking()
+                                .ToListAsync();
+            if (dailyProfiles.Count == 0)
             {
-                dailyProfiles = await context.DailyProfiles
-                                    //.AsNoTracking()
-                                    .ToListAsync();
-                if (dailyProfiles.Count == 0)
-                {
-                    dailyProfiles.AddRange(DefaultValues.DailyProfileSelectorItems);
-                    await context.DailyProfiles.AddRangeAsync(dailyProfiles);
-                    await context.SaveChangesAsync();
-                }
+                dailyProfiles.AddRange(DefaultValues.DailyProfileSelectorItems);
+                await context.DailyProfiles.AddRangeAsync(dailyProfiles);
+                await context.SaveChangesAsync();
             }
             return dailyProfiles;
         }
@@ -58,23 +58,21 @@ namespace FitMyFood.Data
         public async Task<List<Variation>> getVariationsAsync(DailyProfile dailyProfile, Meal meal)
         {
             List<Variation> variations;
-            using (var context = CrateContext())
-            {
-                variations = await context.Variations
-                                            .Where(v => v.Meal == meal && v.DailyProfile == dailyProfile)
-                                            .ToListAsync();
+            variations = await context.Variations
+                                        .Where(v => v.Meal == meal && v.DailyProfile == dailyProfile)
+                                        .ToListAsync();
 
-                if (variations.Count == 0)
+            if (variations.Count == 0)
+            {
+                var variation = new Variation()
                 {
-                    var variation = new Variation()
-                    {
-                        Name = DefaultValues.VariationSelectorItem,
-                        DailyProfile = dailyProfile,
-                        Meal = meal
-                    };
-                    await context.Variations.AddAsync(variation);
-                    await context.SaveChangesAsync();
-                }
+                    Name = DefaultValues.VariationSelectorItem,
+                    DailyProfile = dailyProfile,
+                    Meal = meal
+                };
+                await context.Variations.AddAsync(variation);
+                await context.SaveChangesAsync();
+                variations.Add(variation);
             }
             return variations;
         }
@@ -82,45 +80,53 @@ namespace FitMyFood.Data
         public async Task<List<VariationFoodItem>> getVariationFoodItemsNoTrackingAsync(Variation variation)
         {
             List<VariationFoodItem> variationFoodItems;
-            using (var context = CrateContext())
-            {
-                variationFoodItems = await context.VariationFoodItems
-                                            .AsNoTracking()
-                                            .Where(v => v.Variation == variation)
-                                            .ToListAsync();
-            }
-
+            variationFoodItems = await context.VariationFoodItems
+                                        .AsNoTracking()
+                                        .Where(v => v.Variation == variation)
+                                        .ToListAsync();
             return variationFoodItems;
         }
 
-        public async Task<VariationFoodItem> getVariationFoodItem(FoodItem foodItem, Variation variation)
+
+        public async Task<VariationFoodItem> getVariationFoodItemAsync(FoodItem foodItem, Variation variation)
         {
             VariationFoodItem variationFoodItem;
-            using (var context = CrateContext())
-            {
-                variationFoodItem = await context.VariationFoodItems
-                                            .Where(v => v.FoodItemId == foodItem.FoodItemId && v.Variation == variation)
-                                            .FirstAsync();
-            }
-
+            variationFoodItem = await context.VariationFoodItems
+                                        .Where(v => v.FoodItemId == foodItem.FoodItemId && v.Variation == variation)
+                                        .FirstAsync();
             return variationFoodItem;
         }
-        public async Task SaveChangesAsinc()
+        public async Task SaveChangesAsync()
         {
-            using (var context = CrateContext())
-            {
-                await context.SaveChangesAsync();
-            }
+            await context.SaveChangesAsync();
         }
 
-        public async Task updateQuantityOnVariationFoodItem(VariationFoodItem variationFoodItem)
+        public async Task updateQuantityOnVariationFoodItemAsync(VariationFoodItem variationFoodItem)
         {
-            using (var context = CrateContext())
+            context.Attach(variationFoodItem);
+            context.Entry(variationFoodItem).Property("Quantity").IsModified = true;
+            await context.SaveChangesAsync();
+        }
+
+        public async Task removeVariationFoodItemAsync(VariationFoodItem variationFoodItem)
+        {
+            context.Remove(variationFoodItem);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task addNewVariationFoodItemAsync(double Quantity, Variation variation, FoodItem foodItem)
+        {
+            //var realFoodItem = await context.FoodItems
+            //                        .Where(f => f.FoodItemId == foodItemNotTracked.FoodItemId)
+            //                        .FirstAsync();
+
+            var variationFoodItem = new VariationFoodItem()
             {
-                context.Attach(variationFoodItem);
-                context.Entry(variationFoodItem).Property("Quantity").IsModified = true;
-                await context.SaveChangesAsync();
-            }
+                Quantity = Quantity,
+                Variation = variation,
+                FoodItem = foodItem
+            };
+            await context.SaveChangesAsync();
         }
         #endregion
     }

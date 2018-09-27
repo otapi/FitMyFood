@@ -10,8 +10,6 @@ namespace FitMyFood.Models
     /// </summary>
     public class ComposedFoodItem
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ComposedFoodItemId { get; set; }
 
         // Subfooditem        

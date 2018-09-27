@@ -9,8 +9,6 @@ namespace FitMyFood.Models
     /// </summary>
     public class FoodItem
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FoodItemId { get; set; }
         public string Name { get; set; }
 

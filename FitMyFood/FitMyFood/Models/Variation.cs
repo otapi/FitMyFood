@@ -11,8 +11,6 @@ namespace FitMyFood.Models
     /// </summary>
     public class Variation
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int VariationId { get; set; }
         public string Name { get; set; }
 

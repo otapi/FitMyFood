@@ -12,10 +12,10 @@ namespace FitMyFood.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ItemEditPage : ContentPage
     {
-        public ItemEditPage(FoodItem foodItem)
+        public ItemEditPage(FoodItem foodItem, Variation variation)
         {
             InitializeComponent();
-            App.ItemEditVM = new ItemEditVM(Navigation, foodItem);
+            App.ItemEditVM = new ItemEditVM(Navigation, foodItem, variation);
             BindingContext = App.ItemEditVM;
         }
 
