@@ -35,6 +35,7 @@ namespace FitMyFood.ViewModels
 
         public FoodItem TargetFood { get; set; }
         public FoodItem TotalFood { get; set; }
+        public FoodItem SelectedItem { get; set; }
 
         string _summaryEnergy = string.Empty;
         public string SummaryEnergy
@@ -75,8 +76,7 @@ namespace FitMyFood.ViewModels
         {
             set
             {
-                _DailyProfileSelectorIndex = value;
-                OnPropertyChanged("DailyProfileSelectorIndex");
+                SetProperty(ref _DailyProfileSelectorIndex, value);
                 if (DailyProfileSelectorItems.Count > 0 && DailyProfileSelectorIndex>-1)
                 {
                     DailyProfile = DailyProfileSelectorItems[DailyProfileSelectorIndex];
@@ -93,8 +93,7 @@ namespace FitMyFood.ViewModels
         {
             set
             {
-                _MealSelectorIndex = value;
-                OnPropertyChanged("MealSelectorIndex");
+                SetProperty(ref _MealSelectorIndex, value);
                 if (MealSelectorItems.Count > 0 && MealSelectorIndex > -1)
                 {
                     Meal = MealSelectorItems[MealSelectorIndex];
@@ -111,8 +110,7 @@ namespace FitMyFood.ViewModels
         {
             set
             {
-                _VariationSelectorIndex = value;
-                OnPropertyChanged("VariationSelectorindex");
+                SetProperty(ref _VariationSelectorIndex, value);
                 if (VariationSelectorItems.Count > 0 && VariationSelectorIndex > -1)
                 {
                     MealVariation = VariationSelectorItems[VariationSelectorIndex];
@@ -140,8 +138,8 @@ namespace FitMyFood.ViewModels
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             ItemStepperChangedCommand = new Command<FoodItem>(async (foodItem) => await ExecuteItemStepperChangedCommand(foodItem));
             UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
-            ViewFoodItemDetailCommand = new Command<FoodItem>(async (foodItem) => await ExecuteViewFoodItemViewCommand(foodItem));
-            RemoveItemFromMainList = new Command<FoodItem>(async (foodItem) => await ExecuteRemoveItemFromMainListCommand(foodItem));
+            ViewFoodItemDetailCommand = new Command(async () => await ExecuteViewFoodItemViewCommand());
+            RemoveItemFromMainList = new Command(async () => await ExecuteRemoveItemFromMainListCommand());
             AddItemPageCommand = new Command(async () => await ExecuteAddItemPageCommand());
 
         }
@@ -231,7 +229,6 @@ namespace FitMyFood.ViewModels
                 VariationSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
             }
             MealVariation = VariationSelectorItems[VariationSelectorIndex];
-            LoadItemsCommand.Execute(null);
         }
         async Task ExecuteLoadItemsCommand()
         {
@@ -265,20 +262,29 @@ namespace FitMyFood.ViewModels
             CalcSummary();
         }
 
-        async Task ExecuteViewFoodItemViewCommand(FoodItem foodItem)
+        async Task ExecuteViewFoodItemViewCommand()
         {
+            if (SelectedItem == null)
+            {
+                return;
+            }
             // TODO: cache it to avoid repetative DB get
-            var variationFoodItem = await App.DB.GetVariationFoodItemAsync(foodItem, MealVariation);
+            var variationFoodItem = await App.DB.GetVariationFoodItemAsync(SelectedItem, MealVariation);
             // TODO: PushModalAsync?
-            await Navigation.PushAsync(new ItemViewPage(foodItem, variationFoodItem));
+            await Navigation.PushAsync(new ItemViewPage(SelectedItem, variationFoodItem));
         }
 
-        async Task ExecuteRemoveItemFromMainListCommand(FoodItem foodItem)
+        async Task ExecuteRemoveItemFromMainListCommand()
         {
+            if (SelectedItem == null)
+            {
+                return;
+            }
             IsBusy = true;
             // TODO: cache it to avoid repetative DB get
-            var variationFoodItem = await App.DB.GetVariationFoodItemAsync(foodItem, MealVariation);
+            var variationFoodItem = await App.DB.GetVariationFoodItemAsync(SelectedItem, MealVariation);
             await App.DB.RemoveVariationFoodItemAsync(variationFoodItem);
+            Items.Remove(SelectedItem);
             IsBusy = false;
         }
         async Task ExecuteAddItemPageCommand()

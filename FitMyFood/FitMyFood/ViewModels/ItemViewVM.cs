@@ -18,7 +18,6 @@ namespace FitMyFood.ViewModels
             set
             {
                 SetProperty(ref _Item, value);
-
             }
         }
 

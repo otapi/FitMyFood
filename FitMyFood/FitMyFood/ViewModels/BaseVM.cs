@@ -32,8 +32,8 @@ namespace FitMyFood.ViewModels
             [CallerMemberName]string propertyName = "",
             Action onChanged = null)
         {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return false;
+            //if (EqualityComparer<T>.Default.Equals(backingStore, value))
+            //    return false;
 
             backingStore = value;
             onChanged?.Invoke();

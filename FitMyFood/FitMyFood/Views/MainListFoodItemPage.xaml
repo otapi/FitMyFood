@@ -7,6 +7,26 @@
              x:Name="MainListFoodItemPager"
             >
     <ContentPage.ToolbarItems>
+        
+
+        <ToolbarItem Command="{Binding Path=BindingContext.ViewFoodItemDetailCommand, Source={x:Reference Name=MainListFoodItemPager}}"
+                                CommandParameter="{Binding SelectedItem}"
+                                Text="Details" >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="save.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Command="{Binding Path=BindingContext.RemoveItemFromMainList, Source={x:Reference Name=MainListFoodItemPager}}"
+                                CommandParameter="{Binding SelectedItem}"
+                                Text="Remove" IsDestructive="True">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="cancel.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
         <ToolbarItem Text="Add" Command="{Binding Path=BindingContext.AddItemPageCommand, Source={x:Reference Name=MainListFoodItemPager}}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -53,10 +73,13 @@
                     HasUnevenRows="true"
                     IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                     CachingStrategy="RecycleElement"
-                    SelectionMode="None">
+                    SelectionMode="Single"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
+                        <!--
                         <ViewCell.ContextActions>
                             <MenuItem Command="{Binding Path=BindingContext.ViewFoodItemDetailCommand, Source={x:Reference Name=MainListFoodItemPager}}"
                                 CommandParameter="{Binding .}"
@@ -65,6 +88,7 @@
                                 CommandParameter="{Binding .}"
                                 Text="Remove" IsDestructive="True" />
                         </ViewCell.ContextActions>
+                        -->
                         <StackLayout Padding="10" Orientation="Horizontal">
                             <Label Text="{Binding Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" 
                                             FontSize="16" 

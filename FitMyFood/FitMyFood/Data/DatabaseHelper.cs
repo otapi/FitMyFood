@@ -22,7 +22,7 @@ namespace FitMyFood.Data
             DatabaseContext databaseContext = new DatabaseContext();
             if (Device.RuntimePlatform == Device.Android)
             {
-                databaseContext.Database.EnsureDeleted();
+                //databaseContext.Database.EnsureDeleted();
             }
             databaseContext.Database.EnsureCreated();
             databaseContext.Database.Migrate();
