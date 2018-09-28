@@ -20,20 +20,20 @@
     <Compile Update="Views\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\ItemEditPage.xaml.cs">
-      <DependentUpon>ItemEditPage.xaml</DependentUpon>
+    <Compile Update="Views\FoodItemPage.xaml.cs">
+      <DependentUpon>FoodItemPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\ItemViewPage.xaml.cs">
-      <DependentUpon>ItemViewPage.xaml</DependentUpon>
+    <Compile Update="Views\VariationItemPage.xaml.cs">
+      <DependentUpon>VariationItemPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\MainListFoodItemPage.xaml.cs">
-      <DependentUpon>MainListFoodItemPage.xaml</DependentUpon>
+    <Compile Update="Views\MainListPage.xaml.cs">
+      <DependentUpon>MainListPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

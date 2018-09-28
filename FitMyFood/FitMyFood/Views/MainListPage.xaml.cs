@@ -14,27 +14,27 @@ using FitMyFood.ViewModels;
 namespace FitMyFood.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainListFoodItemPage : ContentPage
+    public partial class MainListPage : ContentPage
     {
-        public MainListFoodItemPage()
+        public MainListPage()
         {
             InitializeComponent();
             App.DB = new Data.DatabaseHelper();
-            App.MainListFoodItemVM = new MainListFoodItemVM(Navigation);
-            BindingContext = App.MainListFoodItemVM;
+            App.MainListVM = new MainListVM(Navigation);
+            BindingContext = App.MainListVM;
             
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            App.MainListFoodItemVM.LoadSelectorsCommand.Execute(null);
+            App.MainListVM.LoadSelectorsCommand.Execute(null);
         }
 
         void OnButtonClick(object sender, EventArgs e)
         {
-            var it = App.MainListFoodItemVM;
-            App.MainListFoodItemVM.LoadItemsCommand.Execute(null);
+            var it = App.MainListVM;
+            App.MainListVM.LoadItemsCommand.Execute(null);
         }      
     }
 }

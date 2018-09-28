@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FitMyFood.Views.ItemViewPage"
+             x:Class="FitMyFood.Views.VariationItemPage"
              Title="{Binding Title}"
-             x:Name="ItemViewPager"
+             x:Name="VariationItemPager"
              >
     <ContentPage.ToolbarItems>
 
 
         <ToolbarItem Text="Remove" 
-                     Command="{Binding Path=BindingContext.RemoveItemFromMainList, Source={x:Reference Name=ItemViewPager}}"
+                     Command="{Binding Path=BindingContext.MainList_RemoveItemCommand, Source={x:Reference Name=VariationItemPager}}"
                      CommandParameter="{Binding SelectedItem}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -17,7 +17,7 @@
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-        <ToolbarItem Text="Edit" Command="{Binding Path=BindingContext.EditFoodItemDetailCommand, Source={x:Reference Name=ItemViewPager}}">
+        <ToolbarItem Text="Edit" Command="{Binding Path=BindingContext.FoodItem_EditCommand, Source={x:Reference Name=VariationItemPager}}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="UWP" Value="save.png"/>
@@ -39,6 +39,7 @@
         <Label Text="{Binding Item.Carbo, StringFormat='Carbo: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource CarboColor}"/>
         <Label Text="{Binding Item.Protein, StringFormat='Protein: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource ProteinColor}"/>
         <Label Text="in 100g" Style="{DynamicResource ListItemDetailTextStyle}" HorizontalOptions="End"/>
-        <Button Text="Edit" Command="{Binding Path=BindingContext.EditFoodItemDetailCommand, Source={x:Reference Name=ItemViewPager}}" />
+        <Button Text="Edit" Command="{Binding Path=BindingContext.FoodItem_EditCommand, Source={x:Reference Name=VariationItemPager}}" />
+        <Button Text="New" Command="{Binding Path=BindingContext.FoodItem_NewCommand, Source={x:Reference Name=VariationItemPager}}" />
     </StackLayout>
 </ContentPage>

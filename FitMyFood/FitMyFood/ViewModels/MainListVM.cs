@@ -13,7 +13,7 @@ using FitMyFood.Data;
 
 namespace FitMyFood.ViewModels
 {
-    public class MainListFoodItemVM : BaseVM
+    public class MainListVM : BaseVM, Architecture.MainListVMI
     {
         public class Summary
         {
@@ -49,7 +49,7 @@ namespace FitMyFood.ViewModels
                 if (_SelectedItem == null)
                     return;
 
-                ViewFoodItemDetailCommand.Execute(null);
+                VariationItem_EditCommand.Execute(null);
                 
                 SelectedItem = null;
             }
@@ -133,7 +133,7 @@ namespace FitMyFood.ViewModels
                 {
                     MealVariation = VariationSelectorItems[VariationSelectorIndex];
                 }
-                App.MainListFoodItemVM.LoadItemsCommand.Execute(null);
+                App.MainListVM.LoadItemsCommand.Execute(null);
             }
             get
             {
@@ -142,10 +142,11 @@ namespace FitMyFood.ViewModels
         }
 
 
-        public Command LoadSelectorsCommand { get; set; }
+        public Command LoadSelectorsCommand { get; set; } 
         public Command UpdateVariantSelectorCommand { get; set; }
         public Command LoadItemsCommand { get; set; }
-        public Command ViewFoodItemDetailCommand { get; set; }
+        public Command VariationItem_EditCommand { get; set; }
+        public Command VariationItem_NewCommand { get; set; }
 
 
         void DefineCommands()
@@ -153,10 +154,11 @@ namespace FitMyFood.ViewModels
             LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
-            ViewFoodItemDetailCommand = new Command(async () => await ExecuteViewFoodItemViewCommand());
+            VariationItem_EditCommand = new Command(async () => await ExecuteOpenVariationItemCommand());
+            VariationItem_NewCommand = new Command(async () => await ExecuteOpenVariationItemCommand());
             
         }
-        public MainListFoodItemVM(INavigation navigation) : base(navigation)
+        public MainListVM(INavigation navigation) : base(navigation)
         {
             Title = "Browse";
             DefineCommands();
@@ -243,6 +245,10 @@ namespace FitMyFood.ViewModels
             }
             MealVariation = VariationSelectorItems[VariationSelectorIndex];
         }
+        /// <summary>
+        /// This is ist
+        /// </summary>
+        /// <returns></returns>
         async Task ExecuteLoadItemsCommand()
         {
             if (MealVariation == null)
@@ -263,15 +269,9 @@ namespace FitMyFood.ViewModels
             IsBusy = false;
         }
         
-        async Task ExecuteViewFoodItemViewCommand()
+        async Task ExecuteOpenVariationItemCommand()
         {
-            if (SelectedItem == null)
-            {
-                return;
-            }
-            // TODO: cache it to avoid repetative DB get
-            var variationFoodItem = await App.DB.GetVariationFoodItemAsync(SelectedItem, MealVariation);
-            await Navigation.PushAsync(new ItemViewPage(SelectedItem, variationFoodItem));
+            await Navigation.PushAsync(new VariationItemPage(SelectedItem, MealVariation));
         }
 
         

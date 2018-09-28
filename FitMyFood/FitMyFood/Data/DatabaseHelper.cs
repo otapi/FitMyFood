@@ -22,14 +22,14 @@ namespace FitMyFood.Data
             DatabaseContext databaseContext = new DatabaseContext();
             if (Device.RuntimePlatform == Device.Android)
             {
-                //databaseContext.Database.EnsureDeleted();
+                databaseContext.Database.EnsureDeleted();
             }
             databaseContext.Database.EnsureCreated();
             databaseContext.Database.Migrate();
             return databaseContext;
         }
 
-        #region MainListFoodItem
+        #region MainList
         public async Task<List<Meal>> GetMealsAsync()
         {
             List<Meal> meals;

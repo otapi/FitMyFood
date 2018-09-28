@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FitMyFood.Views.ItemEditPage"
+             x:Class="FitMyFood.Views.FoodItemPage"
              Title="New Item"
-             x:Name="ItemEditPager">
+             x:Name="FoodItemPager">
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Cancel" Command="{Binding Path=BindingContext.CancelCommand, Source={x:Reference Name=ItemEditPager}}">
+        <ToolbarItem Text="Cancel" Command="{Binding Path=BindingContext.VariationItem_CancelCommand, Source={x:Reference Name=FoodItemPager}}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="UWP" Value="cancel.png"/>
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-        <ToolbarItem Text="Save"  Command="{Binding Path=BindingContext.SaveCommand, Source={x:Reference Name=ItemEditPager}}">
+        <ToolbarItem Text="Save"  Command="{Binding Path=BindingContext.VariationItem_SaveCommand, Source={x:Reference Name=FoodItemPager}}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="UWP" Value="save.png"/>

@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FitMyFood.Views.MainListFoodItemPage"
+             x:Class="FitMyFood.Views.MainListPage"
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
              Title="{Binding Title}"
-             x:Name="MainListFoodItemPager"
+             x:Name="MainListPager"
             >
     <ContentPage.ToolbarItems>
-        
 
-        <ToolbarItem Text="Add" Command="{Binding Path=BindingContext.AddItemPageCommand, Source={x:Reference Name=MainListFoodItemPager}}">
+
+        <ToolbarItem Text="Add" Command="{Binding Path=BindingContext.VariationItem_NewCommand, Source={x:Reference Name=MainListPager}}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="UWP" Value="add.png"/>
@@ -63,10 +63,10 @@
                     <ViewCell>
                         <!--
                         <ViewCell.ContextActions>
-                            <MenuItem Command="{Binding Path=BindingContext.ViewFoodItemDetailCommand, Source={x:Reference Name=MainListFoodItemPager}}"
+                            <MenuItem Command="{Binding Path=BindingContext.OpenVariationItemCommand, Source={x:Reference Name=MainListPager}}"
                                 CommandParameter="{Binding .}"
                                 Text="View Details" />
-                            <MenuItem Command="{Binding Path=BindingContext.RemoveItemFromMainList, Source={x:Reference Name=MainListFoodItemPager}}"
+                            <MenuItem Command="{Binding Path=BindingContext.RemoveItemFromMainList, Source={x:Reference Name=MainListPager}}"
                                 CommandParameter="{Binding .}"
                                 Text="Remove" IsDestructive="True" />
                         </ViewCell.ContextActions>

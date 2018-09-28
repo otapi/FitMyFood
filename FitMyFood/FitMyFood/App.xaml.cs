@@ -8,9 +8,9 @@ namespace FitMyFood
 {
     public partial class App : Application
     {
-        public static ViewModels.MainListFoodItemVM MainListFoodItemVM { get; set; }
-        public static ViewModels.ItemEditVM ItemEditVM { get; set; }
-        public static ViewModels.ItemViewVM ItemViewVM { get; set; }
+        public static ViewModels.MainListVM MainListVM { get; set; }
+        public static ViewModels.FoodItemVM FoodItemVM { get; set; }
+        public static ViewModels.VariationItemVM VariationItemVM { get; set; }
         public static Data.DatabaseHelper DB { get; set; }
         
         public static void PrintWarning(string message)

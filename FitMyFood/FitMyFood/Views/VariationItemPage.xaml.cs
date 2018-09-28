@@ -9,14 +9,14 @@ using FitMyFood.ViewModels;
 namespace FitMyFood.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ItemViewPage : ContentPage
+    public partial class VariationItemPage : ContentPage
     {
-        public ItemViewPage(FoodItem foodItem, VariationFoodItem variationFoodItem)
+        public VariationItemPage(FoodItem foodItem, Variation variation)
         {
             InitializeComponent();
 
-            App.ItemViewVM = new ItemViewVM(Navigation, foodItem, variationFoodItem);
-            BindingContext = App.ItemViewVM;
+            App.VariationItemVM = new VariationItemVM(Navigation, foodItem, variation);
+            BindingContext = App.VariationItemVM;
         }
 
         void OnQuantityChanged(object sender, EventArgs e)
@@ -24,7 +24,7 @@ namespace FitMyFood.Views
             Editor quant = (sender as Editor);
             if (quant.Text != null)
             {
-                App.ItemViewVM.changeQuantity();
+                App.VariationItemVM.ChangeQuantity().Wait();
             }
         }
     }

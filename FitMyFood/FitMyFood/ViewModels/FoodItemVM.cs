@@ -8,10 +8,10 @@ using FitMyFood.Views;
 
 namespace FitMyFood.ViewModels
 {
-    public class ItemEditVM : BaseVM, Architecture.IItemEdit
+    public class FoodItemVM : BaseVM, Architecture.FoodItemVMI
     {
-        public Command SaveCommand { get; set; }
-        public Command CancelCommand { get; set; }
+        public Command VariationItem_SaveCommand { get; set; }
+        public Command VariationItem_CancelCommand { get; set; }
         public bool newitem;
         FoodItem _Item;
         public FoodItem Item {
@@ -29,7 +29,7 @@ namespace FitMyFood.ViewModels
         }
         public Variation Variation { get; set; }
 
-        public ItemEditVM(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
+        public FoodItemVM(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
         {
             if (foodItem == null)
             {
@@ -42,8 +42,8 @@ namespace FitMyFood.ViewModels
 
             this.Item = foodItem;
             Variation = variation;
-            SaveCommand = new Command(async () => await ExecuteSaveCommand());
-            CancelCommand = new Command(async () => await ExecuteCancelCommand());
+            VariationItem_SaveCommand = new Command(async () => await ExecuteSaveCommand());
+            VariationItem_CancelCommand = new Command(async () => await ExecuteCancelCommand());
         }
 
         async Task ExecuteSaveCommand()
@@ -51,17 +51,10 @@ namespace FitMyFood.ViewModels
             IsBusy = true;
             if (newitem)
             {
-                // Came from the MainList - Insert new FoodItem to DB
-                // and go back to the MainList - so that needs to be updated as well
                 await App.DB.AddNewVariationFoodItemAsync(Item.Quantity, Variation, Item);
-                App.MainListFoodItemVM.LoadItemsCommand.Execute(null);
             }
-            else
-            {
-                // Came from the ItemView, FoodItem already existed
-                await App.DB.SaveChangesAsync();
-                App.ItemViewVM.Item = Item;
-            }
+            await App.DB.SaveChangesAsync();
+            App.VariationItemVM.Item = Item;
             IsBusy = false;
             await Navigation.PopModalAsync();
         }
