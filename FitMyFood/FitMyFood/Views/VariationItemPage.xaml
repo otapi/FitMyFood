@@ -19,38 +19,53 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <StackLayout Spacing="20" Padding="15">
-        <SearchBar x:Name="SearchBar" SearchCommand="{Binding SearchCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}" />
+        <SearchBar x:Name="SearchBar" SearchCommand="{Binding SearchCommand}" 
+                   SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}" />
         <StackLayout Orientation="Horizontal">
             <Label Text="{Binding Item.Name}" Style="{DynamicResource TitleStyle}" HorizontalOptions="StartAndExpand"/>
             <Button Text="New" Command="{Binding Path=BindingContext.FoodItem_NewCommand, Source={x:Reference Name=VariationItemPager}}"
                     HorizontalOptions="End"/>
         </StackLayout>
-        <StackLayout IsVisible="{Binding IsDetailsVisible}">
-            <Label Text="Quantity:" />
-            <StackLayout Orientation="Horizontal">
-                <Editor Text="{Binding Item.Quantity}" TextChanged="OnQuantityChanged" HorizontalOptions="StartAndExpand"/>
-                <Label Text="{Binding Item.UnitDescription}" HorizontalOptions="Start"/>
-            </StackLayout>
-            <Label Text="Weight:" />
-            <StackLayout Orientation="Horizontal">
-                <Editor Text="{Binding Weight}" HorizontalOptions="StartAndExpand"/>
-                <Label Text="gramm" HorizontalOptions="Start"/>
-            </StackLayout>
+        <Grid IsVisible="{Binding IsDetailsVisible}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
+            <Label Text="Quantity:" Grid.Row="0" Grid.Column="0"/>
 
-            <Label Text="{Binding Item.Descriptor}" Style="{DynamicResource BodyStyle}" />
-
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Nutrition facts" Style="{DynamicResource SubTitleStyle}" HorizontalOptions="StartAndExpand"/>
-                <Button Text="Edit" Command="{Binding Path=BindingContext.FoodItem_EditCommand, Source={x:Reference Name=VariationItemPager}}" 
-                        HorizontalOptions="End"/>
+            <Editor Text="{Binding Item.Quantity}" TextChanged="OnQuantityChanged" Grid.Row="1" Grid.Column="0"/>
+            <Label Text="{Binding Item.UnitDescription}" Grid.Row="1" Grid.Column="1"/>
+            
+            <Label Text="Weight:" Grid.Row="2" Grid.Column="0"/>
+            
+            <Editor Text="{Binding Weight}" Grid.Row="3" Grid.Column="0"/>
+            <Label Text="gramm" Grid.Row="3" Grid.Column="1"/>
+            <StackLayout Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                <Label Text="{Binding Item.Descriptor}" Style="{DynamicResource BodyStyle}" />
             </StackLayout>
-            <Label Text="{Binding Item.Fat, StringFormat='Fat: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}" TextColor="{StaticResource FatColor}"/>
-            <Label Text="{Binding Item.Carbo, StringFormat='Carbo: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource CarboColor}"/>
-            <Label Text="{Binding Item.Protein, StringFormat='Protein: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource ProteinColor}"/>
-            <Label Text="in 100g" Style="{DynamicResource ListItemDetailTextStyle}" HorizontalOptions="End"/>
-        </StackLayout>
-        
-        
+            <Label Text="Nutrition facts" Style="{DynamicResource SubTitleStyle}" Grid.Row="5" Grid.Column="0"/>
+            <Button Text="Edit" Command="{Binding Path=BindingContext.FoodItem_EditCommand, Source={x:Reference Name=VariationItemPager}}" 
+                       Grid.Row="5" Grid.Column="1" />
+            <Label Text="{Binding Item.Fat, StringFormat='Fat: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}" 
+                   TextColor="{StaticResource FatColor}" Grid.Row="6" Grid.Column="0"/>
+            <Label Text="{Binding Item.Carbo, StringFormat='Carbo: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}" 
+                   TextColor="{StaticResource CarboColor}" Grid.Row="7" Grid.Column="0"/>
+            <Label Text="{Binding Item.Protein, StringFormat='Protein: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}" 
+                   TextColor="{StaticResource ProteinColor}" Grid.Row="8" Grid.Column="0"/>
+            <Label Text="in 100g" Style="{DynamicResource ListItemDetailTextStyle}" Grid.Row="9" Grid.Column="1"/>
+
+        </Grid>
     </StackLayout>
 </ContentPage>
