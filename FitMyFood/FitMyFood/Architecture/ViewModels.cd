@@ -1,21 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="FitMyFood.ViewModels.FoodItemVM">
-    <Position X="6.75" Y="2.75" Width="2.5" />
-    <Members>
-      <Property Name="Item" Hidden="true" />
-      <Property Name="Variation" Hidden="true" />
-    </Members>
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>ACAAACAAABIAAAAAAIAAAAgEAAAAAAAAAAAAAACAAAA=</HashCode>
-      <FileName>ViewModels\FoodItemVM.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="FitMyFood.ViewModels.VariationItemVM">
     <Position X="3.5" Y="2.75" Width="3" />
     <Members>
@@ -26,7 +10,7 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>CQAQACAAABAAAAEAAAAAhAAEAAIAAAAAACAACBAAAAA=</HashCode>
+      <HashCode>CQAQACAAABAAAAEAAAAAhAAEKAIAAAAAACAACBAAAAA=</HashCode>
       <FileName>ViewModels\VariationItemVM.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -69,6 +53,22 @@
     <TypeIdentifier>
       <HashCode>PEAAwAEAQQwiCABEEAwwBAASBIQlBgAQAFIKCABYAAg=</HashCode>
       <FileName>ViewModels\MainListVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FitMyFood.ViewModels.FoodItemVM">
+    <Position X="6.75" Y="2.75" Width="2.5" />
+    <Members>
+      <Property Name="Item" Hidden="true" />
+      <Property Name="Variation" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ACAAACAAABIAAAAAAIAAAAgEAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>ViewModels\FoodItemVM.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

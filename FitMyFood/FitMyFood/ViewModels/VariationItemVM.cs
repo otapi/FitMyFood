@@ -20,11 +20,50 @@ namespace FitMyFood.ViewModels
             get { return _Item; }
             set
             {
+                IsDetailsVisible = value != null;
+                if (value != null)
+                {
+                    if (_Item == null || value.Weight != _Item.Weight)
+                    {
+                        _Weight = value.Weight;
+                    }
+                }
                 SetProperty(ref _Item, value);
             }
         }
+        bool _IsDetailsVisible;
+        public bool IsDetailsVisible
+        {
+            get { return _IsDetailsVisible; }
+            set
+            {
+                SetProperty(ref _IsDetailsVisible, value);
+            }
+        }
+        double _Weight;
+        public double Weight
+        {
+            get { return _Weight; }
+            set
+            {
+                if (value != _Weight)
+                {
+                    if (Item != null)
+                    {
+                        var newQuantity = value / Item.UnitWeight;
+                        if (newQuantity != Item.Quantity)
+                        {
+                            _Item.Quantity = newQuantity;
+                            OnPropertyChanged("Item");
+                            ChangeQuantity().Wait();
+                        }
+                    }
+                    SetProperty(ref _Weight, value);
+                }
+            }
+        }
 
-        
+
         public Variation Variation;
         VariationFoodItem VariationFoodItem;
 
@@ -35,7 +74,7 @@ namespace FitMyFood.ViewModels
             MainList_RemoveItemCommand = new Command(async () => await ExecuteRemoveItemFromMainListCommand());
             FoodItem_NewCommand = new Command(async () => await ExecuteFoodItem_NewCommand());
             MainList_EditFinishedCommand = new Command(async () => await ExecuteMainList_EditFinishedCommand());
-
+            
             Variation = variation;
         }
 
@@ -65,7 +104,8 @@ namespace FitMyFood.ViewModels
                 VariationFoodItem = await App.DB.GetVariationFoodItemAsync(Item, Variation);
             }
             VariationFoodItem.Quantity = Item.Quantity;
-            App.DB.SaveChangesAsync().Wait();
+            await App.DB.SaveChangesAsync();
+            Weight = Item.Weight;
         }
 
         async Task ExecuteRemoveItemFromMainListCommand()

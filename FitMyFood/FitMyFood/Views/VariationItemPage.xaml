@@ -17,29 +17,40 @@
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-        <ToolbarItem Text="Edit" Command="{Binding Path=BindingContext.FoodItem_EditCommand, Source={x:Reference Name=VariationItemPager}}">
-            <ToolbarItem.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="UWP" Value="save.png"/>
-                </OnPlatform>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
     </ContentPage.ToolbarItems>
     <StackLayout Spacing="20" Padding="15">
-        <Label Text="{Binding Item.Name}" Style="{DynamicResource TitleStyle}"/>
-        <Label Text="Quantity:" />
-        <Editor Text="{Binding Item.Quantity}" TextChanged="OnQuantityChanged" />
+        <SearchBar x:Name="SearchBar" SearchCommand="{Binding SearchCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}" />
+        <StackLayout Orientation="Horizontal">
+            <Label Text="{Binding Item.Name}" Style="{DynamicResource TitleStyle}" HorizontalOptions="StartAndExpand"/>
+            <Button Text="New" Command="{Binding Path=BindingContext.FoodItem_NewCommand, Source={x:Reference Name=VariationItemPager}}"
+                    HorizontalOptions="End"/>
+        </StackLayout>
+        <StackLayout IsVisible="{Binding IsDetailsVisible}">
+            <Label Text="Quantity:" />
+            <StackLayout Orientation="Horizontal">
+                <Editor Text="{Binding Item.Quantity}" TextChanged="OnQuantityChanged" HorizontalOptions="StartAndExpand"/>
+                <Label Text="{Binding Item.UnitDescription}" HorizontalOptions="Start"/>
+            </StackLayout>
+            <Label Text="Weight:" />
+            <StackLayout Orientation="Horizontal">
+                <Editor Text="{Binding Weight}" HorizontalOptions="StartAndExpand"/>
+                <Label Text="gramm" HorizontalOptions="Start"/>
+            </StackLayout>
+
+
+            <Label Text="{Binding Item.Descriptor}" Style="{DynamicResource BodyStyle}" />
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Nutrition facts" Style="{DynamicResource SubTitleStyle}" HorizontalOptions="StartAndExpand"/>
+                <Button Text="Edit" Command="{Binding Path=BindingContext.FoodItem_EditCommand, Source={x:Reference Name=VariationItemPager}}" 
+                        HorizontalOptions="End"/>
+            </StackLayout>
+            <Label Text="{Binding Item.Fat, StringFormat='Fat: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}" TextColor="{StaticResource FatColor}"/>
+            <Label Text="{Binding Item.Carbo, StringFormat='Carbo: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource CarboColor}"/>
+            <Label Text="{Binding Item.Protein, StringFormat='Protein: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource ProteinColor}"/>
+            <Label Text="in 100g" Style="{DynamicResource ListItemDetailTextStyle}" HorizontalOptions="End"/>
+        </StackLayout>
         
-        <Label Text="{Binding Item.UnitDescription}" />
-
-        <Label Text="{Binding Item.Descriptor}" Style="{DynamicResource BodyStyle}" />
-        <Label Text="Nutrition facts:" Style="{DynamicResource SubTitleStyle}"/>
-
-        <Label Text="{Binding Item.Fat, StringFormat='Fat: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}" TextColor="{StaticResource FatColor}"/>
-        <Label Text="{Binding Item.Carbo, StringFormat='Carbo: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource CarboColor}"/>
-        <Label Text="{Binding Item.Protein, StringFormat='Protein: {0:F1}'}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource ProteinColor}"/>
-        <Label Text="in 100g" Style="{DynamicResource ListItemDetailTextStyle}" HorizontalOptions="End"/>
-        <Button Text="Edit" Command="{Binding Path=BindingContext.FoodItem_EditCommand, Source={x:Reference Name=VariationItemPager}}" />
-        <Button Text="New" Command="{Binding Path=BindingContext.FoodItem_NewCommand, Source={x:Reference Name=VariationItemPager}}" />
+        
     </StackLayout>
 </ContentPage>
