@@ -17,6 +17,7 @@ namespace FitMyFood.Views
 
             App.VariationItemVM = new VariationItemVM(Navigation, foodItem, variation);
             BindingContext = App.VariationItemVM;
+            App.VariationItemVM.FillSearchFoodItemsCommand.Execute(null);
         }
 
         void OnQuantityChanged(object sender, EventArgs e)
@@ -30,8 +31,6 @@ namespace FitMyFood.Views
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             SearchItemsListview.BeginRefresh();
-            App.VariationItemVM.IsSearchItemsListviewVisible = true;
-
             if (string.IsNullOrWhiteSpace(e.NewTextValue))
                 App.VariationItemVM.FillSearchFoodItemsCommand.Execute(null);
             else

@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using System.Threading.Tasks;
 using FitMyFood.Views;
 
+// TODO: selectall text edits on focus with a Renderer or an Effect
 
 namespace FitMyFood.ViewModels
 {
@@ -55,7 +56,8 @@ namespace FitMyFood.ViewModels
             }
             await App.DB.SaveChangesAsync();
             App.VariationItemVM.Item = Item;
-            //App.VariationItemVM.Weight = Item.Weight;
+            
+            App.VariationItemVM.SelectedSearchItem = Item;
             IsBusy = false;
             await Navigation.PopModalAsync();
         }

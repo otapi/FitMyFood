@@ -7,6 +7,8 @@ using FitMyFood.Views;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
+// TODO: rounded buttons on Android with Renderer or just a style?
+
 namespace FitMyFood.ViewModels
 {
     public class VariationItemVM : BaseVM, Architecture.VariationItemVMI
@@ -62,6 +64,12 @@ namespace FitMyFood.ViewModels
                 if (SelectedSearchItem != null)
                 {
                     Item = SelectedSearchItem;
+                    if (VariationFoodItem == null)
+                    {
+                        var t = App.DB.GetVariationFoodItemAsync(Item, Variation);
+                        t.Wait();
+                        VariationFoodItem = t.Result;
+                    }
                     App.DB.ChangeFoodItemOnVariationFoodItemAsync(Item.Quantity, VariationFoodItem, Item).Wait();
                     IsSearchItemsListviewVisible = false;
                     //Weight = SelectedSearchItem.Weight;
@@ -94,11 +102,12 @@ namespace FitMyFood.ViewModels
         public ObservableCollection<FoodItem> SearchItems { get; set; }
         
         public Variation Variation;
-        VariationFoodItem VariationFoodItem;
+        public VariationFoodItem VariationFoodItem;
 
         public VariationItemVM(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
         {
             Item = foodItem;
+            
             SearchItems = new ObservableCollection<FoodItem>();
             IsSearchItemsListviewVisible = false;
 
@@ -110,6 +119,8 @@ namespace FitMyFood.ViewModels
             
 
             Variation = variation;
+
+            
         }
 
         async Task ExecuteEditFoodItemDetailCommand()
@@ -164,6 +175,7 @@ namespace FitMyFood.ViewModels
 
         async Task ExecuteFillSearchFoodItemsCommand(string term)
         {
+            App.VariationItemVM.IsSearchItemsListviewVisible = true;
             SearchItems.Clear();
             foreach (var item in await App.DB.GetOrderedFoodItemsAsync(term))
             {

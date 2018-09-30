@@ -20,7 +20,7 @@ namespace FitMyFood.Data
         protected DatabaseContext CrateContext()
         {
             DatabaseContext databaseContext = new DatabaseContext();
-            databaseContext.Database.EnsureDeleted();
+            //databaseContext.Database.EnsureDeleted();
             if (Device.RuntimePlatform == Device.Android)
             {
                 databaseContext.Database.EnsureDeleted();
