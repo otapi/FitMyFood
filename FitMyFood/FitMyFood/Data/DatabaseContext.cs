@@ -45,8 +45,10 @@ namespace FitMyFood.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            /* commented out to able to change the foodItem on it
             modelBuilder.Entity<VariationFoodItem>()
                 .HasKey(t => new { t.FoodItemId, t.VariationId });
+                */
         }
     }
 }

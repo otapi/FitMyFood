@@ -19,13 +19,43 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <StackLayout Spacing="20" Padding="15">
-        <SearchBar x:Name="SearchBar" SearchCommand="{Binding SearchCommand}" 
-                   SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}" />
-        <StackLayout Orientation="Horizontal">
-            <Label Text="{Binding Item.Name}" Style="{DynamicResource TitleStyle}" HorizontalOptions="StartAndExpand"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <SearchBar x:Name="SearchBar" TextChanged="SearchBar_TextChanged" Grid.Row="0" Grid.Column="0"/>
             <Button Text="New" Command="{Binding Path=BindingContext.FoodItem_NewCommand, Source={x:Reference Name=VariationItemPager}}"
+                    Grid.Row="0" Grid.Column="1"
                     HorizontalOptions="End"/>
-        </StackLayout>
+            <ListView x:Name="SearchItemsListview"
+                    ItemsSource="{Binding SearchItems}"
+                    HasUnevenRows="true"
+                    IsPullToRefreshEnabled="False"
+                    CachingStrategy="RecycleElement"
+                    SelectionMode="Single"
+                    IsVisible="{Binding IsSearchItemsListviewVisible}"
+                    SelectedItem="{Binding SelectedSearchItem, Mode=TwoWay}"
+                    VerticalOptions="FillAndExpand"
+                    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                  >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding Name}" Style="{DynamicResource ListItemTextStyle}" />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label Text="{Binding Item.Name}" Style="{DynamicResource TitleStyle}" HorizontalOptions="StartAndExpand"
+                   Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+            
+        </Grid>
         <Grid IsVisible="{Binding IsDetailsVisible}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

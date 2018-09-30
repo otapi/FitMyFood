@@ -4,6 +4,8 @@ using FitMyFood.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using FitMyFood.Views;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace FitMyFood.ViewModels
 {
@@ -13,7 +15,8 @@ namespace FitMyFood.ViewModels
         public Command MainList_RemoveItemCommand { get; set; }
         public Command FoodItem_NewCommand { get; set; }
         public Command MainList_EditFinishedCommand { get; set; }
-
+        public Command FillSearchFoodItemsCommand { get; set; }
+        
         FoodItem _Item;
         public FoodItem Item
         {
@@ -31,6 +34,15 @@ namespace FitMyFood.ViewModels
                 SetProperty(ref _Item, value);
             }
         }
+        bool _IsSearchItemsListviewVisible;
+        public bool IsSearchItemsListviewVisible
+        {
+            get { return _IsSearchItemsListviewVisible; }
+            set
+            {
+                SetProperty(ref _IsSearchItemsListviewVisible, value);
+            }
+        }
         bool _IsDetailsVisible;
         public bool IsDetailsVisible
         {
@@ -40,6 +52,23 @@ namespace FitMyFood.ViewModels
                 SetProperty(ref _IsDetailsVisible, value);
             }
         }
+        FoodItem _SelectedSearchItem;
+        public FoodItem SelectedSearchItem
+        {
+            get { return _SelectedSearchItem; }
+            set
+            {
+                SetProperty(ref _SelectedSearchItem, value);
+                if (SelectedSearchItem != null)
+                {
+                    Item = SelectedSearchItem;
+                    App.DB.ChangeFoodItemOnVariationFoodItemAsync(Item.Quantity, VariationFoodItem, Item).Wait();
+                    IsSearchItemsListviewVisible = false;
+                    //Weight = SelectedSearchItem.Weight;
+                }
+            }
+        }
+
         double _Weight;
         public double Weight
         {
@@ -62,19 +91,24 @@ namespace FitMyFood.ViewModels
                 }
             }
         }
-
-
+        public ObservableCollection<FoodItem> SearchItems { get; set; }
+        
         public Variation Variation;
         VariationFoodItem VariationFoodItem;
 
         public VariationItemVM(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
         {
             Item = foodItem;
+            SearchItems = new ObservableCollection<FoodItem>();
+            IsSearchItemsListviewVisible = false;
+
             FoodItem_EditCommand = new Command(async () => await ExecuteEditFoodItemDetailCommand());
             MainList_RemoveItemCommand = new Command(async () => await ExecuteRemoveItemFromMainListCommand());
             FoodItem_NewCommand = new Command(async () => await ExecuteFoodItem_NewCommand());
             MainList_EditFinishedCommand = new Command(async () => await ExecuteMainList_EditFinishedCommand());
+            FillSearchFoodItemsCommand = new Command<string>(async (string term) => await ExecuteFillSearchFoodItemsCommand(term));
             
+
             Variation = variation;
         }
 
@@ -128,5 +162,13 @@ namespace FitMyFood.ViewModels
             await Navigation.PopAsync(true);
         }
 
+        async Task ExecuteFillSearchFoodItemsCommand(string term)
+        {
+            SearchItems.Clear();
+            foreach (var item in await App.DB.GetOrderedFoodItemsAsync(term))
+            {
+                SearchItems.Add(item);
+            };
+        }
     }
 }

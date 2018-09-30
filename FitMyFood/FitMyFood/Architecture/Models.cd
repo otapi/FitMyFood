@@ -24,7 +24,7 @@
     <AssociationLine Name="VariationFoodItems" Type="FitMyFood.Models.VariationFoodItem" FixedToPoint="true">
       <Path>
         <Point X="3.438" Y="3.75" />
-        <Point X="3.438" Y="2.873" />
+        <Point X="3.438" Y="3.065" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="-1.473" Y="0.282" />
@@ -45,7 +45,7 @@
   <Class Name="FitMyFood.Models.VariationFoodItem">
     <Position X="3" Y="1" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAABAAAAAAAAAAAAAAAAAQAAAAAAgAAAEAA=</HashCode>
+      <HashCode>AAAAACAAAAABAAAAAAAAAAAAAAAAAQAAAAgAgAAAEAA=</HashCode>
       <FileName>Models\VariationFoodItem.cs</FileName>
     </TypeIdentifier>
   </Class>

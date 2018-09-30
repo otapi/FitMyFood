@@ -55,7 +55,7 @@ namespace FitMyFood.ViewModels
             }
             await App.DB.SaveChangesAsync();
             App.VariationItemVM.Item = Item;
-            App.VariationItemVM.Weight = Item.Weight;
+            //App.VariationItemVM.Weight = Item.Weight;
             IsBusy = false;
             await Navigation.PopModalAsync();
         }

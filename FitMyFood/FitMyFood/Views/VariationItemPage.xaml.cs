@@ -27,5 +27,30 @@ namespace FitMyFood.Views
                 App.VariationItemVM.ChangeQuantity().Wait();
             }
         }
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchItemsListview.BeginRefresh();
+            App.VariationItemVM.IsSearchItemsListviewVisible = true;
+
+            if (string.IsNullOrWhiteSpace(e.NewTextValue))
+                App.VariationItemVM.FillSearchFoodItemsCommand.Execute(null);
+            else
+                App.VariationItemVM.FillSearchFoodItemsCommand.Execute(e.NewTextValue);
+
+            SearchItemsListview.EndRefresh();
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            if (App.VariationItemVM.IsSearchItemsListviewVisible)
+            {
+                App.VariationItemVM.IsSearchItemsListviewVisible = false;
+            } else
+            {
+                App.VariationItemVM.MainList_EditFinishedCommand.Execute(null);
+            }
+            
+            return true;
+        }
     }
 }

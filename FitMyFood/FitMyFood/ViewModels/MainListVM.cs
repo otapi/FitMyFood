@@ -154,8 +154,8 @@ namespace FitMyFood.ViewModels
             LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
-            VariationItem_EditCommand = new Command(async () => await ExecuteOpenVariationItemCommand());
-            VariationItem_NewCommand = new Command(async () => await ExecuteOpenVariationItemCommand());
+            VariationItem_EditCommand = new Command(async () => await VariationItem_NewCommandCommand());
+            VariationItem_NewCommand = new Command(async () => await VariationItem_NewCommandCommand());
             
         }
         public MainListVM(INavigation navigation) : base(navigation)
@@ -269,7 +269,7 @@ namespace FitMyFood.ViewModels
             IsBusy = false;
         }
         
-        async Task ExecuteOpenVariationItemCommand()
+        async Task VariationItem_NewCommandCommand()
         {
             await Navigation.PushAsync(new VariationItemPage(SelectedItem, MealVariation));
         }

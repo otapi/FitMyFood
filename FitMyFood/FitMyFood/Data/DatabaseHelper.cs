@@ -20,6 +20,7 @@ namespace FitMyFood.Data
         protected DatabaseContext CrateContext()
         {
             DatabaseContext databaseContext = new DatabaseContext();
+            databaseContext.Database.EnsureDeleted();
             if (Device.RuntimePlatform == Device.Android)
             {
                 databaseContext.Database.EnsureDeleted();
@@ -134,6 +135,33 @@ namespace FitMyFood.Data
             };
             await context.AddAsync(variationFoodItem);
             await context.SaveChangesAsync();
+        }
+
+        public async Task ChangeFoodItemOnVariationFoodItemAsync(double Quantity, VariationFoodItem variationFoodItem, FoodItem newFoodItem)
+        {
+            variationFoodItem.FoodItem = newFoodItem;
+            variationFoodItem.Quantity = Quantity;
+            await context.SaveChangesAsync();
+        }
+
+        public async Task<List<FoodItem>> GetOrderedFoodItemsAsync(string filterForTerm)
+        {
+            List<FoodItem> foodItems;
+            if (filterForTerm == null)
+            {
+                foodItems = await context.FoodItems
+                                        .OrderBy(v => v.Name)
+                                        .ToListAsync();
+            }
+            else
+            {
+                filterForTerm = filterForTerm.ToLower();
+                foodItems = await context.FoodItems
+                                        .Where(v => v.Name.ToLower().Contains(filterForTerm))
+                                        .OrderBy(v => v.Name)
+                                        .ToListAsync();
+            }
+            return foodItems;
         }
         #endregion
     }
