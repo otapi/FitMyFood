@@ -26,6 +26,9 @@
         <StackLayout>
             <Label Text="Name:" FontSize="Medium" />
             <Entry Text="{Binding Item.Name}"/>
+            <BoxView HeightRequest="1" BackgroundColor="{StaticResource SeparatorColor}" HorizontalOptions="FillAndExpand" />
+
+        
             <Label Text="Nutrition facts in 100 gramm:" Style="{DynamicResource SubTitleStyle}"/>
 
             <Label Text="Fat:" />
@@ -34,13 +37,16 @@
             <Editor Text="{Binding Item.Carbo}"/>
             <Label Text="Protein:" />
             <Editor Text="{Binding Item.Protein}"/>
-            
+            <BoxView HeightRequest="1" BackgroundColor="{StaticResource SeparatorColor}" HorizontalOptions="FillAndExpand" />
+
             <Label Text="Name of a unit:" />
             <Editor Text="{Binding Item.UnitDescription}"/>
             <Label Text="Weight (gramm) of one unit:" />
             <Editor Text="{Binding Item.UnitWeight}"/>
-            
-            
+            <Label Text="Default quatity:" />
+            <Editor Text="{Binding Item.Quantity}"/>
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

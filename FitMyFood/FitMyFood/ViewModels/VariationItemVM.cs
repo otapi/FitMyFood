@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace FitMyFood.ViewModels
 {
-    public class VariationItemVM : BaseVM, Architecture.VariationItemVMI
+    public class VariationItemVM : BaseVM
     {
         public Command FoodItem_EditCommand { get; set; }
         public Command MainList_RemoveItemCommand { get; set; }
@@ -61,18 +61,27 @@ namespace FitMyFood.ViewModels
             set
             {
                 SetProperty(ref _SelectedSearchItem, value);
-                if (SelectedSearchItem != null)
+                if (value != null)
                 {
-                    Item = SelectedSearchItem;
+
                     if (VariationFoodItem == null)
                     {
-                        var t = App.DB.GetVariationFoodItemAsync(Item, Variation);
-                        t.Wait();
-                        VariationFoodItem = t.Result;
+                        if (Item == null)
+                        {
+                            var t = App.DB.AddNewVariationFoodItemAsync(value.Quantity, Variation, value);
+                            t.Wait();
+                            VariationFoodItem = t.Result;
+                        } else {
+                            var t = App.DB.GetVariationFoodItemAsync(value, Variation);
+                            t.Wait();
+                            VariationFoodItem = t.Result;
+                        }
+                        
                     }
-                    App.DB.ChangeFoodItemOnVariationFoodItemAsync(Item.Quantity, VariationFoodItem, Item).Wait();
+                    Item = value;
+                    App.DB.ChangeFoodItemOnVariationFoodItemAsync(Item.Quantity, VariationFoodItem, value).Wait();
                     IsSearchItemsListviewVisible = false;
-                    //Weight = SelectedSearchItem.Weight;
+                    Weight = SelectedSearchItem.Weight;
                 }
             }
         }
@@ -111,11 +120,11 @@ namespace FitMyFood.ViewModels
             SearchItems = new ObservableCollection<FoodItem>();
             IsSearchItemsListviewVisible = false;
 
-            FoodItem_EditCommand = new Command(async () => await ExecuteEditFoodItemDetailCommand());
-            MainList_RemoveItemCommand = new Command(async () => await ExecuteRemoveItemFromMainListCommand());
-            FoodItem_NewCommand = new Command(async () => await ExecuteFoodItem_NewCommand());
-            MainList_EditFinishedCommand = new Command(async () => await ExecuteMainList_EditFinishedCommand());
-            FillSearchFoodItemsCommand = new Command<string>(async (string term) => await ExecuteFillSearchFoodItemsCommand(term));
+            FoodItem_EditCommand = new Command(async () => await FoodItem_Edit());
+            MainList_RemoveItemCommand = new Command(async () => await MainList_RemoveItem());
+            FoodItem_NewCommand = new Command(async () => await FoodItem_New());
+            MainList_EditFinishedCommand = new Command(async () => await MainList_EditFinished());
+            FillSearchFoodItemsCommand = new Command<string>(async (string term) => await FillSearchFoodItems(term));
             
 
             Variation = variation;
@@ -123,17 +132,17 @@ namespace FitMyFood.ViewModels
             
         }
 
-        async Task ExecuteEditFoodItemDetailCommand()
+        async Task FoodItem_Edit()
         {
             IsBusy = true;
-            await Navigation.PushModalAsync(new NavigationPage(new FoodItemPage(Item, null)));
+            await Navigation.PushAsync(new FoodItemPage(Item, null));
             IsBusy = false;
         }
 
-        async Task ExecuteFoodItem_NewCommand()
+        async Task FoodItem_New()
         {
             IsBusy = true;
-            await Navigation.PushModalAsync(new NavigationPage(new FoodItemPage(null, Variation)));
+            await Navigation.PushAsync(new FoodItemPage(null, Variation));
             IsBusy = false;
         }
 
@@ -153,7 +162,7 @@ namespace FitMyFood.ViewModels
             Weight = Item.Weight;
         }
 
-        async Task ExecuteRemoveItemFromMainListCommand()
+        async Task MainList_RemoveItem()
         {
             if (Item == null)
             {
@@ -168,12 +177,12 @@ namespace FitMyFood.ViewModels
             IsBusy = false;
             await Navigation.PopAsync(true);
         }
-        async Task ExecuteMainList_EditFinishedCommand()
+        async Task MainList_EditFinished()
         {
             await Navigation.PopAsync(true);
         }
 
-        async Task ExecuteFillSearchFoodItemsCommand(string term)
+        async Task FillSearchFoodItems(string term)
         {
             App.VariationItemVM.IsSearchItemsListviewVisible = true;
             SearchItems.Clear();
@@ -182,5 +191,7 @@ namespace FitMyFood.ViewModels
                 SearchItems.Add(item);
             };
         }
+
+       
     }
 }

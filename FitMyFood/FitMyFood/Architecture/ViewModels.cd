@@ -1,47 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="FitMyFood.ViewModels.VariationItemVM">
-    <Position X="3.5" Y="2.75" Width="3" />
+    <Position X="3.75" Y="0.5" Width="3" />
     <Members>
+      <Method Name="ChangeQuantity" Hidden="true" />
+      <Method Name="FillSearchFoodItems" Hidden="true" />
       <Property Name="Item" Hidden="true" />
+      <Method Name="VariationItemVM" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>CQAQACAAABAAAAEAAAAAhAAEKAIAAAAAACAACBAAAAA=</HashCode>
+      <HashCode>KBAQACAAABAAIIEAAAAAgAAkKCIYAAEIAQAAABAAgAA=</HashCode>
       <FileName>ViewModels\VariationItemVM.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FitMyFood.ViewModels.MainListVM">
-    <Position X="0.5" Y="2.75" Width="2.75" />
+    <Position X="0.5" Y="0.5" Width="2.75" />
     <Members>
-      <Property Name="DailyProfile" Hidden="true" />
-      <Property Name="DailyProfileSelectorIndex" Hidden="true" />
-      <Property Name="DailyProfileSelectorSource" Hidden="true" />
-      <Property Name="Items" Hidden="true" />
-      <Property Name="LoadItemsCommand" Hidden="true" />
-      <Property Name="LoadSelectorsCommand" Hidden="true" />
-      <Property Name="Meal" Hidden="true" />
-      <Property Name="MealSelectorIndex" Hidden="true" />
-      <Property Name="MealSelectorSource" Hidden="true" />
-      <Property Name="MealVariation" Hidden="true" />
-      <Property Name="SelectedItem" Hidden="true" />
-      <Property Name="SummaryCarbo" Hidden="true" />
-      <Property Name="SummaryEnergy" Hidden="true" />
-      <Property Name="SummaryFat" Hidden="true" />
-      <Property Name="SummaryProtein" Hidden="true" />
-      <Property Name="TargetFood" Hidden="true" />
-      <Property Name="TotalFood" Hidden="true" />
-      <Property Name="UpdateVariantSelectorCommand" Hidden="true" />
-      <Property Name="VariationSelectorIndex" Hidden="true" />
-      <Property Name="VariationSelectorSource" Hidden="true" />
+      <Method Name="CalcSummary" Hidden="true" />
+      <Method Name="CalcTargetFood" Hidden="true" />
+      <Method Name="DefineCommands" Hidden="true" />
+      <Method Name="ExecuteLoadItemsCommand" Hidden="true" />
+      <Method Name="ExecuteLoadSelectorsCommand" Hidden="true" />
+      <Method Name="MainListVM" Hidden="true" />
+      <Method Name="PopulateDailyProfileSelector" Hidden="true" />
+      <Method Name="PopulateMealSelector" Hidden="true" />
+      <Method Name="PopulateVariationSelector" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <NestedTypes>
       <Class Name="FitMyFood.ViewModels.MainListVM.Summary" Collapsed="true">
@@ -51,47 +42,25 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>PEAAwAEAQQwiCABEEAwwBAASBIQlBgAQAFIKCABYAAg=</HashCode>
+      <HashCode>PEAAwAEAQSwiCABEAAwwBAASBIQlBgAQAFIKCABYAAg=</HashCode>
       <FileName>ViewModels\MainListVM.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="FitMyFood.ViewModels.FoodItemVM">
-    <Position X="6.75" Y="2.75" Width="2.5" />
+    <Position X="7.25" Y="0.5" Width="2.5" />
     <Members>
+      <Method Name="FoodItemVM" Hidden="true" />
       <Property Name="Item" Hidden="true" />
       <Property Name="Variation" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>ACAAACAAABIAAAAAAIAAAAgEAAAAAAAAAAAAAACAAAA=</HashCode>
+      <HashCode>ACCAACAAABIAAABAAAAAAAgEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\FoodItemVM.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="FitMyFood.Architecture.VariationItemVMI">
-    <Position X="3.5" Y="0.5" Width="3" />
-    <TypeIdentifier>
-      <HashCode>AAAQAAAAAAAAAAEAAAAAgAAAAAAAAAAAAAAAABAAAAA=</HashCode>
-      <FileName>Architecture\IVariationItemVM.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="FitMyFood.Architecture.MainListVMI">
-    <Position X="0.5" Y="0.5" Width="2.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAgAAAAAAAAAAAAA=</HashCode>
-      <FileName>Architecture\IMainListVM.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="FitMyFood.Architecture.FoodItemVMI">
-    <Position X="6.75" Y="0.5" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Architecture\IFoodItemVM.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

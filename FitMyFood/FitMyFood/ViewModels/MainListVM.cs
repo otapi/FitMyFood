@@ -13,7 +13,7 @@ using FitMyFood.Data;
 
 namespace FitMyFood.ViewModels
 {
-    public class MainListVM : BaseVM, Architecture.MainListVMI
+    public class MainListVM : BaseVM
     {
         public class Summary
         {
@@ -154,8 +154,8 @@ namespace FitMyFood.ViewModels
             LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
-            VariationItem_EditCommand = new Command(async () => await VariationItem_NewCommandCommand());
-            VariationItem_NewCommand = new Command(async () => await VariationItem_NewCommandCommand());
+            VariationItem_EditCommand = new Command(async () => await ExecuteVariationItem_EditCommand());
+            VariationItem_NewCommand = new Command(async () => await ExecuteVariationItem_NewCommand());
             
         }
         public MainListVM(INavigation navigation) : base(navigation)
@@ -187,7 +187,9 @@ namespace FitMyFood.ViewModels
             {
                 Fat = 0,
                 Carbo = 0,
-                Protein = 0
+                Protein = 0,
+                Quantity = 1,
+                UnitWeight = 1
             };
 
             foreach (var food in Items)
@@ -269,9 +271,13 @@ namespace FitMyFood.ViewModels
             IsBusy = false;
         }
         
-        async Task VariationItem_NewCommandCommand()
+        async Task ExecuteVariationItem_EditCommand()
         {
             await Navigation.PushAsync(new VariationItemPage(SelectedItem, MealVariation));
+        }
+        async Task ExecuteVariationItem_NewCommand()
+        {
+            await Navigation.PushAsync(new VariationItemPage(null, MealVariation));
         }
 
         

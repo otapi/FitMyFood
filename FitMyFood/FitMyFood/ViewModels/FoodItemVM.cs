@@ -9,7 +9,7 @@ using FitMyFood.Views;
 
 namespace FitMyFood.ViewModels
 {
-    public class FoodItemVM : BaseVM, Architecture.FoodItemVMI
+    public class FoodItemVM : BaseVM
     {
         public Command VariationItem_SaveCommand { get; set; }
         public Command VariationItem_CancelCommand { get; set; }
@@ -43,27 +43,26 @@ namespace FitMyFood.ViewModels
 
             this.Item = foodItem;
             Variation = variation;
-            VariationItem_SaveCommand = new Command(async () => await ExecuteSaveCommand());
-            VariationItem_CancelCommand = new Command(async () => await ExecuteCancelCommand());
+            VariationItem_SaveCommand = new Command(async () => await VariationItem_Save());
+            VariationItem_CancelCommand = new Command(async () => await VariationItem_Cancel());
         }
 
-        async Task ExecuteSaveCommand()
+        async Task VariationItem_Save()
         {
             IsBusy = true;
             if (newitem)
             {
-                await App.DB.AddNewVariationFoodItemAsync(Item.Quantity, Variation, Item);
+                App.VariationItemVM.VariationFoodItem = await App.DB.AddNewVariationFoodItemAsync(Item.Quantity, Variation, Item);
             }
             await App.DB.SaveChangesAsync();
             App.VariationItemVM.Item = Item;
-            
             App.VariationItemVM.SelectedSearchItem = Item;
             IsBusy = false;
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync(true);
         }
-        async Task ExecuteCancelCommand()
+        async Task VariationItem_Cancel()
         {
-            await Navigation.PopModalAsync();
+            await Navigation.PopAsync(true);
         }
     }
 }

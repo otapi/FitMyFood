@@ -10,6 +10,7 @@
             <Color x:Key="FatColor">#2196F3</Color>
             <Color x:Key="CarboColor">#2196F3</Color>
             <Color x:Key="ProteinColor">#2196F3</Color>
+            <Color x:Key="SeparatorColor">#2196F3</Color>
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
                 <Setter Property="BarTextColor" Value="White" />

@@ -17,15 +17,18 @@ namespace FitMyFood.Views
 
             App.VariationItemVM = new VariationItemVM(Navigation, foodItem, variation);
             BindingContext = App.VariationItemVM;
-            App.VariationItemVM.FillSearchFoodItemsCommand.Execute(null);
+            if (foodItem == null)
+            {
+                App.VariationItemVM.FillSearchFoodItemsCommand.Execute(null);
+            }
         }
 
-        void OnQuantityChanged(object sender, EventArgs e)
+        async void OnQuantityChanged(object sender, EventArgs e)
         {
             Editor quant = (sender as Editor);
             if (quant.Text != null)
             {
-                App.VariationItemVM.ChangeQuantity().Wait();
+                await App.VariationItemVM.ChangeQuantity();
             }
         }
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)

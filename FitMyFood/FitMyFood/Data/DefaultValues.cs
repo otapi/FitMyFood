@@ -31,7 +31,7 @@ namespace FitMyFood.Data
             return new FoodItem
             {
                 Name = "Item 1",
-                UnitDescription = "gr",
+                UnitDescription = "gramm",
                 UnitWeight = 1,
                 Fat = 0,
                 Carbo = 0,

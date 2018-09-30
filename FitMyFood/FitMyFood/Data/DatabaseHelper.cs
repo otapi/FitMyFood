@@ -120,7 +120,7 @@ namespace FitMyFood.Data
             await context.SaveChangesAsync();
         }
 
-        public async Task AddNewVariationFoodItemAsync(double Quantity, Variation variation, FoodItem foodItem)
+        public async Task<VariationFoodItem> AddNewVariationFoodItemAsync(double Quantity, Variation variation, FoodItem foodItem)
         {
             
             //var realFoodItem = await context.FoodItems
@@ -135,6 +135,7 @@ namespace FitMyFood.Data
             };
             await context.AddAsync(variationFoodItem);
             await context.SaveChangesAsync();
+            return variationFoodItem;
         }
 
         public async Task ChangeFoodItemOnVariationFoodItemAsync(double Quantity, VariationFoodItem variationFoodItem, FoodItem newFoodItem)

@@ -56,6 +56,8 @@
                    Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
             
         </Grid>
+        <BoxView HeightRequest="1" BackgroundColor="{StaticResource SeparatorColor}" HorizontalOptions="FillAndExpand" />
+
         <Grid IsVisible="{Binding IsDetailsVisible}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
