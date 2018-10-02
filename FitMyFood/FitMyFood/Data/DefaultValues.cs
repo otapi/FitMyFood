@@ -40,5 +40,21 @@ namespace FitMyFood.Data
                 Quantity = 0,
             };
         }
+
+        public static Settings Settings()
+        {
+            return new Settings
+            {
+                ActualWeight = 82,
+                Height = 171,
+                Sex = true,
+                Age = 39,
+                Physical_activity = 1,
+                WeeklyWeightChange = -0.5,
+                DailyFatRatio = 20,
+                DailyCarboRatio = 50,
+                DailyProteinRatio = 30
+            };
+        }
     }
 }

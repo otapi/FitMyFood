@@ -17,7 +17,7 @@ namespace FitMyFood.Views
 
             MasterBehavior = MasterBehavior.Popover;
             
-            MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
+            MenuPages.Add((int)MenuItemType.MainList, (NavigationPage)Detail);
 
         }
 
@@ -33,7 +33,10 @@ namespace FitMyFood.Views
             {
                 switch (id)
                 {
-                    case (int)MenuItemType.Browse:
+                    case (int)MenuItemType.Settings:
+                        MenuPages.Add(id, new NavigationPage(new SettingsPage()));
+                        break;
+                    case (int)MenuItemType.MainList:
                         MenuPages.Add(id, new NavigationPage(new MainListPage()));
                         break;
                     case (int)MenuItemType.About:

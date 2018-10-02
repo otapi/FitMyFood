@@ -33,6 +33,7 @@ namespace FitMyFood.ViewModels
         public ObservableCollection<View> MealSelectorSource { get; set; }
         public ObservableCollection<View> VariationSelectorSource { get; set; }
 
+        public Settings Settings { get; set; }
         public FoodItem TargetFood { get; set; }
         public FoodItem TotalFood { get; set; }
         FoodItem _SelectedItem;

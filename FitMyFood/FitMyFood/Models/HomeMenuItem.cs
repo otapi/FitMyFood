@@ -6,7 +6,8 @@ namespace FitMyFood.Models
 {
     public enum MenuItemType
     {
-        Browse,
+        MainList,
+        Settings,
         About
     }
     public class HomeMenuItem

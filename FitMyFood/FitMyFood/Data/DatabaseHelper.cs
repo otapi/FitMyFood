@@ -41,7 +41,7 @@ namespace FitMyFood.Data
             {
                 meals.AddRange(DefaultValues.MealSelectorItems);
                 await context.Meals.AddRangeAsync(meals);
-                await context.SaveChangesAsync();
+                await SaveChangesAsync();
             }
             return meals;
         }
@@ -56,7 +56,7 @@ namespace FitMyFood.Data
             {
                 dailyProfiles.AddRange(DefaultValues.DailyProfileSelectorItems);
                 await context.DailyProfiles.AddRangeAsync(dailyProfiles);
-                await context.SaveChangesAsync();
+                await SaveChangesAsync();
             }
             return dailyProfiles;
         }
@@ -77,7 +77,7 @@ namespace FitMyFood.Data
                     Meal = meal
                 };
                 await context.Variations.AddAsync(variation);
-                await context.SaveChangesAsync();
+                await SaveChangesAsync();
                 variations.Add(variation);
             }
             return variations;
@@ -111,13 +111,13 @@ namespace FitMyFood.Data
         {
             context.Attach(variationFoodItem);
             context.Entry(variationFoodItem).Property("Quantity").IsModified = true;
-            await context.SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
         public async Task RemoveVariationFoodItemAsync(VariationFoodItem variationFoodItem)
         {
             context.Remove(variationFoodItem);
-            await context.SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
         public async Task<VariationFoodItem> AddNewVariationFoodItemAsync(double Quantity, Variation variation, FoodItem foodItem)
@@ -142,7 +142,7 @@ namespace FitMyFood.Data
         {
             variationFoodItem.FoodItem = newFoodItem;
             variationFoodItem.Quantity = Quantity;
-            await context.SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
         public async Task<List<FoodItem>> GetOrderedFoodItemsAsync(string filterForTerm)
@@ -163,6 +163,22 @@ namespace FitMyFood.Data
                                         .ToListAsync();
             }
             return foodItems;
+        }
+
+        public async Task<Settings> GetSettings()
+        {
+            var settings = (await context.Settings.ToListAsync());
+            if (settings.Count == 0)
+            {
+                var set = DefaultValues.Settings();
+                await context.Settings.AddAsync(set);
+
+                await SaveChangesAsync();
+                return set;
+            } else
+            {
+                return settings[0];
+            }
         }
         #endregion
     }

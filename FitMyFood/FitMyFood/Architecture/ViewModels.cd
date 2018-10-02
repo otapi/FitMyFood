@@ -46,20 +46,20 @@
       <FileName>ViewModels\MainListVM.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FitMyFood.ViewModels.FoodItemVM">
+  <Class Name="FitMyFood.ViewModels.SettingsVM">
     <Position X="7.25" Y="0.5" Width="2.5" />
     <Members>
-      <Method Name="FoodItemVM" Hidden="true" />
-      <Property Name="Item" Hidden="true" />
-      <Property Name="Variation" Hidden="true" />
+      <Property Name="Settings" Hidden="true" />
+      <Method Name="SettingsVM" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>ACCAACAAABIAAABAAAAAAAgEAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\FoodItemVM.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgCAAAAAAAgAAAAAAwAAA=</HashCode>
+      <FileName>ViewModels\SettingsVM.cs</FileName>
+      <NewMemberFileName>ViewModels\FoodItemVM.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

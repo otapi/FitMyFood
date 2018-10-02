@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitMyFood.Views.SettingsPage"
+             xmlns:vm="clr-namespace:FitMyFood.ViewModels"
+             Title="{Binding Title}"
+             x:Name="SettingsPager">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel" Command="{Binding Path=BindingContext.MainList_CancelCommand, Source={x:Reference Name=SettingsPager}}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="cancel.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Save"  Command="{Binding Path=BindingContext.MainList_SaveCommand, Source={x:Reference Name=SettingsPager}}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="save.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Actual weight (kg):" />
+            <Entry Text="{Binding Settings.ActualWeight}"/>
+            <Label Text="Height (cm):" />
+            <Entry Text="{Binding Settings.Height}"/>
+            <Label Text="Sex:" />
+            <Entry Text="{Binding Settings.Sex}"/>
+            <Label Text="Age:" />
+            <Entry Text="{Binding Settings.Age}"/>
+            <Label Text="Physical activity:" />
+            <Entry Text="{Binding Settings.Physical_activity}"/>
+            <Label Text="Weight change (kg/week):" />
+            <Entry Text="{Binding Settings.WeeklyWeightChange}"/>
+            <Label Text="Daily fat (%):" />
+            <Entry Text="{Binding Settings.DailyFatRatio}"/>
+            <Label Text="Daily carbo (%):" />
+            <Entry Text="{Binding Settings.DailyCarboRatio}"/>
+            <Label Text="Daily protein (%):" />
+            <Entry Text="{Binding Settings.DailyProteinRatio}"/>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
