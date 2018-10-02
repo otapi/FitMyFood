@@ -189,7 +189,7 @@ namespace FitMyFood.ViewModels
                 Carbo = 0,
                 Protein = 0,
                 Quantity = 1,
-                UnitWeight = 1
+                UnitWeight = 100
             };
 
             foreach (var food in Items)
@@ -199,9 +199,9 @@ namespace FitMyFood.ViewModels
                 TotalFood.Protein += food.Protein * food.Weight/100;
             }
             SummaryEnergy = $"Energy: {TotalFood.Energy} / {TargetFood.Energy} kcal";
-            SummaryFat = $"Fat: {TotalFood.Energy} / {TargetFood.Energy} gramm";
-            SummaryCarbo = $"Carbo: {TotalFood.Energy} / {TargetFood.Energy} gramm";
-            SummaryProtein = $"Protein: {TotalFood.Energy} / {TargetFood.Energy} gramm";
+            SummaryFat = $"Fat: {TotalFood.Fat} / {TargetFood.Fat} gramm";
+            SummaryCarbo = $"Carbo: {TotalFood.Carbo} / {TargetFood.Carbo} gramm";
+            SummaryProtein = $"Protein: {TotalFood.Protein} / {TargetFood.Protein} gramm";
         }
 
         async Task ExecuteLoadSelectorsCommand()
