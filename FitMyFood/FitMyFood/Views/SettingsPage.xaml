@@ -7,18 +7,35 @@
              x:Name="SettingsPager">
 
     <ContentPage.Content>
-        <StackLayout>
+        <ScrollView>
+        <StackLayout Padding="20">
             <Label Text="Actual weight (kg):" />
             <Entry Text="{Binding Settings.ActualWeight}"/>
             <Label Text="Height (cm):" />
             <Entry Text="{Binding Settings.Height}"/>
             <Label Text="Sex:" />
-            <Entry Text="{Binding Settings.Sex}"/>
-            <Label Text="Age:" />
+                <Picker SelectedIndex="{Binding SexPicker}" 
+                        HorizontalOptions="FillAndExpand"
+                        ItemsSource="SexItems">
+                    <Picker.Items>
+                        <x:String>Female</x:String>
+                        <x:String>Male</x:String>
+                    </Picker.Items>
+                </Picker>
+
+                <Label Text="Age:" />
             <Entry Text="{Binding Settings.Age}"/>
             <Label Text="Physical activity:" />
-            <Entry Text="{Binding Settings.Physical_activity}"/>
-            <Label Text="Weight change (kg/week):" />
+                <Picker SelectedIndex="{Binding ActivityPicker}" 
+                        HorizontalOptions="FillAndExpand"
+                        ItemsSource="ActivityItems">
+                    <Picker.Items>
+                        <x:String>Sedentary</x:String>
+                        <x:String>Moderately</x:String>
+                        <x:String>Active</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Label Text="Weight change (kg/week):" />
             <Entry Text="{Binding Settings.WeeklyWeightChange}"/>
             <Label Text="Daily fat (%):" />
             <Entry Text="{Binding Settings.DailyFatRatio}"/>
@@ -29,5 +46,6 @@
 
 
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -57,7 +57,7 @@
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAQAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgIAAAAAAAAAAAAAAAEgAAgAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\SettingsVM.cs</FileName>
       <NewMemberFileName>ViewModels\FoodItemVM.cs</NewMemberFileName>
     </TypeIdentifier>

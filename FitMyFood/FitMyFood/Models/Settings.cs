@@ -19,7 +19,12 @@ namespace FitMyFood.Models
         /// </summary>
         public bool Sex { get; set; }
         public int Age { get; set; }
-        public double Physical_activity { get; set; } //(1-3)
+        /// <summary>
+        /// 1-Sedentary
+        /// 2-Moderately
+        /// 3-Active
+        /// </summary>
+        public int Physical_activity { get; set; }
         /// <summary>
         /// kg/week
         /// </summary>
