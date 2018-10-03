@@ -11,6 +11,7 @@ namespace FitMyFood
         public static ViewModels.MainListVM MainListVM { get; set; }
         public static ViewModels.FoodItemVM FoodItemVM { get; set; }
         public static ViewModels.VariationItemVM VariationItemVM { get; set; }
+        public static ViewModels.MenuVM MenuVM { get; set; }
         public static Data.DatabaseHelper DB { get; set; }
         
         public static void PrintWarning(string message)
@@ -25,6 +26,7 @@ namespace FitMyFood
         public App()
         {
             InitializeComponent();
+            MenuVM = new ViewModels.MenuVM(null);
 
             MainPage = new MainPage();
         }

@@ -102,6 +102,11 @@ namespace FitMyFood.Data
                                         .FirstAsync();
             return variationFoodItem;
         }
+        public void SaveChangesNoWait()
+        {
+            var t = SaveChangesAsync();
+        }
+
         public async Task SaveChangesAsync()
         {
             await context.SaveChangesAsync();

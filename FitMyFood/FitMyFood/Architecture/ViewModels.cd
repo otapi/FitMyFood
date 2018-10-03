@@ -42,7 +42,7 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>PEAAwAEAQSwiCABEAAwwBAASBIQlBgAQAFIKCABYAAg=</HashCode>
+      <HashCode>PEAAwAEAQSwiCABEAAwwBAASBIQlBgAQgFIKCABYAAg=</HashCode>
       <FileName>ViewModels\MainListVM.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -57,9 +57,30 @@
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgCAAAAAAAgAAAAAAwAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAQAAA=</HashCode>
       <FileName>ViewModels\SettingsVM.cs</FileName>
       <NewMemberFileName>ViewModels\FoodItemVM.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FitMyFood.ViewModels.MenuVM">
+    <Position X="0.5" Y="3" Width="2.75" />
+    <Members>
+      <Method Name="GetMenuItems" Hidden="true" />
+      <Method Name="MenuVM" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="FitMyFood.ViewModels.MenuVM.MenuItemType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ViewModels\MenuVM.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>ViewModels\MenuVM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -10,15 +10,13 @@ namespace FitMyFood.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : MasterDetailPage
     {
-        Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
         public MainPage()
         {
             InitializeComponent();
 
             MasterBehavior = MasterBehavior.Popover;
+            App.MenuVM.MasterDetailPage = this;
             
-            MenuPages.Add((int)MenuItemType.MainList, (NavigationPage)Detail);
-
         }
 
         protected override void OnAppearing()
@@ -27,35 +25,6 @@ namespace FitMyFood.Views
             base.OnAppearing();
         }
 
-        public async Task NavigateFromMenu(int id)
-        {
-            if (!MenuPages.ContainsKey(id))
-            {
-                switch (id)
-                {
-                    case (int)MenuItemType.Settings:
-                        MenuPages.Add(id, new NavigationPage(new SettingsPage()));
-                        break;
-                    case (int)MenuItemType.MainList:
-                        MenuPages.Add(id, new NavigationPage(new MainListPage()));
-                        break;
-                    case (int)MenuItemType.About:
-                        MenuPages.Add(id, new NavigationPage(new AboutPage()));
-                        break;
-                }
-            }
-
-            var newPage = MenuPages[id];
-
-            if (newPage != null && Detail != newPage)
-            {
-                Detail = newPage;
-
-                if (Device.RuntimePlatform == Device.Android)
-                    await Task.Delay(100);
-
-                IsPresented = false;
-            }
-        }
+        
     }
 }

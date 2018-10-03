@@ -6,23 +6,6 @@
              Title="{Binding Title}"
              x:Name="SettingsPager">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Cancel" Command="{Binding Path=BindingContext.MainList_CancelCommand, Source={x:Reference Name=SettingsPager}}">
-            <ToolbarItem.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="UWP" Value="cancel.png"/>
-                </OnPlatform>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
-        <ToolbarItem Text="Save"  Command="{Binding Path=BindingContext.MainList_SaveCommand, Source={x:Reference Name=SettingsPager}}">
-            <ToolbarItem.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="UWP" Value="save.png"/>
-                </OnPlatform>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
-
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Actual weight (kg):" />
