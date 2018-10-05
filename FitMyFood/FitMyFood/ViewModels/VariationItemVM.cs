@@ -192,6 +192,24 @@ namespace FitMyFood.ViewModels
             };
         }
 
-       
+        private void updateWeight()
+        {
+            foodItem.setWeight(1);
+            double energyInOneGramm = foodItem.getEnergy();
+            double missingEnergy = sharedData.getTargetFoodItem().getEnergy() -
+                    (sharedData.getActualTotalFoodItem().getEnergy() - currentOrigEnergy);
+            if (missingEnergy > 0 && energyInOneGramm != 0)
+            {
+                foodItem.setWeight((double)(int)missingEnergy / energyInOneGramm);
+            }
+            else
+            {
+                // TODO: warning to exceed the energy limit
+                foodItem.setWeight(100);
+            }
+            foodWeight.setText(String.valueOf((int)foodItem.getWeight()));
+
+        }
+
     }
 }

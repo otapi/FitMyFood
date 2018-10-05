@@ -10,23 +10,35 @@ using FitMyFood.Views;
 using System.Collections.Generic;
 using FitMyFood.Data;
 
+/*
+    FitMyFod
+    com.otapigems.fitmyfood
+    Copyright (C) 2018 Barnabás Nagy - otapiGems.com - otapiGems@protonmail.ch
+   
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 namespace FitMyFood.ViewModels
 {
     public class MainListVM : BaseVM
     {
-        public class Summary
-        {
-            public string SummaryEnergy { get; set; }
-            public string SummaryFat { get; set; }
-            public string SummaryCarbo { get; set; }
-            public string SummaryProtein { get; set; }
-
-        }
         public static double ENERGYFAT = 9.3;
         public static double ENERGYPROTEIN = 4.2;
         public static double ENERGYCARBO = 4.1;
         public static double ENERGYBODYFAT = 7;
+
+        public static double SEDENTARY = 1.2;
+        public static double MODERATELY = 1.3;
+        public static double ACTIVE = 1.4;
 
         public ObservableCollection<FoodItem> Items { get; set; }
         public ObservableCollection<View> DailyProfileSelectorSource { get; set; }
@@ -182,9 +194,76 @@ namespace FitMyFood.ViewModels
 
         }
 
+        /*According to Nutrition Therapy and Pathophysiology, the Mifflin-St. Jeor equation was
+         developed in 1990 and has been validated by more than 10 studies. The Mifflin-St. Jeor
+         equation is gaining popularity among the nutrition professionals for accurately estimating
+         caloric needs. The equation is as follows:
+         for females = 10 x (Weight in kg) + 6.25 x (Height in cm) - 5 x age - 161;
+         for males= 10 x (Weight in kg) + 6.25 x (Height in cm) - 5 x age + 5.
+
+         These equations are also multiplied by the same physical activity factors to estimate
+         daily caloric needs.
+        */
         void CalcTargetFood()
         {
-            // TODO: implement
+             public double BMR;
+        public double dailyKcal;
+        public double dailyKcalChange;
+        public double dailyKcalTarget;
+        public double dailyWeightChangeInGramm;
+        int extraKcal = S
+            int mealKcalRatio
+                if (settings.isSex() == Sex.FEMALE)
+                {
+                    message = "Female\n";
+                    BMR = 10 * settings.getActualWeight() + 6.25 * settings.getHeight() - 5 * settings.getAge() - 161;
+                }
+                else
+                {
+                    message = "Male\n";
+                    BMR = 10 * settings.getActualWeight() + 6.25 * settings.getHeight() - 5 * settings.getAge() + 5;
+                }
+                message += String.format(
+                        "Weight: %d\n" +
+                        "Height: %d\n" +
+                        "Age: %d\n",
+                        (int)settings.getActualWeight(),
+                        settings.getHeight(),
+                    settings.getAge());
+                dailyKcal = BMR * settings.getPhysical_activity() + extraKcal;
+                dailyWeightChangeInGramm = settings.getWeeklyWeightChange() * 1000 / ENERGYBODYFAT;
+
+                // 7 is just an estimated number of body energy...
+                dailyKcalChange = dailyWeightChangeInGramm * ENERGYBODYFAT;
+
+                dailyKcalTarget = dailyKcal + dailyKcalChange;
+                double mealKcal = dailyKcalTarget * mealKcalRatio / 100;
+
+                int fatPercent = settings.getDailyFatRatio();
+                int carboPercent = settings.getDailyCarboRatio();
+                int proteinPercent = settings.getDailyProteinRatio();
+
+                double fatKcal = mealKcal * fatPercent / 100;
+                double carboKcal = mealKcal * carboPercent / 100;
+                double proteinKcal = mealKcal * proteinPercent / 100;
+
+                double fat = fatKcal / ENERGYFAT;
+                double carbo = carboKcal / ENERGYCARBO;
+                double protein = proteinKcal / ENERGYPROTEIN;
+
+                FoodItem targetFoodItem = new FoodItem("Target", 100, fat, carbo, protein);
+
+                message += String.format(
+                                "\nBMR: %d kcal\n" +
+                                "Maintenance: %d kcal\n" +
+                                "Target change: %d\n" +
+                                "Target weight change: %d gramm\n" +
+                                "Target energy: %d kcal\n",
+                        (int)BMR,
+                        (int)dailyKcal,
+                        (int)dailyKcalChange,
+                        (int)dailyWeightChangeInGramm,
+                        (int)dailyKcalTarget);
         }
         void CalcSummary()
         {
