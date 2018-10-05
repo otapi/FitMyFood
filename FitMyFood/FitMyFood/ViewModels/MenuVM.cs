@@ -19,6 +19,7 @@ namespace FitMyFood.ViewModels
 
         public enum MenuItemType
         {
+            WeightTrack,
             Settings,
             About
         }
@@ -27,6 +28,7 @@ namespace FitMyFood.ViewModels
         {
             return new List<HomeMenuItem>
             {
+                new HomeMenuItem {Id = MenuItemType.WeightTrack, Title="Weights" },
                 new HomeMenuItem {Id = MenuItemType.Settings, Title="Settings" },
                 new HomeMenuItem {Id = MenuItemType.About, Title="About" }
             };
@@ -36,6 +38,9 @@ namespace FitMyFood.ViewModels
         {
             switch (page)
             {
+                case MenuItemType.WeightTrack:
+                    await Navigation.PushAsync(new WeightTrackPage());
+                    break;
                 case MenuItemType.Settings:
                     await Navigation.PushAsync(new SettingsPage());
                     break;

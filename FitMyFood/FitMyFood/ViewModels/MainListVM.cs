@@ -176,6 +176,10 @@ namespace FitMyFood.ViewModels
             TargetFood = new FoodItem();
             TotalFood = new FoodItem();
 
+            var t = App.DB.GetSettings();
+            t.Wait();
+            Settings = t.Result;
+
         }
 
         void CalcTargetFood()

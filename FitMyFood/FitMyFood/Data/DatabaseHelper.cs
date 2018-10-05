@@ -20,7 +20,7 @@ namespace FitMyFood.Data
         protected DatabaseContext CrateContext()
         {
             DatabaseContext databaseContext = new DatabaseContext();
-            databaseContext.Database.EnsureDeleted();
+            //databaseContext.Database.EnsureDeleted();
             if (Device.RuntimePlatform == Device.Android)
             {
                 databaseContext.Database.EnsureDeleted();
@@ -183,6 +183,29 @@ namespace FitMyFood.Data
             } else
             {
                 return settings[0];
+            }
+        }
+
+        public async Task<List<WeightTrack>> GetWeightTracks()
+        {
+            return await context.WeightTracks
+                        .OrderByDescending(w=> w.Date) 
+                        .ToListAsync();
+        }
+
+        public async Task SetWeightTrack(WeightTrack weightTrack)
+        {
+            var thisWeightTrack = await context.WeightTracks
+                        .Where(w => w.Date == weightTrack.Date)
+                        .ToListAsync();
+
+            if (thisWeightTrack.Count == 0)
+            {
+                await context.WeightTracks.AddAsync(weightTrack);
+            } else
+            {
+                thisWeightTrack[0].Weight = weightTrack.Weight;
+                weightTrack = thisWeightTrack[0];
             }
         }
         #endregion

@@ -19,6 +19,15 @@ namespace FitMyFood.ViewModels
             }
             set
             {
+                if (_Settings != null && value != null && _Settings.ActualWeight != value.ActualWeight)
+                {
+                    var t = App.DB.SetWeightTrack(new WeightTrack()
+                    {
+                        Date = DateTime.Today,
+                        Weight = value.ActualWeight
+                    });
+                    t.Wait();
+                }
                 SetProperty(ref _Settings, value);
                 if (!internalChange)
                 {

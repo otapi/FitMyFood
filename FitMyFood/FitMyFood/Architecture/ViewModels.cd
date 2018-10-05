@@ -46,24 +46,23 @@
       <FileName>ViewModels\MainListVM.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FitMyFood.ViewModels.SettingsVM">
-    <Position X="7.25" Y="0.5" Width="2.5" />
+  <Class Name="FitMyFood.ViewModels.WeightTrackVM">
+    <Position X="3.75" Y="4" Width="2.5" />
     <Members>
-      <Property Name="Settings" Hidden="true" />
-      <Method Name="SettingsVM" Hidden="true" />
+      <Property Name="ActualWeight" Hidden="true" />
+      <Method Name="WeightTrackVM" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgIAAAAAAAAAAAAAAAEgAAgAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\SettingsVM.cs</FileName>
-      <NewMemberFileName>ViewModels\FoodItemVM.cs</NewMemberFileName>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAACEAAAAAAABA=</HashCode>
+      <FileName>ViewModels\WeightTrackVM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FitMyFood.ViewModels.MenuVM">
-    <Position X="0.5" Y="3" Width="2.75" />
+    <Position X="0.5" Y="4" Width="2.75" />
     <Members>
       <Method Name="GetMenuItems" Hidden="true" />
       <Method Name="MenuVM" Hidden="true" />
@@ -81,6 +80,20 @@
     <TypeIdentifier>
       <HashCode>AAAAEAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
       <FileName>ViewModels\MenuVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FitMyFood.ViewModels.FoodItemVM">
+    <Position X="7.25" Y="0.5" Width="2.75" />
+    <Members>
+      <Method Name="FoodItemVM" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ACCAACAAABIAAABAAAAAAAgEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\FoodItemVM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
