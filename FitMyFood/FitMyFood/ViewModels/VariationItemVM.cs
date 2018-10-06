@@ -81,7 +81,7 @@ namespace FitMyFood.ViewModels
                     Item = value;
                     App.DB.ChangeFoodItemOnVariationFoodItemAsync(Item.Quantity, VariationFoodItem, value).Wait();
                     IsSearchItemsListviewVisible = false;
-                    Weight = SelectedSearchItem.Weight;
+                    SuggestWeight();
                 }
             }
         }
@@ -113,10 +113,12 @@ namespace FitMyFood.ViewModels
         public Variation Variation;
         public VariationFoodItem VariationFoodItem;
 
+        public double OrigEnergy;
+
         public VariationItemVM(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
         {
             Item = foodItem;
-            
+            OrigEnergy = (foodItem == null ? 0 : foodItem.Energy);
             SearchItems = new ObservableCollection<FoodItem>();
             IsSearchItemsListviewVisible = false;
 
@@ -128,8 +130,6 @@ namespace FitMyFood.ViewModels
             
 
             Variation = variation;
-
-            
         }
 
         async Task FoodItem_Edit()
@@ -192,23 +192,21 @@ namespace FitMyFood.ViewModels
             };
         }
 
-        private void updateWeight()
+        private void SuggestWeight()
         {
-            foodItem.setWeight(1);
-            double energyInOneGramm = foodItem.getEnergy();
-            double missingEnergy = sharedData.getTargetFoodItem().getEnergy() -
-                    (sharedData.getActualTotalFoodItem().getEnergy() - currentOrigEnergy);
+            
+            double energyInOneGramm = Item.Energy / (Item.Weight);
+            double missingEnergy = App.MainListVM.TargetFood.Energy -
+                    (App.MainListVM.TotalFood.Energy - OrigEnergy);
             if (missingEnergy > 0 && energyInOneGramm != 0)
             {
-                foodItem.setWeight((double)(int)missingEnergy / energyInOneGramm);
+                Weight = (int)(missingEnergy / energyInOneGramm);
             }
             else
             {
                 // TODO: warning to exceed the energy limit
-                foodItem.setWeight(100);
+                Weight = 100;
             }
-            foodWeight.setText(String.valueOf((int)foodItem.getWeight()));
-
         }
 
     }

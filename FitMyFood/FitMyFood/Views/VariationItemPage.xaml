@@ -18,7 +18,9 @@
             </ToolbarItem.Icon>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
+    <ScrollView>
     <StackLayout Spacing="20" Padding="15">
+        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -99,5 +101,7 @@
             <Label Text="in 100g" Style="{DynamicResource ListItemDetailTextStyle}" Grid.Row="9" Grid.Column="1"/>
 
         </Grid>
+        
     </StackLayout>
+    </ScrollView>
 </ContentPage>

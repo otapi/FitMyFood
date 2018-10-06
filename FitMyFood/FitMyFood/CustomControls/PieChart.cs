@@ -4,6 +4,7 @@ using System.Text;
 
 namespace FitMyFood.CustomControls
 {
+    /*
     public class PieChart extends View
     {
     private class Item
@@ -153,6 +154,6 @@ namespace FitMyFood.CustomControls
 
             }
         }
-
+        */
 
     }

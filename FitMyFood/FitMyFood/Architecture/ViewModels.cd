@@ -13,7 +13,7 @@
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>KBAQACAAABAAIIEAAAAAgAAkKCIYAAEIAQAAABAAgAA=</HashCode>
+      <HashCode>KBAQACAAAhAAIIEAAAAAgAAkKCIYgAEIAQAAABAAgAA=</HashCode>
       <FileName>ViewModels\VariationItemVM.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -34,15 +34,8 @@
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
-    <NestedTypes>
-      <Class Name="FitMyFood.ViewModels.MainListVM.Summary" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>ViewModels\MainListVM.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>PEAAwAEAQSwiCABEAAwwBAASBIQlBgAQgFIKCABYAAg=</HashCode>
+      <HashCode>PEAAwAEAQSwmCABEAAwwBACSBIQlBgAQgFIKKABYAAg=</HashCode>
       <FileName>ViewModels\MainListVM.cs</FileName>
     </TypeIdentifier>
   </Class>

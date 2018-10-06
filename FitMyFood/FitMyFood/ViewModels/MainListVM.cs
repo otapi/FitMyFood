@@ -46,8 +46,18 @@ namespace FitMyFood.ViewModels
         public ObservableCollection<View> VariationSelectorSource { get; set; }
 
         public Settings Settings { get; set; }
-        public FoodItem TargetFood { get; set; }
-        public FoodItem TotalFood { get; set; }
+        FoodItem _TargetFood;
+        public FoodItem TargetFood
+        {
+            get { return _TargetFood; }
+            set { SetProperty(ref _TargetFood, value); }
+        }
+        FoodItem _TotalFood;
+        public FoodItem TotalFood
+        {
+            get { return _TotalFood; }
+            set { SetProperty(ref _TotalFood, value); }
+        }
         FoodItem _SelectedItem;
         public FoodItem SelectedItem
         {
@@ -206,64 +216,70 @@ namespace FitMyFood.ViewModels
         */
         void CalcTargetFood()
         {
-             public double BMR;
-        public double dailyKcal;
-        public double dailyKcalChange;
-        public double dailyKcalTarget;
-        public double dailyWeightChangeInGramm;
-        int extraKcal = S
-            int mealKcalRatio
-                if (settings.isSex() == Sex.FEMALE)
-                {
-                    message = "Female\n";
-                    BMR = 10 * settings.getActualWeight() + 6.25 * settings.getHeight() - 5 * settings.getAge() - 161;
-                }
-                else
-                {
-                    message = "Male\n";
-                    BMR = 10 * settings.getActualWeight() + 6.25 * settings.getHeight() - 5 * settings.getAge() + 5;
-                }
-                message += String.format(
-                        "Weight: %d\n" +
-                        "Height: %d\n" +
-                        "Age: %d\n",
-                        (int)settings.getActualWeight(),
-                        settings.getHeight(),
-                    settings.getAge());
-                dailyKcal = BMR * settings.getPhysical_activity() + extraKcal;
-                dailyWeightChangeInGramm = settings.getWeeklyWeightChange() * 1000 / ENERGYBODYFAT;
+            string message = "";
+            double BMR;
+            if (Settings.Sex == false)
+            {
+                message = "Female\n";
+                BMR = 10 * Settings.ActualWeight + 6.25 * Settings.Height - 5 * Settings.Age - 161;
+            }
+            else
+            {
+                message = "Male\n";
+                BMR = 10 * Settings.ActualWeight + 6.25 * Settings.Height - 5 * Settings.Age + 5;
+            }
+            message += $"Weight: {Settings.ActualWeight }\n" +
+                        $"Height: {Settings.Height}\n" +
+                        $"Age: {Settings.Age}\n";
 
-                // 7 is just an estimated number of body energy...
-                dailyKcalChange = dailyWeightChangeInGramm * ENERGYBODYFAT;
+            double physicalActivity = 0;
+            switch (Settings.Physical_activity)
+            {
+                case 1:
+                    physicalActivity = 1.1;
+                    break;
+                case 2:
+                    physicalActivity = 1.2;
+                    break;
+                case 3:
+                    physicalActivity = 1.3;
+                    break;
+            }
+            double dailyKcal = BMR * physicalActivity + DailyProfile.ExtraKcal;
+            double dailyWeightChangeInGramm = Settings.WeeklyWeightChange * 1000 / ENERGYBODYFAT;
 
-                dailyKcalTarget = dailyKcal + dailyKcalChange;
-                double mealKcal = dailyKcalTarget * mealKcalRatio / 100;
+            // 7 is just an estimated number of body energy...
+            double dailyKcalChange = dailyWeightChangeInGramm * ENERGYBODYFAT;
 
-                int fatPercent = settings.getDailyFatRatio();
-                int carboPercent = settings.getDailyCarboRatio();
-                int proteinPercent = settings.getDailyProteinRatio();
+            double dailyKcalTarget = dailyKcal + dailyKcalChange;
+            double mealKcal = dailyKcalTarget * Meal.KcalRatio / 100;
 
-                double fatKcal = mealKcal * fatPercent / 100;
-                double carboKcal = mealKcal * carboPercent / 100;
-                double proteinKcal = mealKcal * proteinPercent / 100;
+            int fatPercent = Settings.DailyFatRatio;
+            int carboPercent = Settings.DailyCarboRatio;
+            int proteinPercent = Settings.DailyProteinRatio;
 
-                double fat = fatKcal / ENERGYFAT;
-                double carbo = carboKcal / ENERGYCARBO;
-                double protein = proteinKcal / ENERGYPROTEIN;
+            double fatKcal = mealKcal * fatPercent / 100;
+            double carboKcal = mealKcal * carboPercent / 100;
+            double proteinKcal = mealKcal * proteinPercent / 100;
 
-                FoodItem targetFoodItem = new FoodItem("Target", 100, fat, carbo, protein);
+            double fat = fatKcal / ENERGYFAT;
+            double carbo = carboKcal / ENERGYCARBO;
+            double protein = proteinKcal / ENERGYPROTEIN;
 
-                message += String.format(
-                                "\nBMR: %d kcal\n" +
-                                "Maintenance: %d kcal\n" +
-                                "Target change: %d\n" +
-                                "Target weight change: %d gramm\n" +
-                                "Target energy: %d kcal\n",
-                        (int)BMR,
-                        (int)dailyKcal,
-                        (int)dailyKcalChange,
-                        (int)dailyWeightChangeInGramm,
-                        (int)dailyKcalTarget);
+            TargetFood = new FoodItem()
+            {
+                Fat = fat,
+                Carbo = carbo,
+                Protein = protein,
+                Quantity = 1,
+                UnitWeight = 100
+            };
+
+            message += $"\nBMR: {BMR} kcal\n" +
+                        $"Maintenance: {dailyKcal} kcal\n" +
+                        $"Target change: {dailyKcalChange} kcal\n" +
+                        $"Target weight change: {dailyWeightChangeInGramm} gramm\n" +
+                        $"Target energy: {dailyKcalTarget} kcal\n";
         }
         void CalcSummary()
         {
@@ -282,10 +298,14 @@ namespace FitMyFood.ViewModels
                 TotalFood.Carbo += food.Carbo * food.Weight/100;
                 TotalFood.Protein += food.Protein * food.Weight/100;
             }
-            SummaryEnergy = $"Energy: {TotalFood.Energy} / {TargetFood.Energy} kcal";
-            SummaryFat = $"Fat: {TotalFood.Fat} / {TargetFood.Fat} gramm";
-            SummaryCarbo = $"Carbo: {TotalFood.Carbo} / {TargetFood.Carbo} gramm";
-            SummaryProtein = $"Protein: {TotalFood.Protein} / {TargetFood.Protein} gramm";
+            if (TargetFood == null || TargetFood.Energy == 0)
+            {
+                CalcTargetFood();
+            }
+            SummaryEnergy = $"Energy: {TotalFood.Energy:0.#} / {TargetFood.Energy:0.#} kcal";
+            SummaryFat = $"Fat: {TotalFood.Fat:0.#} / {TargetFood.Fat:0.#} gramm";
+            SummaryCarbo = $"Carbo: {TotalFood.Carbo:0.#} / {TargetFood.Carbo:0.#} gramm";
+            SummaryProtein = $"Protein: {TotalFood.Protein:0.#} / {TargetFood.Protein:0.#} gramm";
         }
 
         async Task ExecuteLoadSelectorsCommand()
@@ -330,6 +350,7 @@ namespace FitMyFood.ViewModels
                 VariationSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
             }
             MealVariation = VariationSelectorItems[VariationSelectorIndex];
+            CalcTargetFood();
         }
         /// <summary>
         /// This is ist
@@ -352,6 +373,7 @@ namespace FitMyFood.ViewModels
                 Items.Add(foodItem);
             }
             CalcSummary();
+            
             IsBusy = false;
         }
         
