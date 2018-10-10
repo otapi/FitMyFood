@@ -51,10 +51,13 @@
   </Class>
   <Class Name="FitMyFood.Models.FoodItem">
     <Position X="0.5" Y="0.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
     <AssociationLine Name="VariationFoodItems" Type="FitMyFood.Models.VariationFoodItem" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.5" Y="0.75" />
-        <Point X="3.438" Y="0.75" />
+        <Point X="2.5" Y="0.77" />
+        <Point X="3.438" Y="0.77" />
         <Point X="3.438" Y="1" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
@@ -63,7 +66,7 @@
     </AssociationLine>
     <AssociationLine Name="ComposedFoodItems" Type="FitMyFood.Models.ComposedFoodItem" FixedToPoint="true">
       <Path>
-        <Point X="0.857" Y="3.719" />
+        <Point X="0.857" Y="3.978" />
         <Point X="0.857" Y="4.25" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
@@ -71,7 +74,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAgEAABAAAAAAEAAQAACoBAIAKAAAAgAAAEAA=</HashCode>
+      <HashCode>AAAAAAAAgEAABAAAAAAEAAQAACoBAIAKAAAAgAAAEBA=</HashCode>
       <FileName>Models\FoodItem.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>

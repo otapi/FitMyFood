@@ -29,7 +29,7 @@ namespace FitMyFood.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            App.MainListVM.LoadSelectorsCommand.Execute(null);
+            App.MainListVM.LoadItemsCommand.Execute(null);
         }
 
         void OnButtonClick(object sender, EventArgs e)

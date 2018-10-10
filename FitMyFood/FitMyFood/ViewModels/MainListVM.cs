@@ -201,6 +201,11 @@ namespace FitMyFood.ViewModels
             var t = App.DB.GetSettings();
             t.Wait();
             Settings = t.Result;
+            var t2 = ExecuteLoadSelectorsCommand();
+            t2.Wait();
+            var t3 = PopulateVariationSelector();
+            t3.Wait();
+ 
 
         }
 
@@ -324,6 +329,7 @@ namespace FitMyFood.ViewModels
             {
                 MealSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
             }
+            MealSelectorIndex = 0;
         }
 
         async Task PopulateDailyProfileSelector()
@@ -334,6 +340,7 @@ namespace FitMyFood.ViewModels
             {
                 DailyProfileSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
             }
+            DailyProfileSelectorIndex = 0;
         }
 
         async Task PopulateVariationSelector()
@@ -368,7 +375,7 @@ namespace FitMyFood.ViewModels
             var variationFoodItems = await App.DB.GetVariationFoodItemsIncludeFoodItem(MealVariation);
             foreach (var variationFoodItem in variationFoodItems)
             {
-                var foodItem = variationFoodItem.FoodItem;
+                var foodItem = variationFoodItem.FoodItem.CloneWithoutSub();
                 foodItem.Quantity = variationFoodItem.Quantity;
                 Items.Add(foodItem);
             }

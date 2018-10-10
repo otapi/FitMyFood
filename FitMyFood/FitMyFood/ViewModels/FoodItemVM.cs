@@ -55,8 +55,8 @@ namespace FitMyFood.ViewModels
                 App.VariationItemVM.VariationFoodItem = await App.DB.AddNewVariationFoodItemAsync(Item.Quantity, Variation, Item);
             }
             await App.DB.SaveChangesAsync();
-            App.VariationItemVM.Item = Item;
-            App.VariationItemVM.SelectedSearchItem = Item;
+            App.VariationItemVM.Item = Item.CloneWithoutSub();
+            App.VariationItemVM.SelectedSearchItem = App.VariationItemVM.Item;
             IsBusy = false;
             await Navigation.PopAsync(true);
         }

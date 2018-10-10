@@ -208,6 +208,13 @@ namespace FitMyFood.Data
                 weightTrack = thisWeightTrack[0];
             }
         }
+        public async Task<FoodItem> GetRealFoodItem(FoodItem fakeFoodItem)
+        {
+            var realFoodItem = await context.FoodItems
+                                        .Where(v => v.FoodItemId == fakeFoodItem.FoodItemId)
+                                        .FirstAsync();
+            return realFoodItem;
+        }
         #endregion
     }
 }

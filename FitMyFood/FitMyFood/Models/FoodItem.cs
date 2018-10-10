@@ -83,5 +83,22 @@ namespace FitMyFood.Models
                 return $"{Quantity} {UnitDescription}(s) give {Energy} Calories with {Weight} gramm.";
             }
         }
+
+        public FoodItem CloneWithoutSub()
+        {
+            FoodItem foodItem = new FoodItem()
+            {
+                Carbo = this.Carbo,
+                Fat = this.Fat,
+                Protein = this.Protein,
+                Name = this.Name,
+                Quantity = this.Quantity,
+                UnitDescription = this.UnitDescription,
+                UnitWeight = this.UnitWeight,
+                FoodItemId = this.FoodItemId,
+                IsComposedFood = this.IsComposedFood
+            };
+            return foodItem;
+        }
     }
 }

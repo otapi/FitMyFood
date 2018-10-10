@@ -78,7 +78,7 @@ namespace FitMyFood.ViewModels
                         }
                         
                     }
-                    Item = value;
+                    Item = value.CloneWithoutSub();
                     App.DB.ChangeFoodItemOnVariationFoodItemAsync(Item.Quantity, VariationFoodItem, value).Wait();
                     IsSearchItemsListviewVisible = false;
                     SuggestWeight();
@@ -135,7 +135,7 @@ namespace FitMyFood.ViewModels
         async Task FoodItem_Edit()
         {
             IsBusy = true;
-            await Navigation.PushAsync(new FoodItemPage(Item, null));
+            await Navigation.PushAsync(new FoodItemPage(await App.DB.GetRealFoodItem(Item), null));
             IsBusy = false;
         }
 
