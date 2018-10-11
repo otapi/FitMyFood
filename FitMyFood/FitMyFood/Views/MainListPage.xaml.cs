@@ -19,7 +19,6 @@ namespace FitMyFood.Views
         public MainListPage()
         {
             InitializeComponent();
-            App.DB = new Data.DatabaseHelper();
             App.MainListVM = new MainListVM(Navigation);
             App.MenuVM.Navigation = Navigation;
             BindingContext = App.MainListVM;

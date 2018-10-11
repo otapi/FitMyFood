@@ -12,8 +12,22 @@ namespace FitMyFood
         public static ViewModels.FoodItemVM FoodItemVM { get; set; }
         public static ViewModels.VariationItemVM VariationItemVM { get; set; }
         public static ViewModels.MenuVM MenuVM { get; set; }
-        public static Data.DatabaseHelper DB { get; set; }
         
+        static Data.DatabaseHelper _DB;
+        public static Data.DatabaseHelper DB
+        {
+            get
+            {
+                if (_DB == null)
+                {
+                    // Changes here by @cwrea for adaptation to EF Core.
+                    var databasePath = DependencyService.Get<Data.IFileHelper>().GetLocalFilePath("database1.db");
+                    _DB = new Data.DatabaseHelper(databasePath);
+                }
+                return _DB;
+            }
+        }
+
         public static void PrintWarning(string message)
         {
             System.Diagnostics.Debug.WriteLine($"[FitMyFood][Warning] {message}");

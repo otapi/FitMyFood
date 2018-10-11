@@ -20,8 +20,16 @@ namespace FitMyFood.Data
         public DbSet<Settings> Settings { get; set; }
 
         private const string databaseName = "database1.db";
+        protected string DatabasePath { get; set; }
+        public DatabaseContext(string databasePath)
+        {
+            DatabasePath = databasePath;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseSqlite($"Filename={DatabasePath}");
+            //App.PrintNote($"Path to database is: {DatabasePath}");
+            /*
             String databasePath = "";
             switch (Device.RuntimePlatform)
             {
@@ -41,6 +49,7 @@ namespace FitMyFood.Data
             // Specify that we will use sqlite and the path of the database here
             optionsBuilder.UseSqlite($"Filename={databasePath}");
             App.PrintNote($"Path to database is: {databasePath}");
+            */
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

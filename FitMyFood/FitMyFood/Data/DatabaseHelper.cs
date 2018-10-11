@@ -12,14 +12,14 @@ namespace FitMyFood.Data
     {
         DatabaseContext context;
 
-        public DatabaseHelper()
+        public DatabaseHelper(string databasePath)
         {
-            context = CrateContext();
+            context = CrateContext(databasePath);
         }
         // TODO: why: There are many strategies for handling the lifecycle of a context object. I prefer to create a context when I need one and then dispose it at the end of the operation. 
-        protected DatabaseContext CrateContext()
+        protected DatabaseContext CrateContext(string databasePath)
         {
-            DatabaseContext databaseContext = new DatabaseContext();
+            DatabaseContext databaseContext = new DatabaseContext(databasePath);
             //databaseContext.Database.EnsureDeleted();
             if (Device.RuntimePlatform == Device.Android)
             {
