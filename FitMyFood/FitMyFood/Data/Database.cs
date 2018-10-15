@@ -8,39 +8,46 @@ using Xamarin.Forms;
 
 namespace FitMyFood.Data
 {
-    public class DatabaseHelper
+    public class Database : DbContext
     {
-        DatabaseContext context;
+        // TODO: OnModelCreating?
+        // https://blog.oneunicorn.com/2017/09/25/many-to-many-relationships-in-ef-core-2-0-part-1-the-basics/
+        public DbSet<ComposedFoodItem> ComposedFoodItems { get; set; }
+        public DbSet<FoodItem> FoodItems { get; set; }
+        public DbSet<DailyProfile> DailyProfiles { get; set; }
+        public DbSet<Meal> Meals { get; set; }
+        public DbSet<Variation> Variations { get; set; }
+        public DbSet<VariationFoodItem> VariationFoodItems { get; set; }
+        public DbSet<WeightTrack> WeightTracks { get; set; }
+        public DbSet<Settings> Settings { get; set; }
 
-        public DatabaseHelper(string databasePath)
-        {
-            context = CrateContext(databasePath);
-        }
         // TODO: why: There are many strategies for handling the lifecycle of a context object. I prefer to create a context when I need one and then dispose it at the end of the operation. 
-        protected DatabaseContext CrateContext(string databasePath)
+
+        public static Database Create(string databasePath)
         {
-            DatabaseContext databaseContext = new DatabaseContext(databasePath);
+            var dbContext = new Database(databasePath);
             //databaseContext.Database.EnsureDeleted();
-            if (Device.RuntimePlatform == Device.Android)
-            {
-                databaseContext.Database.EnsureDeleted();
-            }
-            databaseContext.Database.EnsureCreated();
-            databaseContext.Database.Migrate();
-            return databaseContext;
+            //if (Device.RuntimePlatform == Device.Android)
+            //{
+                //databaseContext.Database.EnsureDeleted();
+            //}
+            dbContext.Database.EnsureCreated();
+            dbContext.Database.Migrate();
+            return dbContext;
         }
+
 
         #region MainList
         public async Task<List<Meal>> GetMealsAsync()
         {
             List<Meal> meals;
-            meals = await context.Meals
+            meals = await Meals
                                 //.AsNoTracking()
                                 .ToListAsync();
             if (meals.Count == 0)
             {
                 meals.AddRange(DefaultValues.MealSelectorItems);
-                await context.Meals.AddRangeAsync(meals);
+                await Meals.AddRangeAsync(meals);
                 await SaveChangesAsync();
             }
             return meals;
@@ -49,13 +56,13 @@ namespace FitMyFood.Data
         public async Task<List<DailyProfile>> GetDailyProfilesAsync()
         {
             List<DailyProfile> dailyProfiles;
-            dailyProfiles = await context.DailyProfiles
+            dailyProfiles = await DailyProfiles
                                 //.AsNoTracking()
                                 .ToListAsync();
             if (dailyProfiles.Count == 0)
             {
                 dailyProfiles.AddRange(DefaultValues.DailyProfileSelectorItems);
-                await context.DailyProfiles.AddRangeAsync(dailyProfiles);
+                await DailyProfiles.AddRangeAsync(dailyProfiles);
                 await SaveChangesAsync();
             }
             return dailyProfiles;
@@ -64,7 +71,7 @@ namespace FitMyFood.Data
         public async Task<List<Variation>> GetVariationsAsync(DailyProfile dailyProfile, Meal meal)
         {
             List<Variation> variations;
-            variations = await context.Variations
+            variations = await Variations
                                         .Where(v => v.Meal == meal && v.DailyProfile == dailyProfile)
                                         .ToListAsync();
 
@@ -76,7 +83,7 @@ namespace FitMyFood.Data
                     DailyProfile = dailyProfile,
                     Meal = meal
                 };
-                await context.Variations.AddAsync(variation);
+                await Variations.AddAsync(variation);
                 await SaveChangesAsync();
                 variations.Add(variation);
             }
@@ -86,7 +93,7 @@ namespace FitMyFood.Data
         public async Task<List<VariationFoodItem>> GetVariationFoodItemsIncludeFoodItem(Variation variation)
         {
             List<VariationFoodItem> variationFoodItems;
-            variationFoodItems = await context.VariationFoodItems
+            variationFoodItems = await VariationFoodItems
                                         .Include(v => v.FoodItem)
                                         .Where(v => v.Variation == variation)
                                         .ToListAsync();
@@ -97,7 +104,7 @@ namespace FitMyFood.Data
         public async Task<VariationFoodItem> GetVariationFoodItemAsync(FoodItem foodItem, Variation variation)
         {
             VariationFoodItem variationFoodItem;
-            variationFoodItem = await context.VariationFoodItems
+            variationFoodItem = await VariationFoodItems
                                         .Where(v => v.FoodItemId == foodItem.FoodItemId && v.Variation == variation)
                                         .FirstAsync();
             return variationFoodItem;
@@ -107,28 +114,23 @@ namespace FitMyFood.Data
             var t = SaveChangesAsync();
         }
 
-        public async Task SaveChangesAsync()
-        {
-            await context.SaveChangesAsync();
-        }
-
         public async Task UpdateQuantityOnVariationFoodItemAsync(VariationFoodItem variationFoodItem)
         {
-            context.Attach(variationFoodItem);
-            context.Entry(variationFoodItem).Property("Quantity").IsModified = true;
+            Attach(variationFoodItem);
+            Entry(variationFoodItem).Property("Quantity").IsModified = true;
             await SaveChangesAsync();
         }
 
         public async Task RemoveVariationFoodItemAsync(VariationFoodItem variationFoodItem)
         {
-            context.Remove(variationFoodItem);
+            Remove(variationFoodItem);
             await SaveChangesAsync();
         }
 
         public async Task<VariationFoodItem> AddNewVariationFoodItemAsync(double Quantity, Variation variation, FoodItem foodItem)
         {
             
-            //var realFoodItem = await context.FoodItems
+            //var realFoodItem = await FoodItems
             //                        .Where(f => f.FoodItemId == foodItemNotAttached.FoodItemId)
             //                        .FirstAsync();
 
@@ -138,8 +140,8 @@ namespace FitMyFood.Data
                 Variation = variation,
                 FoodItem = foodItem
             };
-            await context.AddAsync(variationFoodItem);
-            await context.SaveChangesAsync();
+            await AddAsync(variationFoodItem);
+            await SaveChangesAsync();
             return variationFoodItem;
         }
 
@@ -155,14 +157,14 @@ namespace FitMyFood.Data
             List<FoodItem> foodItems;
             if (filterForTerm == null)
             {
-                foodItems = await context.FoodItems
+                foodItems = await FoodItems
                                         .OrderBy(v => v.Name)
                                         .ToListAsync();
             }
             else
             {
                 filterForTerm = filterForTerm.ToLower();
-                foodItems = await context.FoodItems
+                foodItems = await FoodItems
                                         .Where(v => v.Name.ToLower().Contains(filterForTerm))
                                         .OrderBy(v => v.Name)
                                         .ToListAsync();
@@ -172,13 +174,22 @@ namespace FitMyFood.Data
 
         public async Task<Settings> GetSettings()
         {
-            var settings = (await context.Settings.ToListAsync());
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] start");
+
+            var settings = (await Settings.ToListAsync());
             if (settings.Count == 0)
             {
+                App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] default pre");
+
                 var set = DefaultValues.Settings();
-                await context.Settings.AddAsync(set);
+                App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] default after");
+
+                await Settings.AddAsync(set);
+                App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] add pre");
 
                 await SaveChangesAsync();
+                    App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] save after");
+
                 return set;
             } else
             {
@@ -188,20 +199,20 @@ namespace FitMyFood.Data
 
         public async Task<List<WeightTrack>> GetWeightTracks()
         {
-            return await context.WeightTracks
+            return await WeightTracks
                         .OrderByDescending(w=> w.Date) 
                         .ToListAsync();
         }
 
         public async Task SetWeightTrack(WeightTrack weightTrack)
         {
-            var thisWeightTrack = await context.WeightTracks
+            var thisWeightTrack = await WeightTracks
                         .Where(w => w.Date == weightTrack.Date)
                         .ToListAsync();
 
             if (thisWeightTrack.Count == 0)
             {
-                await context.WeightTracks.AddAsync(weightTrack);
+                await WeightTracks.AddAsync(weightTrack);
             } else
             {
                 thisWeightTrack[0].Weight = weightTrack.Weight;
@@ -210,10 +221,25 @@ namespace FitMyFood.Data
         }
         public async Task<FoodItem> GetRealFoodItem(FoodItem fakeFoodItem)
         {
-            var realFoodItem = await context.FoodItems
+            var realFoodItem = await FoodItems
                                         .Where(v => v.FoodItemId == fakeFoodItem.FoodItemId)
                                         .FirstAsync();
             return realFoodItem;
+        }
+        #endregion
+
+        #region Private implementation
+
+        protected string DatabasePath { get; set; }
+
+        protected Database(string databasePath)
+        {
+            DatabasePath = databasePath;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite($"Filename={DatabasePath}");
         }
         #endregion
     }

@@ -183,6 +183,8 @@ namespace FitMyFood.ViewModels
         }
         public MainListVM(INavigation navigation) : base(navigation)
         {
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] start");
+
             Title = "Browse";
             DefineCommands();
 
@@ -197,15 +199,21 @@ namespace FitMyFood.ViewModels
             
             TargetFood = new FoodItem();
             TotalFood = new FoodItem();
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] db pre");
 
             var t = App.DB.GetSettings();
             t.Wait();
             Settings = t.Result;
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] loadselectors pre");
+
             var t2 = ExecuteLoadSelectorsCommand();
             t2.Wait();
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] populate pre");
+
             var t3 = PopulateVariationSelector();
             t3.Wait();
- 
+
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] end");
 
         }
 
@@ -221,6 +229,8 @@ namespace FitMyFood.ViewModels
         */
         void CalcTargetFood()
         {
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] start");
+
             string message = "";
             double BMR;
             if (Settings.Sex == false)
@@ -285,6 +295,9 @@ namespace FitMyFood.ViewModels
                         $"Target change: {dailyKcalChange} kcal\n" +
                         $"Target weight change: {dailyWeightChangeInGramm} gramm\n" +
                         $"Target energy: {dailyKcalTarget} kcal\n";
+
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] end");
+
         }
         void CalcSummary()
         {
@@ -315,10 +328,14 @@ namespace FitMyFood.ViewModels
 
         async Task ExecuteLoadSelectorsCommand()
         {
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] start");
+
             IsBusy = true;
             await PopulateDailyProfileSelector();
             await PopulateMealSelector();
             IsBusy = false;
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] end");
+
         }
 
         async Task PopulateMealSelector()
@@ -345,6 +362,8 @@ namespace FitMyFood.ViewModels
 
         async Task PopulateVariationSelector()
         {
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] ping");
+
             if (MealSelectorItems.Count <1 || DailyProfileSelectorItems.Count < 1 || DailyProfile == null || Meal == null)
             {
                 return;
@@ -358,6 +377,8 @@ namespace FitMyFood.ViewModels
             }
             MealVariation = VariationSelectorItems[VariationSelectorIndex];
             CalcTargetFood();
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] endg");
+
         }
         /// <summary>
         /// This is ist

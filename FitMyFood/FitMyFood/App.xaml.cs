@@ -13,16 +13,20 @@ namespace FitMyFood
         public static ViewModels.VariationItemVM VariationItemVM { get; set; }
         public static ViewModels.MenuVM MenuVM { get; set; }
         
-        static Data.DatabaseHelper _DB;
-        public static Data.DatabaseHelper DB
+        static Data.Database _DB;
+        public static Data.Database DB
         {
             get
             {
                 if (_DB == null)
                 {
+                    App.PrintNote($"[DatabaseHelper] start");
                     // Changes here by @cwrea for adaptation to EF Core.
-                    var databasePath = DependencyService.Get<Data.IFileHelper>().GetLocalFilePath("database1.db");
-                    _DB = new Data.DatabaseHelper(databasePath);
+                    var databasePath = DependencyService.Get<Data.IFileHelper>().GetLocalFilePath("TodoSQLite.db");
+                    
+                    _DB = Data.Database.Create(databasePath);
+                    App.PrintNote($"[DatabaseHelper] end");
+
                 }
                 return _DB;
             }
@@ -36,10 +40,11 @@ namespace FitMyFood
         {
             System.Diagnostics.Debug.WriteLine($"[FitMyFood][Note] {message}");
         }
-        
+
         public App()
         {
             InitializeComponent();
+            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] ping");
             MenuVM = new ViewModels.MenuVM(null);
 
             MainPage = new MainPage();
