@@ -9,8 +9,7 @@
 
 
         <ToolbarItem Text="Remove" 
-                     Command="{Binding Path=BindingContext.MainList_RemoveItemCommand, Source={x:Reference Name=VariationItemPager}}"
-                     CommandParameter="{Binding SelectedItem}">
+                     Command="{Binding Path=BindingContext.MainList_RemoveItemCommand, Source={x:Reference Name=VariationItemPager}}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="UWP" Value="cancel.png"/>

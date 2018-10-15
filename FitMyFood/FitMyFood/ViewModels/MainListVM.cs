@@ -27,6 +27,13 @@ using FitMyFood.Data;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+    // Todo: convert all .Wait() and .Result to:
+    /* Task.Run(async () =>
+          {
+                await ExecuteLoadSelectorsCommand();
+await PopulateVariationSelector();
+            });
+*/
 namespace FitMyFood.ViewModels
 {
     public class MainListVM : BaseVM
@@ -201,19 +208,9 @@ namespace FitMyFood.ViewModels
             TotalFood = new FoodItem();
             App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] db pre");
 
-            var t = App.DB.GetSettings();
-            t.Wait();
-            Settings = t.Result;
-            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] loadselectors pre");
-
-            var t2 = ExecuteLoadSelectorsCommand();
-            t2.Wait();
-            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] populate pre");
-
-            var t3 = PopulateVariationSelector();
-            t3.Wait();
-
-            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] end");
+            Settings = App.DB.GetSettings().Result;
+            ExecuteLoadSelectorsCommand().Wait();
+            PopulateVariationSelector().Wait();
 
         }
 
@@ -396,7 +393,7 @@ namespace FitMyFood.ViewModels
             var variationFoodItems = await App.DB.GetVariationFoodItemsIncludeFoodItem(MealVariation);
             foreach (var variationFoodItem in variationFoodItems)
             {
-                var foodItem = variationFoodItem.FoodItem.CloneWithoutSub();
+                var foodItem = await App.DB.GetFoodItemAsNoTracked(variationFoodItem.FoodItem);
                 foodItem.Quantity = variationFoodItem.Quantity;
                 Items.Add(foodItem);
             }

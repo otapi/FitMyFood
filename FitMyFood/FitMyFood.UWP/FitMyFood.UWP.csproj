@@ -93,6 +93,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -162,6 +163,9 @@
       <Project>{49570032-B708-4AA4-8646-825FE57EE8D8}</Project>
       <Name>FitMyFood</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageLayout Include="App.packagelayout" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

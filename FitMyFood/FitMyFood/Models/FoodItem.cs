@@ -84,6 +84,7 @@ namespace FitMyFood.Models
             }
         }
 
+        /*
         public FoodItem CloneWithoutSub()
         {
             FoodItem foodItem = new FoodItem()
@@ -99,6 +100,6 @@ namespace FitMyFood.Models
                 IsComposedFood = this.IsComposedFood
             };
             return foodItem;
-        }
+        }*/
     }
 }

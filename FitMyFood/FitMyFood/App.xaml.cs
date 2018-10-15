@@ -21,10 +21,8 @@ namespace FitMyFood
                 if (_DB == null)
                 {
                     App.PrintNote($"[DatabaseHelper] start");
-                    // Changes here by @cwrea for adaptation to EF Core.
-                    var databasePath = DependencyService.Get<Data.IFileHelper>().GetLocalFilePath("TodoSQLite.db");
                     
-                    _DB = Data.Database.Create(databasePath);
+                    _DB = Data.Database.Create();
                     App.PrintNote($"[DatabaseHelper] end");
 
                 }

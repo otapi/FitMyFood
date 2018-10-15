@@ -68,17 +68,13 @@ namespace FitMyFood.ViewModels
                     {
                         if (Item == null)
                         {
-                            var t = App.DB.AddNewVariationFoodItemAsync(value.Quantity, Variation, value);
-                            t.Wait();
-                            VariationFoodItem = t.Result;
+                            VariationFoodItem = App.DB.AddNewVariationFoodItemAsync(value.Quantity, Variation, value).Result;
                         } else {
-                            var t = App.DB.GetVariationFoodItemAsync(value, Variation);
-                            t.Wait();
-                            VariationFoodItem = t.Result;
+                            VariationFoodItem = App.DB.GetVariationFoodItemAsync(value, Variation).Result;
                         }
                         
                     }
-                    Item = value.CloneWithoutSub();
+                    Item = App.DB.GetFoodItemAsNoTracked(value).Result;
                     App.DB.ChangeFoodItemOnVariationFoodItemAsync(Item.Quantity, VariationFoodItem, value).Wait();
                     IsSearchItemsListviewVisible = false;
                     SuggestWeight();
@@ -135,7 +131,7 @@ namespace FitMyFood.ViewModels
         async Task FoodItem_Edit()
         {
             IsBusy = true;
-            await Navigation.PushAsync(new FoodItemPage(await App.DB.GetRealFoodItem(Item), null));
+            await Navigation.PushAsync(new FoodItemPage(await App.DB.GetFoodItemAsTracked(Item), null));
             IsBusy = false;
         }
 

@@ -10,8 +10,6 @@ namespace FitMyFood.Data
 {
     public class Database : DbContext
     {
-        // TODO: OnModelCreating?
-        // https://blog.oneunicorn.com/2017/09/25/many-to-many-relationships-in-ef-core-2-0-part-1-the-basics/
         public DbSet<ComposedFoodItem> ComposedFoodItems { get; set; }
         public DbSet<FoodItem> FoodItems { get; set; }
         public DbSet<DailyProfile> DailyProfiles { get; set; }
@@ -23,8 +21,10 @@ namespace FitMyFood.Data
 
         // TODO: why: There are many strategies for handling the lifecycle of a context object. I prefer to create a context when I need one and then dispose it at the end of the operation. 
 
-        public static Database Create(string databasePath)
+        public static Database Create()
         {
+            var databasePath = DependencyService.Get<Data.IFileHelper>().GetLocalFilePath("fitmyfood.db");
+            App.PrintNote($"Database file: {databasePath}");
             var dbContext = new Database(databasePath);
             //databaseContext.Database.EnsureDeleted();
             //if (Device.RuntimePlatform == Device.Android)
@@ -219,10 +219,18 @@ namespace FitMyFood.Data
                 weightTrack = thisWeightTrack[0];
             }
         }
-        public async Task<FoodItem> GetRealFoodItem(FoodItem fakeFoodItem)
+        public async Task<FoodItem> GetFoodItemAsTracked(FoodItem fakeFoodItem)
         {
             var realFoodItem = await FoodItems
                                         .Where(v => v.FoodItemId == fakeFoodItem.FoodItemId)
+                                        .FirstAsync();
+            return realFoodItem;
+        }
+        public async Task<FoodItem> GetFoodItemAsNoTracked(FoodItem foodItem)
+        {
+            var realFoodItem = await FoodItems
+                                        .AsNoTracking()
+                                        .Where(v => v.FoodItemId == foodItem.FoodItemId)
                                         .FirstAsync();
             return realFoodItem;
         }
