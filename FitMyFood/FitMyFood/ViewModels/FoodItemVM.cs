@@ -52,10 +52,11 @@ namespace FitMyFood.ViewModels
             IsBusy = true;
             if (newitem)
             {
-                App.VariationItemVM.VariationFoodItem = await App.DB.AddNewVariationFoodItemAsync(Item.Quantity, Variation, Item);
+                await App.DB.AddFoodItem(Item);
+                await App.DB.SaveChangesAsync();
+                App.VariationItemVM.SearchItems.Add(Item);
             }
-            await App.DB.SaveChangesAsync();
-            App.VariationItemVM.SelectedSearchItem = App.VariationItemVM.Item;
+            App.VariationItemVM.SelectedSearchItem = Item;
             IsBusy = false;
             await Navigation.PopAsync(true);
         }

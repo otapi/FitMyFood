@@ -209,9 +209,8 @@ namespace FitMyFood.ViewModels
             App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] db pre");
 
             Settings = App.DB.GetSettings().Result;
-            ExecuteLoadSelectorsCommand().Wait();
-            PopulateVariationSelector().Wait();
 
+            LoadSelectorsCommand.Execute(null);
         }
 
         /*According to Nutrition Therapy and Pathophysiology, the Mifflin-St. Jeor equation was

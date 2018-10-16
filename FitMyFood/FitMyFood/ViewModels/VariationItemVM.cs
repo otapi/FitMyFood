@@ -69,13 +69,16 @@ namespace FitMyFood.ViewModels
                         if (Item == null)
                         {
                             VariationFoodItem = App.DB.AddNewVariationFoodItemAsync(value.Quantity, Variation, value).Result;
+                            App.DB.SaveChangesNoWait();
                         } else {
                             VariationFoodItem = App.DB.GetVariationFoodItemAsync(value, Variation).Result;
                         }
                         
                     }
                     Item = App.DB.GetFoodItemAsNoTracked(value).Result;
-                    App.DB.ChangeFoodItemOnVariationFoodItemAsync(Item.Quantity, VariationFoodItem, value).Wait();
+                    VariationFoodItem.FoodItem = value;
+                    VariationFoodItem.Quantity = Item.Quantity;
+                    App.DB.SaveChangesNoWait();
                     IsSearchItemsListviewVisible = false;
                     SuggestWeight();
                 }
@@ -169,7 +172,8 @@ namespace FitMyFood.ViewModels
                 VariationFoodItem = await App.DB.GetVariationFoodItemAsync(Item, Variation);
             }
             VariationFoodItem = await App.DB.GetVariationFoodItemAsync(Item, Variation);
-            await App.DB.RemoveVariationFoodItemAsync(VariationFoodItem);
+            App.DB.Remove(VariationFoodItem);
+            await App.DB.SaveChangesAsync();
             IsBusy = false;
             await Navigation.PopAsync(true);
         }

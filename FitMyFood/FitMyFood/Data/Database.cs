@@ -114,19 +114,6 @@ namespace FitMyFood.Data
             var t = SaveChangesAsync();
         }
 
-        public async Task UpdateQuantityOnVariationFoodItemAsync(VariationFoodItem variationFoodItem)
-        {
-            Attach(variationFoodItem);
-            Entry(variationFoodItem).Property("Quantity").IsModified = true;
-            await SaveChangesAsync();
-        }
-
-        public async Task RemoveVariationFoodItemAsync(VariationFoodItem variationFoodItem)
-        {
-            Remove(variationFoodItem);
-            await SaveChangesAsync();
-        }
-
         public async Task<VariationFoodItem> AddNewVariationFoodItemAsync(double Quantity, Variation variation, FoodItem foodItem)
         {
             
@@ -141,15 +128,7 @@ namespace FitMyFood.Data
                 FoodItem = foodItem
             };
             await AddAsync(variationFoodItem);
-            await SaveChangesAsync();
             return variationFoodItem;
-        }
-
-        public async Task ChangeFoodItemOnVariationFoodItemAsync(double Quantity, VariationFoodItem variationFoodItem, FoodItem newFoodItem)
-        {
-            variationFoodItem.FoodItem = newFoodItem;
-            variationFoodItem.Quantity = Quantity;
-            await SaveChangesAsync();
         }
 
         public async Task<List<FoodItem>> GetOrderedFoodItemsAsync(string filterForTerm)
@@ -233,6 +212,11 @@ namespace FitMyFood.Data
                                         .Where(v => v.FoodItemId == foodItem.FoodItemId)
                                         .FirstAsync();
             return realFoodItem;
+        }
+
+        public async Task AddFoodItem(FoodItem foodItem)
+        {
+            await FoodItems.AddAsync(foodItem);
         }
         #endregion
 
