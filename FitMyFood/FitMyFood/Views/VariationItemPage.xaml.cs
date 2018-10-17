@@ -25,7 +25,7 @@ namespace FitMyFood.Views
 
         async void OnQuantityChanged(object sender, EventArgs e)
         {
-            Editor quant = (sender as Editor);
+            Entry quant = (sender as Entry);
             if (quant.Text != null)
             {
                 await App.VariationItemVM.ChangeQuantity();
