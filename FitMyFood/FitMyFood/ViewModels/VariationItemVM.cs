@@ -7,8 +7,6 @@ using FitMyFood.Views;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
-// TODO: rounded buttons on Android with Renderer or just a style?
-
 namespace FitMyFood.ViewModels
 {
     public class VariationItemVM : BaseVM
@@ -18,6 +16,7 @@ namespace FitMyFood.ViewModels
         public Command FoodItem_NewCommand { get; set; }
         public Command MainList_EditFinishedCommand { get; set; }
         public Command FillSearchFoodItemsCommand { get; set; }
+        public Command ChangeQuantityCommand { get; set; }
         
         FoodItem _Item;
         public FoodItem Item
@@ -100,7 +99,7 @@ namespace FitMyFood.ViewModels
                         {
                             _Item.Quantity = newQuantity;
                             OnPropertyChanged("Item");
-                            ChangeQuantity().Wait();
+                            ChangeQuantityCommand.Execute(null);
                         }
                     }
                     SetProperty(ref _Weight, value);
@@ -116,17 +115,17 @@ namespace FitMyFood.ViewModels
 
         public VariationItemVM(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
         {
-            Item = foodItem;
-            OrigEnergy = (foodItem == null ? 0 : foodItem.Energy);
-            SearchItems = new ObservableCollection<FoodItem>();
-            IsSearchItemsListviewVisible = false;
-
             FoodItem_EditCommand = new Command(async () => await FoodItem_Edit());
             MainList_RemoveItemCommand = new Command(async () => await MainList_RemoveItem());
             FoodItem_NewCommand = new Command(async () => await FoodItem_New());
             MainList_EditFinishedCommand = new Command(async () => await MainList_EditFinished());
             FillSearchFoodItemsCommand = new Command<string>(async (string term) => await FillSearchFoodItems(term));
-            
+            ChangeQuantityCommand = new Command(async () => await ChangeQuantity());
+
+            Item = foodItem;
+            OrigEnergy = (foodItem == null ? 0 : foodItem.Energy);
+            SearchItems = new ObservableCollection<FoodItem>();
+            IsSearchItemsListviewVisible = false;
 
             Variation = variation;
         }
@@ -145,7 +144,6 @@ namespace FitMyFood.ViewModels
             IsBusy = false;
         }
 
-        // TODO: convert this to a behavior or a property change
         public async Task ChangeQuantity()
         {
             if (Item == null)

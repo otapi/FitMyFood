@@ -27,7 +27,7 @@ using FitMyFood.Data;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-    // Todo: convert all .Wait() and .Result to:
+    // TODO: convert all .Wait() and .Result to:
     /* Task.Run(async () =>
           {
                 await ExecuteLoadSelectorsCommand();

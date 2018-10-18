@@ -31,10 +31,6 @@ namespace FitMyFood.Views
             App.MainListVM.LoadItemsCommand.Execute(null);
         }
 
-        void OnButtonClick(object sender, EventArgs e)
-        {
-            var it = App.MainListVM;
-            App.MainListVM.LoadItemsCommand.Execute(null);
-        }      
+        
     }
 }

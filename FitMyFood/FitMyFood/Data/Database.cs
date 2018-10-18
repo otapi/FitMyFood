@@ -185,9 +185,10 @@ namespace FitMyFood.Data
 
         public async Task SetWeightTrack(WeightTrack weightTrack)
         {
-            var thisWeightTrack = await WeightTracks
+            var thisWeightTrack = WeightTracks
+                        .ToList()
                         .Where(w => w.Date == weightTrack.Date)
-                        .ToListAsync();
+                        .ToList();
 
             if (thisWeightTrack.Count == 0)
             {

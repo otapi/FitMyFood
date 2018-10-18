@@ -88,6 +88,6 @@
             </ListView.ItemTemplate>
         </ListView>
         
-        <Button Text="Button!" Clicked="OnButtonClick" />
+
     </StackLayout>
 </ContentPage>

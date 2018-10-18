@@ -21,12 +21,15 @@ namespace FitMyFood.ViewModels
             {
                 if (_Settings != null && value != null && _Settings.ActualWeight != value.ActualWeight)
                 {
-                    var t = App.DB.SetWeightTrack(new WeightTrack()
+                    Task.Run(async () =>
                     {
-                        Date = DateTime.Today,
-                        Weight = value.ActualWeight
+                        await App.DB.SetWeightTrack(new WeightTrack()
+                        {
+                            Date = DateTime.Today,
+                            Weight = value.ActualWeight
+                        });
+                        await App.DB.SaveChangesAsync();
                     });
-                    t.Wait();
                 }
                 SetProperty(ref _Settings, value);
                 if (!internalChange)
@@ -36,7 +39,7 @@ namespace FitMyFood.ViewModels
                     ActivityPicker = value.Physical_activity - 1;
                     internalChange = false;
                 }
-                App.DB.SaveChangesNoWait();
+                
                 App.MainListVM.Settings = Settings;
             }
         }
@@ -51,7 +54,7 @@ namespace FitMyFood.ViewModels
             set
             {
                 SetProperty(ref _SexPicker, value);
-                if (!internalChange)
+                if (!internalChange && Settings != null)
                 {
                     internalChange = true;
                     Settings.Sex = value == 1;
@@ -70,7 +73,7 @@ namespace FitMyFood.ViewModels
             set
             {
                 SetProperty(ref _ActivityPicker, value);
-                if (!internalChange)
+                if (!internalChange && Settings != null)
                 {
                     internalChange = true;
                     Settings.Physical_activity = value + 1;
@@ -81,11 +84,12 @@ namespace FitMyFood.ViewModels
 
         public SettingsVM(INavigation navigation) : base(navigation)
         {
-            
+
             //Title = "Settings";
-            var t = App.DB.GetSettings();
-            t.Wait();
-            Settings = t.Result;
+            Task.Run(async () =>
+            {
+                Settings = await App.DB.GetSettings();
+            });
         }
 
     }
