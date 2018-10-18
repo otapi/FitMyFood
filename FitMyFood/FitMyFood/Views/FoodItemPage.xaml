@@ -6,13 +6,6 @@
              x:Name="FoodItemPager">
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Cancel" Command="{Binding Path=BindingContext.VariationItem_CancelCommand, Source={x:Reference Name=FoodItemPager}}">
-            <ToolbarItem.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="UWP" Value="cancel.png"/>
-                </OnPlatform>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
         <ToolbarItem Text="Save"  Command="{Binding Path=BindingContext.VariationItem_SaveCommand, Source={x:Reference Name=FoodItemPager}}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">

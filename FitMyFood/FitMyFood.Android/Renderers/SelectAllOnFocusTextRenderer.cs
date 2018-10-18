@@ -24,6 +24,16 @@ namespace FitMyFood.Droid.Renderers
         {
         }
 
+        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
+        {
+            base.OnElementChanged(e);
+            if (e.OldElement == null)
+            {
+                var nativeEditText = (global::Android.Widget.EditText)Control;
+                nativeEditText.SetSelectAllOnFocus(true);
+            }
+        }
+        /*
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             base.OnElementPropertyChanged(sender, args);
@@ -34,11 +44,13 @@ namespace FitMyFood.Droid.Renderers
                     var nativeEditText = (global::Android.Widget.EditText)Control;
                     nativeEditText.SetSelectAllOnFocus(true);
                 }
+
             }
             catch
             {
 
             }
         }
+        */
     }
 }

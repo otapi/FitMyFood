@@ -194,7 +194,10 @@ namespace FitMyFood.ViewModels
 
         private void SuggestWeight()
         {
-            
+            if (Item.Quantity == 0)
+            {
+                Item.Quantity = 1;
+            }
             double energyInOneGramm = Item.Energy / (Item.Weight);
             double missingEnergy = App.MainListVM.TargetFood.Energy -
                     (App.MainListVM.TotalFood.Energy - OrigEnergy);
