@@ -80,6 +80,7 @@ namespace FitMyFood.ViewModels
                     App.DB.SaveChangesNoWait();
                     IsSearchItemsListviewVisible = false;
                     SuggestWeight();
+                    SelectedSearchItem = null;
                 }
             }
         }

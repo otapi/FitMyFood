@@ -9,7 +9,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Actual weight (kg):" />
-            <Entry Text="{Binding ActualWeight}"/>
+            <Entry Text="{Binding ActualWeight}" Keyboard="Numeric"/>
             <ListView x:Name="ItemsListView"
                         ItemsSource="{Binding Weights}"
                         VerticalOptions="FillAndExpand"

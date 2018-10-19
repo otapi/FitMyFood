@@ -78,12 +78,12 @@
 
             <Label Text="Quantity:" Grid.Row="0" Grid.Column="0"/>
 
-                <Entry Text="{Binding Item.Quantity}" TextChanged="OnQuantityChanged" Grid.Row="1" Grid.Column="0"/>
+                <Entry Text="{Binding Item.Quantity}" TextChanged="OnQuantityChanged" Grid.Row="1" Grid.Column="0" Keyboard="Numeric"/>
             <Label Text="{Binding Item.UnitDescription}" Grid.Row="1" Grid.Column="1"/>
             
             <Label Text="Weight:" Grid.Row="2" Grid.Column="0"/>
 
-                <Entry Text="{Binding Weight}" Grid.Row="3" Grid.Column="0"/>
+                <Entry Text="{Binding Weight}" Grid.Row="3" Grid.Column="0" Keyboard="Numeric"/>
             <Label Text="gramm" Grid.Row="3" Grid.Column="1"/>
             <StackLayout Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
                 <Label Text="{Binding Item.Descriptor}" Style="{DynamicResource BodyStyle}" />

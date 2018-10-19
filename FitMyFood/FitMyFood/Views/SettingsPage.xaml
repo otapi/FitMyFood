@@ -10,9 +10,9 @@
         <ScrollView>
         <StackLayout Padding="20">
             <Label Text="Actual weight (kg):" />
-            <Entry Text="{Binding Settings.ActualWeight}"/>
+                <Entry Text="{Binding Settings.ActualWeight}" Keyboard="Numeric"/>
             <Label Text="Height (cm):" />
-            <Entry Text="{Binding Settings.Height}"/>
+                <Entry Text="{Binding Settings.Height}" Keyboard="Numeric"/>
             <Label Text="Sex:" />
                 <Picker SelectedIndex="{Binding SexPicker}" 
                         HorizontalOptions="FillAndExpand"
@@ -36,13 +36,13 @@
                     </Picker.Items>
                 </Picker>
                 <Label Text="Weight change (kg/week):" />
-            <Entry Text="{Binding Settings.WeeklyWeightChange}"/>
+                <Entry Text="{Binding Settings.WeeklyWeightChange}" Keyboard="Numeric"/>
             <Label Text="Daily fat (%):" />
-            <Entry Text="{Binding Settings.DailyFatRatio}"/>
+                <Entry Text="{Binding Settings.DailyFatRatio}" Keyboard="Numeric"/>
             <Label Text="Daily carbo (%):" />
-            <Entry Text="{Binding Settings.DailyCarboRatio}"/>
+                <Entry Text="{Binding Settings.DailyCarboRatio}" Keyboard="Numeric"/>
             <Label Text="Daily protein (%):" />
-            <Entry Text="{Binding Settings.DailyProteinRatio}"/>
+                <Entry Text="{Binding Settings.DailyProteinRatio}" Keyboard="Numeric"/>
 
 
         </StackLayout>

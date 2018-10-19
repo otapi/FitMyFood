@@ -26,19 +26,19 @@
             <Label Text="Nutrition facts in 100 gramm:" Style="{DynamicResource SubTitleStyle}"/>
 
             <Label Text="Fat:" />
-                <Entry Text="{Binding Item.Fat}"/>
+                <Entry Text="{Binding Item.Fat}" Keyboard="Numeric"/>
             <Label Text="Carbo:" />
-                <Entry Text="{Binding Item.Carbo}"/>
+                <Entry Text="{Binding Item.Carbo}" Keyboard="Numeric"/>
             <Label Text="Protein:" />
-                <Entry Text="{Binding Item.Protein}"/>
+                <Entry Text="{Binding Item.Protein}" Keyboard="Numeric"/>
             <BoxView HeightRequest="1" BackgroundColor="{StaticResource SeparatorColor}" HorizontalOptions="FillAndExpand" />
 
             <Label Text="Name of a unit:" />
                 <Entry Text="{Binding Item.UnitDescription}"/>
             <Label Text="Weight (gramm) of one unit:" />
-                <Entry Text="{Binding Item.UnitWeight}"/>
+                <Entry Text="{Binding Item.UnitWeight}" Keyboard="Numeric"/>
             <Label Text="Default quatity:" />
-                <Entry Text="{Binding Item.Quantity}"/>
+                <Entry Text="{Binding Item.Quantity}" Keyboard="Numeric"/>
 
 
         </StackLayout>
