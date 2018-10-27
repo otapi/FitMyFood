@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="CardsView" Version="1.6.3" />
+    <PackageReference Include="DalSoft.RestClient" Version="3.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
     <PackageReference Include="System.Memory" Version="4.5.1" />

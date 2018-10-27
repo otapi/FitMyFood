@@ -189,6 +189,14 @@ namespace FitMyFood.ViewModels
             {
                 SearchItems.Add(item);
             };
+            if (term != null && term.Length > 1)
+            {
+                RemoteParsers.KaloriaBazisRemoteParser kaloriaBazisRemoteParser = new RemoteParsers.KaloriaBazisRemoteParser();
+                foreach (var item in kaloriaBazisRemoteParser.GetMatches(term))
+                {
+                    SearchItems.Add(item);
+                }
+            }
         }
 
         private void SuggestWeight()
