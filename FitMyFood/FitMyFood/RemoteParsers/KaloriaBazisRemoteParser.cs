@@ -34,9 +34,9 @@ namespace FitMyFood.RemoteParsers
         {
             List<FoodItem> retnams = new List<FoodItem>();
             // https://kaloriabazis.hu/getfood.php?fav=true&q=r%C3%A9pa&p=1&s=8&expropsearch_id=0&expropsearch_inc=0&all_public_food=0
-            dynamic client = new RestClient("https://kaloriabazis.hu/getfood.php");
+            dynamic client = new RestClient("https://kaloriabazis.hu");
             
-            var result = client.Query(new {
+            var result = client.Resource("getfood.php").Query(new {
                 fav = true,
                 q=pattern,
                 p=1,
@@ -45,6 +45,7 @@ namespace FitMyFood.RemoteParsers
                 expropsearch_inc = 0,
                 all_public_food = 0
                 }).Get().Result;
+            
             return retnams;
         }
 
