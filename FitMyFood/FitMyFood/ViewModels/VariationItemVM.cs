@@ -74,6 +74,10 @@ namespace FitMyFood.ViewModels
                         }
                         
                     }
+                    if (!App.DB.IsExistFoodItem(value))
+                    {
+                        App.DB.AddFoodItem(value).Wait();
+                    }
                     Item = App.DB.GetFoodItemAsNoTracked(value).Result;
                     VariationFoodItem.FoodItem = value;
                     VariationFoodItem.Quantity = Item.Quantity;
@@ -114,6 +118,9 @@ namespace FitMyFood.ViewModels
 
         public double OrigEnergy;
 
+        RemoteParsers.KaloriaBazisRemoteParser kaloriaBazisRemoteParser;
+
+
         public VariationItemVM(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
         {
             FoodItem_EditCommand = new Command(async () => await FoodItem_Edit());
@@ -122,6 +129,8 @@ namespace FitMyFood.ViewModels
             MainList_EditFinishedCommand = new Command(async () => await MainList_EditFinished());
             FillSearchFoodItemsCommand = new Command<string>(async (string term) => await FillSearchFoodItems(term));
             ChangeQuantityCommand = new Command(async () => await ChangeQuantity());
+
+            kaloriaBazisRemoteParser = new RemoteParsers.KaloriaBazisRemoteParser();
 
             Item = foodItem;
             OrigEnergy = (foodItem == null ? 0 : foodItem.Energy);
@@ -189,13 +198,11 @@ namespace FitMyFood.ViewModels
             {
                 SearchItems.Add(item);
             };
-            
-            RemoteParsers.KaloriaBazisRemoteParser kaloriaBazisRemoteParser = new RemoteParsers.KaloriaBazisRemoteParser();
-            foreach (var item in kaloriaBazisRemoteParser.GetMatches(term))
+
+            foreach (var item in await kaloriaBazisRemoteParser.GetMatches(term))
             {
                 SearchItems.Add(item);
             }
-
         }
 
         private void SuggestWeight()

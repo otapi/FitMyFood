@@ -131,6 +131,12 @@ namespace FitMyFood.Data
             return variationFoodItem;
         }
 
+        public bool IsExistFoodItem(FoodItem foodItem)
+        {
+            return FoodItems.Any(f => f.FoodItemId == foodItem.FoodItemId);
+
+        }
+
         public async Task<List<FoodItem>> GetOrderedFoodItemsAsync(string filterForTerm)
         {
             List<FoodItem> foodItems;

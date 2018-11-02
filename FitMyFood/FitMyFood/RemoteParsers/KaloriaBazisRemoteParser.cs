@@ -15,6 +15,8 @@ using System.Collections;
 
 // https://restclient.dalsoft.io/docs
 // https://github.com/DalSoft/DalSoft.RestClient/blob/master/DalSoft.RestClient.Test.Integration/RestClientTests.cs
+// http://blog.masterdevs.com/xf-day-2/
+// https://msdn.microsoft.com/en-us/magazine/dn605875.aspx
 namespace FitMyFood.RemoteParsers
 {
     
@@ -30,7 +32,11 @@ namespace FitMyFood.RemoteParsers
             throw new NotImplementedException();
         }
 
-        public List<FoodItem> GetMatches(string pattern)
+        string normalize(string str)
+        {
+            return str.Replace("<b>", "").Replace("</b>", "");
+        }
+        public async Task<List<FoodItem>> GetMatches(string pattern)
         {
             List<FoodItem> retnams = new List<FoodItem>();
             if (pattern != null && pattern.Length > 2)
@@ -40,7 +46,7 @@ namespace FitMyFood.RemoteParsers
                 KalObject result = null;
                 try
                 {
-                    result = client.Resource("getfood.php").Query(new
+                    result = await client.Resource("getfood.php").Query(new
                     {
                         fav = true,
                         q = pattern,
@@ -48,8 +54,9 @@ namespace FitMyFood.RemoteParsers
                         s = 8,
                         expropsearch_id = 0,
                         expropsearch_inc = 0,
-                        all_public_food = 0
-                    }).Get().Result;
+                        all_public_food = 0,
+                        
+                    }).Get();
                 } catch
                 {
                     return retnams;
@@ -58,10 +65,11 @@ namespace FitMyFood.RemoteParsers
                 {
                     retnams.Add(new FoodItem()
                     {
-                        Name = f.name.Replace("<b>", "").Replace("</b>",""),
+                        Name = normalize(f.name),
                         Protein = double.Parse(f.protein),
                         Carbo = double.Parse(f.carbo),
-                        Fat = double.Parse(f.fat)
+                        Fat = double.Parse(f.fat),
+                        UnitDescription = "gramm"
 
                     });
                 }
