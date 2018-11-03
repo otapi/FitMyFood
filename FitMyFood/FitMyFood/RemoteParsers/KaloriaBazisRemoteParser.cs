@@ -22,23 +22,36 @@ namespace FitMyFood.RemoteParsers
     
     class KaloriaBazisRemoteParser : IRemoteParser
     {
+        List<FoodItem> Items;
         public FoodItem GetFoodItem(string name)
-        {
-            throw new NotImplementedException();
+        {   
+            foreach(var i in Items)
+            {
+                if (i.Name == name)
+                {
+                    return i;
+                }
+            }
+            return null;
         }
 
-        public void GetIcon()
+        public string GetSource()
         {
-            throw new NotImplementedException();
+            return "Kaloriabazis";
+        }
+        public string GetIcon()
+        {
+            return "https://kaloriabazis.hu/favicon.png";
         }
 
         string normalize(string str)
         {
             return str.Replace("<b>", "").Replace("</b>", "");
         }
-        public async Task<List<FoodItem>> GetMatches(string pattern)
+        public async Task<List<string>> GetMatches(string pattern)
         {
-            List<FoodItem> retnams = new List<FoodItem>();
+            List<string> retnams = new List<string>();
+            Items = new List<FoodItem>();
             if (pattern != null && pattern.Length > 2)
             {
                 // https://kaloriabazis.hu/getfood.php?fav=true&q=r%C3%A9pa&p=1&s=8&expropsearch_id=0&expropsearch_inc=0&all_public_food=0
@@ -63,14 +76,14 @@ namespace FitMyFood.RemoteParsers
                 }
                 foreach (var f in result.results2)
                 {
-                    retnams.Add(new FoodItem()
+                    retnams.Add(normalize(f.name));
+                    Items.Add(new FoodItem()
                     {
                         Name = normalize(f.name),
                         Protein = double.Parse(f.protein),
                         Carbo = double.Parse(f.carbo),
                         Fat = double.Parse(f.fat),
                         UnitDescription = "gramm"
-
                     });
                 }
             }

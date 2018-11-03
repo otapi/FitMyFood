@@ -10,14 +10,14 @@ namespace FitMyFood.Models
     public class FoodItem
     {
         public int FoodItemId { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = "Item 1";
 
         public ICollection<VariationFoodItem> VariationFoodItems { get; } = new List<VariationFoodItem>();
 
         /// <summary>
         /// True if this is a composed food
         /// </summary>
-        public bool IsComposedFood { get; set; }
+        public bool IsComposedFood { get; set; } = false;
         /// <summary>
         /// Sub-FoodItems if this is a composed item
         /// </summary>
@@ -26,30 +26,30 @@ namespace FitMyFood.Models
         /// <summary>
         /// Default unit
         /// </summary>
-        public string UnitDescription { get; set; }
+        public string UnitDescription { get; set; } = "gramm";
         /// <summary>
         /// x gramm in a unit
         /// </summary>
-        public double UnitWeight { get; set; }
+        public double UnitWeight { get; set; } = 1;
 
         /// <summary>
         /// x gramm in 100g
         /// </summary>
-        public double Fat { get; set; }
+        public double Fat { get; set; } = 0;
         /// <summary>
         /// x gramm in 100g
         /// </summary>
-        public double Carbo { get; set; }
+        public double Carbo { get; set; } = 0;
         /// <summary>
         /// x gramm in 100g
         /// </summary>
-        public double Protein { get; set; }
+        public double Protein { get; set; } = 0;
 
-        
+
         /// <summary>
         /// How many unit has? Or what is the default quantity?
         /// </summary>
-        public double Quantity { get; set; }
+        public double Quantity { get; set; } = 0;
         /// <summary>
         /// Get Energy in kcal aka Calorie
         /// </summary>

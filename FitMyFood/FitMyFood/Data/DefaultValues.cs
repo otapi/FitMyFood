@@ -26,21 +26,6 @@ namespace FitMyFood.Data
 
         public static string VariationSelectorItem = "Variation A";
 
-        public static FoodItem FoodItem()
-        {
-            return new FoodItem
-            {
-                Name = "Item 1",
-                UnitDescription = "gramm",
-                UnitWeight = 1,
-                Fat = 0,
-                Carbo = 0,
-                Protein = 0,
-                IsComposedFood = false,
-                Quantity = 0,
-            };
-        }
-
         public static Settings Settings()
         {
             return new Settings

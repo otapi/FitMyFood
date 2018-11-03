@@ -35,7 +35,7 @@ namespace FitMyFood.ViewModels
             if (foodItem == null)
             {
                 newitem = true;
-                foodItem = Data.DefaultValues.FoodItem();
+                foodItem = new FoodItem();
             } else
             {
                 newitem = false;
@@ -50,13 +50,18 @@ namespace FitMyFood.ViewModels
         async Task VariationItem_Save()
         {
             IsBusy = true;
+            VariationItemSearchItem var = new VariationItemSearchItem()
+            {
+                Name = Item.Name,
+                InternalFoodItem = Item
+            };
             if (newitem)
             {
                 await App.DB.AddFoodItem(Item);
                 await App.DB.SaveChangesAsync();
-                App.VariationItemVM.SearchItems.Add(Item);
             }
-            App.VariationItemVM.SelectedSearchItem = Item;
+            App.VariationItemVM.SearchItems.Add(var);
+            App.VariationItemVM.SelectedSearchItem = var;
             IsBusy = false;
             await Navigation.PopAsync(true);
         }

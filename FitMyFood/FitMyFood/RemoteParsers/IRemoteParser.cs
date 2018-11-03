@@ -7,8 +7,9 @@ namespace FitMyFood.RemoteParsers
 {
     public interface IRemoteParser
     {
-        void GetIcon();
-        Task<List<Models.FoodItem>> GetMatches(string pattern);
-        FitMyFood.Models.FoodItem GetFoodItem(string name);
+        string GetIcon();
+        string GetSource();
+        Task<List<string>> GetMatches(string pattern);
+        Models.FoodItem GetFoodItem(string name);
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FitMyFood.Views;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using FitMyFood.RemoteParsers;
 
 namespace FitMyFood.ViewModels
 {
@@ -53,8 +54,8 @@ namespace FitMyFood.ViewModels
                 SetProperty(ref _IsDetailsVisible, value);
             }
         }
-        FoodItem _SelectedSearchItem;
-        public FoodItem SelectedSearchItem
+        VariationItemSearchItem _SelectedSearchItem;
+        public VariationItemSearchItem SelectedSearchItem
         {
             get { return _SelectedSearchItem; }
             set
@@ -62,24 +63,24 @@ namespace FitMyFood.ViewModels
                 SetProperty(ref _SelectedSearchItem, value);
                 if (value != null)
                 {
-
+                    FoodItem selectedFoodItem = value.GetFoodItem();
                     if (VariationFoodItem == null)
                     {
                         if (Item == null)
                         {
-                            VariationFoodItem = App.DB.AddNewVariationFoodItemAsync(value.Quantity, Variation, value).Result;
+                            VariationFoodItem = App.DB.AddNewVariationFoodItemAsync(selectedFoodItem.Quantity, Variation, selectedFoodItem).Result;
                             App.DB.SaveChangesNoWait();
                         } else {
-                            VariationFoodItem = App.DB.GetVariationFoodItemAsync(value, Variation).Result;
+                            VariationFoodItem = App.DB.GetVariationFoodItemAsync(selectedFoodItem, Variation).Result;
                         }
                         
                     }
-                    if (!App.DB.IsExistFoodItem(value))
+                    if (!App.DB.IsExistFoodItem(selectedFoodItem))
                     {
-                        App.DB.AddFoodItem(value).Wait();
+                        App.DB.AddFoodItem(selectedFoodItem).Wait();
                     }
-                    Item = App.DB.GetFoodItemAsNoTracked(value).Result;
-                    VariationFoodItem.FoodItem = value;
+                    Item = App.DB.GetFoodItemAsNoTracked(selectedFoodItem).Result;
+                    VariationFoodItem.FoodItem = selectedFoodItem;
                     VariationFoodItem.Quantity = Item.Quantity;
                     App.DB.SaveChangesNoWait();
                     IsSearchItemsListviewVisible = false;
@@ -111,7 +112,7 @@ namespace FitMyFood.ViewModels
                 }
             }
         }
-        public ObservableCollection<FoodItem> SearchItems { get; set; }
+        public ObservableCollection<VariationItemSearchItem> SearchItems { get; set; }
         
         public Variation Variation;
         public VariationFoodItem VariationFoodItem;
@@ -130,11 +131,9 @@ namespace FitMyFood.ViewModels
             FillSearchFoodItemsCommand = new Command<string>(async (string term) => await FillSearchFoodItems(term));
             ChangeQuantityCommand = new Command(async () => await ChangeQuantity());
 
-            kaloriaBazisRemoteParser = new RemoteParsers.KaloriaBazisRemoteParser();
-
             Item = foodItem;
             OrigEnergy = (foodItem == null ? 0 : foodItem.Energy);
-            SearchItems = new ObservableCollection<FoodItem>();
+            SearchItems = new ObservableCollection<VariationItemSearchItem>();
             IsSearchItemsListviewVisible = false;
 
             Variation = variation;
@@ -196,12 +195,47 @@ namespace FitMyFood.ViewModels
             SearchItems.Clear();
             foreach (var item in await App.DB.GetOrderedFoodItemsAsync(term))
             {
-                SearchItems.Add(item);
+                SearchItems.Add(new VariationItemSearchItem()
+                {
+                    Source = null,
+                    Name = item.Name,
+                    Icon = null,
+                    InternalFoodItem = item
+                });
             };
 
-            foreach (var item in await kaloriaBazisRemoteParser.GetMatches(term))
+            // External sources
+            if (kaloriaBazisRemoteParser == null)
             {
-                SearchItems.Add(item);
+                kaloriaBazisRemoteParser = new KaloriaBazisRemoteParser();
+            }
+            await FillSearchItems_ExternalSources(kaloriaBazisRemoteParser, term);
+        }
+
+        async Task FillSearchItems_ExternalSources(IRemoteParser source, string term)
+        {
+            foreach (var item in await source.GetMatches(term))
+            {
+                bool exit = false;
+                foreach (var s in SearchItems)
+                {
+                    if (s.Name == item)
+                    {
+                        exit = true;
+                        break;
+                    }
+                }
+                if (exit)
+                {
+                    continue;
+                }
+                SearchItems.Add(new VariationItemSearchItem()
+                {
+                    Name = item,
+                    Icon = source.GetIcon(),
+                    Source = source,
+                }
+                );
             }
         }
 

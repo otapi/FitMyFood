@@ -48,7 +48,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Label Text="{Binding Name}" Style="{DynamicResource ListItemTextStyle}" />
+                                <Label Text="{Binding Name}" Style="{DynamicResource ListItemTextStyle}" />
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
