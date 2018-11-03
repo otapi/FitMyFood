@@ -30,10 +30,14 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <SearchBar x:Name="SearchBar" TextChanged="SearchBar_TextChanged" Grid.Row="0" Grid.Column="0" Placeholder="Enter name of food to search"/>
+            <SearchBar x:Name="SearchBar" TextChanged="SearchBar_TextChanged" 
+                       Grid.Row="0" Grid.Column="0" 
+                       Placeholder="Enter name of food to search"
+                       IsVisible="{Binding IsSearchItemsListviewVisible}"/>
             <Button Text="New" Command="{Binding Path=BindingContext.FoodItem_NewCommand, Source={x:Reference Name=VariationItemPager}}"
                     Grid.Row="0" Grid.Column="1"
-                    HorizontalOptions="End"/>
+                    HorizontalOptions="End"
+                    IsVisible="{Binding IsSearchItemsListviewVisible}"/>
             <ListView x:Name="SearchItemsListview"
                     ItemsSource="{Binding SearchItems}"
                     HasUnevenRows="true"
