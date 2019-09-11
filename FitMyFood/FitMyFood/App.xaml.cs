@@ -13,8 +13,8 @@ namespace FitMyFood
         public static ViewModels.VariationItemVM VariationItemVM { get; set; }
         public static ViewModels.MenuVM MenuVM { get; set; }
         
-        static Data.Database _DB;
-        public static Data.Database DB
+        static Services.Database _DB;
+        public static Services.Database DB
         {
             get
             {
@@ -22,7 +22,7 @@ namespace FitMyFood
                 {
                     App.PrintNote($"[DatabaseHelper] start");
                     
-                    _DB = Data.Database.Create();
+                    _DB = Services.Database.Create();
                     App.PrintNote($"[DatabaseHelper] end");
 
                 }

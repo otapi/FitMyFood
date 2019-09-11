@@ -8,7 +8,7 @@ using Xamarin.Forms;
 using FitMyFood.Models;
 using FitMyFood.Views;
 using System.Collections.Generic;
-using FitMyFood.Data;
+using FitMyFood.Services;
 
 /*
     FitMyFod
@@ -171,6 +171,18 @@ namespace FitMyFood.ViewModels
             }
         }
 
+        FoodDiagramModel _EnergyDiagram;
+        public FoodDiagramModel EnergyDiagram
+        {
+            set
+            {
+                SetProperty(ref _EnergyDiagram, value);
+            }
+            get
+            {
+                return _EnergyDiagram;
+            }
+        }
 
         public Command LoadSelectorsCommand { get; set; } 
         public Command UpdateVariantSelectorCommand { get; set; }
@@ -320,6 +332,15 @@ namespace FitMyFood.ViewModels
             SummaryFat = $"Fat: {TotalFood.Fat:0.#} / {TargetFood.Fat:0.#} gramm";
             SummaryCarbo = $"Carbo: {TotalFood.Carbo:0.#} / {TargetFood.Carbo:0.#} gramm";
             SummaryProtein = $"Protein: {TotalFood.Protein:0.#} / {TargetFood.Protein:0.#} gramm";
+
+            EnergyDiagram = new FoodDiagramModel()
+            {
+                Type = FoodDiagramModel.Types.Energy,
+                Actual = 5,
+                //Actual = TotalFood.Energy,
+                Maximum = TargetFood.Energy,
+                WholeDay = TargetFood.Energy*4 // TODO: calc the real whole day energy
+            };
         }
 
         async Task ExecuteLoadSelectorsCommand()

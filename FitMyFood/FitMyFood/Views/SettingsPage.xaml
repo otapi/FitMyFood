@@ -5,47 +5,43 @@
              xmlns:vm="clr-namespace:FitMyFood.ViewModels"
              Title="{Binding Title}"
              x:Name="SettingsPager">
-
     <ContentPage.Content>
         <ScrollView>
         <StackLayout Padding="20">
             <Label Text="Actual weight (kg):" />
                 <Entry Text="{Binding Settings.ActualWeight}" Keyboard="Numeric"/>
-            <Label Text="Height (cm):" />
+                <Label Text="Height (cm):" />
                 <Entry Text="{Binding Settings.Height}" Keyboard="Numeric"/>
-            <Label Text="Sex:" />
+                <Label Text="Sex:" />
                 <Picker SelectedIndex="{Binding SexPicker}" 
-                        HorizontalOptions="FillAndExpand"
-                        ItemsSource="SexItems">
+                        HorizontalOptions="FillAndExpand">
                     <Picker.Items>
                         <x:String>Female</x:String>
                         <x:String>Male</x:String>
                     </Picker.Items>
                 </Picker>
-
                 <Label Text="Age:" />
-            <Entry Text="{Binding Settings.Age}"/>
-            <Label Text="Physical activity:" />
+                <Entry Text="{Binding Settings.Age}"/>
+                <Label Text="Physical activity:" />
                 <Picker SelectedIndex="{Binding ActivityPicker}" 
                         HorizontalOptions="FillAndExpand"
-                        ItemsSource="ActivityItems">
+                        >
                     <Picker.Items>
                         <x:String>Sedentary</x:String>
                         <x:String>Moderately</x:String>
                         <x:String>Active</x:String>
                     </Picker.Items>
                 </Picker>
+
                 <Label Text="Weight change (kg/week):" />
                 <Entry Text="{Binding Settings.WeeklyWeightChange}" Keyboard="Numeric"/>
-            <Label Text="Daily fat (%):" />
+                <Label Text="Daily fat (%):" />
                 <Entry Text="{Binding Settings.DailyFatRatio}" Keyboard="Numeric"/>
-            <Label Text="Daily carbo (%):" />
+                <Label Text="Daily carbo (%):" />
                 <Entry Text="{Binding Settings.DailyCarboRatio}" Keyboard="Numeric"/>
-            <Label Text="Daily protein (%):" />
+                <Label Text="Daily protein (%):" />
                 <Entry Text="{Binding Settings.DailyProteinRatio}" Keyboard="Numeric"/>
-
-
-        </StackLayout>
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

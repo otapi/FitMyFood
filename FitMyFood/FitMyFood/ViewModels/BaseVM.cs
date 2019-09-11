@@ -6,7 +6,7 @@ using System.ComponentModel;
 using Xamarin.Forms;
 
 using FitMyFood.Models;
-using FitMyFood.Data;
+using FitMyFood.Services;
 using System.Runtime.CompilerServices;
 
 namespace FitMyFood.ViewModels

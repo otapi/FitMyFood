@@ -6,7 +6,7 @@ using FitMyFood.iOS;
 [assembly: Dependency(typeof(FileHelper))]
 namespace FitMyFood.iOS
 {
-    public class FileHelper : FitMyFood.Data.IFileHelper
+    public class FileHelper : FitMyFood.Services.IFileHelper
     {
         public string GetLocalFilePath(string filename)
         {

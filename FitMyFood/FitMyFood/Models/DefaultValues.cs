@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FitMyFood.Data
+namespace FitMyFood.Models
 {
     public class DefaultValues
     {

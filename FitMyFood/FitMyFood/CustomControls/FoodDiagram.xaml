@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitMyFood.CustomControls.FoodDiagram"
+             x:Name="this">
+  <ContentView.Content>
+      <AbsoluteLayout>
+          <Label Text="{Binding Source={x:Reference this}, Path=Caption}" />
+            <BoxView 
+                Color="{Binding Source={x:Reference this}, Path=Data.ActualColor}"
+                x:Name="ActualBar"
+                />
+        </AbsoluteLayout>
+  </ContentView.Content>
+</ContentView>

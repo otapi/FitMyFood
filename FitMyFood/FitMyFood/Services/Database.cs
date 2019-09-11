@@ -6,7 +6,7 @@ using System.Linq;
 using FitMyFood.Models;
 using Xamarin.Forms;
 
-namespace FitMyFood.Data
+namespace FitMyFood.Services
 {
     public class Database : DbContext
     {
@@ -23,7 +23,7 @@ namespace FitMyFood.Data
 
         public static Database Create()
         {
-            var databasePath = DependencyService.Get<Data.IFileHelper>().GetLocalFilePath("fitmyfood.db");
+            var databasePath = DependencyService.Get<Services.IFileHelper>().GetLocalFilePath("fitmyfood.db");
             App.PrintNote($"Database file: {databasePath}");
             var dbContext = new Database(databasePath);
             //dbContext.Database.EnsureDeleted();

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitMyFood.Views.MainListPage"
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+             xmlns:controls="clr-namespace:FitMyFood.CustomControls"
              Title="{Binding Title}"
              x:Name="MainListPager"
             >
@@ -44,6 +45,9 @@
                 SelectedIndex="{Binding VariationSelectorIndex}"
                 />
         </Grid>
+        <controls:FoodDiagram
+            Data="{Binding EnergyDiagram}"
+            />
         <Label Text="{Binding SummaryEnergy}" Style="{DynamicResource BodyStyle}" />
         <Label Text="{Binding SummaryFat}" Style="{DynamicResource ListItemTextStyle}" TextColor="{StaticResource FatColor}"/>
         <Label Text="{Binding SummaryCarbo}" Style="{DynamicResource ListItemTextStyle}"  TextColor="{StaticResource CarboColor}"/>
