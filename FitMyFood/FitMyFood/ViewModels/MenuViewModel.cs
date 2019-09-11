@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using FitMyFood.Views;
+using MvvmHelpers.Interfaces;
+using MvvmHelpers.Commands;
 
 namespace FitMyFood.ViewModels
 {

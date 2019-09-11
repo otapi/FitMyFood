@@ -9,6 +9,9 @@ using FitMyFood.Models;
 using FitMyFood.Views;
 using System.Collections.Generic;
 using FitMyFood.Services;
+using MvvmHelpers.Interfaces;
+using MvvmHelpers.Commands;
+
 
 /*
     FitMyFod
@@ -27,12 +30,12 @@ using FitMyFood.Services;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-    // TODO: convert all .Wait() and .Result to:
-    /* Task.Run(async () =>
-          {
-                await ExecuteLoadSelectorsCommand();
+// TODO: convert all .Wait() and .Result to:
+/* Task.Run(async () =>
+      {
+            await ExecuteLoadSelectorsCommand();
 await PopulateVariationSelector();
-            });
+        });
 */
 namespace FitMyFood.ViewModels
 {
@@ -184,21 +187,21 @@ namespace FitMyFood.ViewModels
             }
         }
 
-        public Command LoadSelectorsCommand { get; set; } 
-        public Command UpdateVariantSelectorCommand { get; set; }
-        public Command LoadItemsCommand { get; set; }
-        public Command VariationItem_EditCommand { get; set; }
-        public Command VariationItem_NewCommand { get; set; }
+        public IAsyncCommand LoadSelectorsCommand { get; set; } 
+        public IAsyncCommand UpdateVariantSelectorCommand { get; set; }
+        public IAsyncCommand LoadItemsCommand { get; set; }
+        public IAsyncCommand VariationItem_EditCommand { get; set; }
+        public IAsyncCommand VariationItem_NewCommand { get; private set; }
 
 
         void DefineCommands()
         {
-            LoadSelectorsCommand = new Command(async () => await ExecuteLoadSelectorsCommand());
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            UpdateVariantSelectorCommand = new Command(async () => await PopulateVariationSelector());
-            VariationItem_EditCommand = new Command(async () => await ExecuteVariationItem_EditCommand());
-            VariationItem_NewCommand = new Command(async () => await ExecuteVariationItem_NewCommand());
-            
+            LoadSelectorsCommand = new AsyncCommand(ExecuteLoadSelectorsCommand);
+            LoadItemsCommand = new AsyncCommand(ExecuteLoadItemsCommand);
+            UpdateVariantSelectorCommand = new AsyncCommand(PopulateVariationSelector);
+            VariationItem_EditCommand = new AsyncCommand(ExecuteVariationItem_EditCommand);
+            VariationItem_NewCommand = new AsyncCommand(ExecuteVariationItem_NewCommand);
+           
         }
         public MainListViewModel(INavigation navigation) : base(navigation)
         {

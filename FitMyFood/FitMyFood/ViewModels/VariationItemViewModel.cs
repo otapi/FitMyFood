@@ -7,17 +7,19 @@ using FitMyFood.Views;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using FitMyFood.Services.RemoteParsers;
+using MvvmHelpers.Interfaces;
+using MvvmHelpers.Commands;
 
 namespace FitMyFood.ViewModels
 {
     public class VariationItemViewModel : BaseViewModel
     {
-        public Command FoodItem_EditCommand { get; set; }
-        public Command MainList_RemoveItemCommand { get; set; }
-        public Command FoodItem_NewCommand { get; set; }
-        public Command MainList_EditFinishedCommand { get; set; }
-        public Command FillSearchFoodItemsCommand { get; set; }
-        public Command ChangeQuantityCommand { get; set; }
+        public IAsyncCommand FoodItem_EditCommand { get; set; }
+        public IAsyncCommand MainList_RemoveItemCommand { get; set; }
+        public IAsyncCommand FoodItem_NewCommand { get; set; }
+        public IAsyncCommand MainList_EditFinishedCommand { get; set; }
+        public IAsyncCommand FillSearchFoodItemsCommand { get; set; }
+        publicIAsyncCommand ChangeQuantityCommand { get; set; }
         
         FoodItem _Item;
         public FoodItem Item

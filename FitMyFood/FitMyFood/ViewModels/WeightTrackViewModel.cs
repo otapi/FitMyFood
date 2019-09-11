@@ -5,7 +5,8 @@ using Xamarin.Forms;
 using System.Threading.Tasks;
 using FitMyFood.Views;
 using System.Collections.ObjectModel;
-
+using MvvmHelpers.Interfaces;
+using MvvmHelpers.Commands;
 // TODO: OxyPlot.Xamarin.Forms - http://docs.oxyplot.org/en/latest/getting-started/hello-xamarin-forms.html
 
 namespace FitMyFood.ViewModels

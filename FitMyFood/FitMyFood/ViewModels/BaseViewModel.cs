@@ -9,6 +9,7 @@ using FitMyFood.Models;
 using FitMyFood.Services;
 using System.Runtime.CompilerServices;
 
+
 namespace FitMyFood.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged

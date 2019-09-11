@@ -4,6 +4,8 @@ using FitMyFood.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using FitMyFood.Views;
+using MvvmHelpers.Interfaces;
+using MvvmHelpers.Commands;
 
 namespace FitMyFood.ViewModels
 {
