@@ -18,8 +18,8 @@ namespace FitMyFood.ViewModels
         public IAsyncCommand MainList_RemoveItemCommand { get; set; }
         public IAsyncCommand FoodItem_NewCommand { get; set; }
         public IAsyncCommand MainList_EditFinishedCommand { get; set; }
-        public IAsyncCommand FillSearchFoodItemsCommand { get; set; }
-        publicIAsyncCommand ChangeQuantityCommand { get; set; }
+        public IAsyncCommand<string> FillSearchFoodItemsCommand { get; set; }
+        public IAsyncCommand ChangeQuantityCommand { get; set; }
         
         FoodItem _Item;
         public FoodItem Item
@@ -130,7 +130,7 @@ namespace FitMyFood.ViewModels
             MainList_RemoveItemCommand = new AsyncCommand(MainList_RemoveItem);
             FoodItem_NewCommand = new AsyncCommand(FoodItem_New);
             MainList_EditFinishedCommand = new AsyncCommand(MainList_EditFinished);
-            FillSearchFoodItemsCommand = new AsyncCommand<string>(async (string term) => await FillSearchFoodItems(term));
+            FillSearchFoodItemsCommand = new AsyncCommand<string>(FillSearchFoodItems);
             ChangeQuantityCommand = new AsyncCommand(ChangeQuantity);
 
             Item = foodItem;
