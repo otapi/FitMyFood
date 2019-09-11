@@ -126,12 +126,12 @@ namespace FitMyFood.ViewModels
 
         public VariationItemViewModel(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
         {
-            FoodItem_EditCommand = new Command(async () => await FoodItem_Edit());
-            MainList_RemoveItemCommand = new Command(async () => await MainList_RemoveItem());
-            FoodItem_NewCommand = new Command(async () => await FoodItem_New());
-            MainList_EditFinishedCommand = new Command(async () => await MainList_EditFinished());
-            FillSearchFoodItemsCommand = new Command<string>(async (string term) => await FillSearchFoodItems(term));
-            ChangeQuantityCommand = new Command(async () => await ChangeQuantity());
+            FoodItem_EditCommand = new AsyncCommand(FoodItem_Edit);
+            MainList_RemoveItemCommand = new AsyncCommand(MainList_RemoveItem);
+            FoodItem_NewCommand = new AsyncCommand(FoodItem_New);
+            MainList_EditFinishedCommand = new AsyncCommand(MainList_EditFinished);
+            FillSearchFoodItemsCommand = new AsyncCommand<string>(async (string term) => await FillSearchFoodItems(term));
+            ChangeQuantityCommand = new AsyncCommand(ChangeQuantity);
 
             Item = foodItem;
             OrigEnergy = (foodItem == null ? 0 : foodItem.Energy);
