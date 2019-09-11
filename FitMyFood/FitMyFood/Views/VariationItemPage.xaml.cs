@@ -15,11 +15,11 @@ namespace FitMyFood.Views
         {
             InitializeComponent();
 
-            App.VariationItemVM = new VariationItemVM(Navigation, foodItem, variation);
-            BindingContext = App.VariationItemVM;
+            App.VariationItemViewModel = new VariationItemViewModel(Navigation, foodItem, variation);
+            BindingContext = App.VariationItemViewModel;
             if (foodItem == null)
             {
-                App.VariationItemVM.FillSearchFoodItemsCommand.Execute(null);
+                App.VariationItemViewModel.FillSearchFoodItemsCommand.Execute(null);
             }
         }
 
@@ -28,28 +28,28 @@ namespace FitMyFood.Views
             Entry quant = (sender as Entry);
             if (quant.Text != null)
             {
-                await App.VariationItemVM.ChangeQuantity();
+                await App.VariationItemViewModel.ChangeQuantity();
             }
         }
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             SearchItemsListview.BeginRefresh();
             if (string.IsNullOrWhiteSpace(e.NewTextValue))
-                App.VariationItemVM.FillSearchFoodItemsCommand.Execute(null);
+                App.VariationItemViewModel.FillSearchFoodItemsCommand.Execute(null);
             else
-                App.VariationItemVM.FillSearchFoodItemsCommand.Execute(e.NewTextValue);
+                App.VariationItemViewModel.FillSearchFoodItemsCommand.Execute(e.NewTextValue);
 
             SearchItemsListview.EndRefresh();
         }
 
         protected override bool OnBackButtonPressed()
         {
-            if (App.VariationItemVM.IsSearchItemsListviewVisible)
+            if (App.VariationItemViewModel.IsSearchItemsListviewVisible)
             {
-                App.VariationItemVM.IsSearchItemsListviewVisible = false;
+                App.VariationItemViewModel.IsSearchItemsListviewVisible = false;
             } else
             {
-                App.VariationItemVM.MainList_EditFinishedCommand.Execute(null);
+                App.VariationItemViewModel.MainList_EditFinishedCommand.Execute(null);
             }
             
             return true;

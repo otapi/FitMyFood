@@ -8,11 +8,11 @@ using FitMyFood.Views;
 
 namespace FitMyFood.ViewModels
 {
-    public class MenuVM : BaseVM
+    public class MenuViewModel : BaseViewModel
     {
         public MasterDetailPage MasterDetailPage { get; set; }
 
-        public MenuVM(INavigation navigation) : base(navigation)
+        public MenuViewModel(INavigation navigation) : base(navigation)
         {
 
         }

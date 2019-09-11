@@ -15,7 +15,7 @@ namespace FitMyFood.Views
             InitializeComponent();
 
             MasterBehavior = MasterBehavior.Popover;
-            App.MenuVM.MasterDetailPage = this;
+            App.MenuViewModel.MasterDetailPage = this;
             
         }
 

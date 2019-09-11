@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Architecture\**" />
+    <EmbeddedResource Remove="Architecture\**" />
+    <None Remove="Architecture\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CardsView" Version="2.2.1" />
     <PackageReference Include="DalSoft.RestClient" Version="4.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
@@ -19,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="CustomControls\FoodDiagram.xaml.cs">
+    <Compile Update="Views\CustomControls\FoodDiagram.xaml.cs">
       <DependentUpon>FoodDiagram.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\WeightTrackPage.xaml.cs">
@@ -49,12 +55,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="CustomControls\FoodDiagram.xaml">
+    <EmbeddedResource Update="Views\CustomControls\FoodDiagram.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Architecture\" />
   </ItemGroup>
 </Project>

@@ -17,7 +17,7 @@ using System.Collections;
 // https://github.com/DalSoft/DalSoft.RestClient/blob/master/DalSoft.RestClient.Test.Integration/RestClientTests.cs
 // http://blog.masterdevs.com/xf-day-2/
 // https://msdn.microsoft.com/en-us/magazine/dn605875.aspx
-namespace FitMyFood.RemoteParsers
+namespace FitMyFood.Services.RemoteParsers
 {
     
     class KaloriaBazisRemoteParser : IRemoteParser

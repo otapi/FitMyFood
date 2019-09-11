@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 
-namespace FitMyFood.CustomControls
+namespace FitMyFood.Views.CustomControls
 {
     public class SwiperStackLayout : StackLayout, ISwipeCallBack
     {

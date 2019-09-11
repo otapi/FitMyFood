@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using FitMyFood.Views;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using FitMyFood.RemoteParsers;
+using FitMyFood.Services.RemoteParsers;
 
 namespace FitMyFood.ViewModels
 {
-    public class VariationItemVM : BaseVM
+    public class VariationItemViewModel : BaseViewModel
     {
         public Command FoodItem_EditCommand { get; set; }
         public Command MainList_RemoveItemCommand { get; set; }
@@ -119,10 +119,10 @@ namespace FitMyFood.ViewModels
 
         public double OrigEnergy;
 
-        RemoteParsers.KaloriaBazisRemoteParser kaloriaBazisRemoteParser;
+        KaloriaBazisRemoteParser kaloriaBazisRemoteParser;
 
 
-        public VariationItemVM(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
+        public VariationItemViewModel(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
         {
             FoodItem_EditCommand = new Command(async () => await FoodItem_Edit());
             MainList_RemoveItemCommand = new Command(async () => await MainList_RemoveItem());
@@ -191,7 +191,7 @@ namespace FitMyFood.ViewModels
 
         async Task FillSearchFoodItems(string term)
         {
-            App.VariationItemVM.IsSearchItemsListviewVisible = true;
+            App.VariationItemViewModel.IsSearchItemsListviewVisible = true;
             SearchItems.Clear();
             foreach (var item in await App.DB.GetOrderedFoodItemsAsync(term))
             {
@@ -246,8 +246,8 @@ namespace FitMyFood.ViewModels
                 Item.Quantity = 1;
             }
             double energyInOneGramm = Item.Energy / (Item.Weight);
-            double missingEnergy = App.MainListVM.TargetFood.Energy -
-                    (App.MainListVM.TotalFood.Energy - OrigEnergy);
+            double missingEnergy = App.MainListViewModel.TargetFood.Energy -
+                    (App.MainListViewModel.TotalFood.Energy - OrigEnergy);
             if (missingEnergy > 0 && energyInOneGramm != 0)
             {
                 Weight = (int)(missingEnergy / energyInOneGramm);

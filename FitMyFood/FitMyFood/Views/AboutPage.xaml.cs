@@ -11,7 +11,7 @@ namespace FitMyFood.Views
         public AboutPage()
         {
             InitializeComponent();
-            BindingContext = new ViewModels.AboutVM(Navigation);
+            BindingContext = new ViewModels.AboutViewModel(Navigation);
         }
     }
 }

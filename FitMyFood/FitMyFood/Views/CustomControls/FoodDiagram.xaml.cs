@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace FitMyFood.CustomControls
+namespace FitMyFood.Views.CustomControls
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class FoodDiagram : ContentView

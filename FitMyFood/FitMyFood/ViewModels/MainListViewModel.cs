@@ -36,7 +36,7 @@ await PopulateVariationSelector();
 */
 namespace FitMyFood.ViewModels
 {
-    public class MainListVM : BaseVM
+    public class MainListViewModel : BaseViewModel
     {
         public static double ENERGYFAT = 9.3;
         public static double ENERGYPROTEIN = 4.2;
@@ -163,7 +163,7 @@ namespace FitMyFood.ViewModels
                 {
                     MealVariation = VariationSelectorItems[VariationSelectorIndex];
                 }
-                App.MainListVM.LoadItemsCommand.Execute(null);
+                App.MainListViewModel.LoadItemsCommand.Execute(null);
             }
             get
             {
@@ -200,7 +200,7 @@ namespace FitMyFood.ViewModels
             VariationItem_NewCommand = new Command(async () => await ExecuteVariationItem_NewCommand());
             
         }
-        public MainListVM(INavigation navigation) : base(navigation)
+        public MainListViewModel(INavigation navigation) : base(navigation)
         {
             App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] start");
 

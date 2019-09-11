@@ -7,7 +7,7 @@ using FitMyFood.Views;
 
 namespace FitMyFood.ViewModels
 {
-    public class SettingsVM : BaseVM
+    public class SettingsViewModel : BaseViewModel
     {
         bool internalChange = false;
         Settings _Settings;
@@ -40,7 +40,7 @@ namespace FitMyFood.ViewModels
                     internalChange = false;
                 }
                 
-                App.MainListVM.Settings = Settings;
+                App.MainListViewModel.Settings = Settings;
             }
         }
         int _SexPicker;
@@ -82,7 +82,7 @@ namespace FitMyFood.ViewModels
             }
         }
 
-        public SettingsVM(INavigation navigation) : base(navigation)
+        public SettingsViewModel(INavigation navigation) : base(navigation)
         {
 
             //Title = "Settings";

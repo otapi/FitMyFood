@@ -13,7 +13,7 @@ namespace FitMyFood.Views
         public SettingsPage()
         {
             InitializeComponent();
-            BindingContext = new ViewModels.SettingsVM(Navigation);
+            BindingContext = new ViewModels.SettingsViewModel(Navigation);
         }
     }
 }

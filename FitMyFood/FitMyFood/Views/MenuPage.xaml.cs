@@ -15,7 +15,7 @@ namespace FitMyFood.Views
         {
             InitializeComponent();
 
-            menuItems = App.MenuVM.GetMenuItems();
+            menuItems = App.MenuViewModel.GetMenuItems();
 
             ListViewMenu.ItemsSource = menuItems;
 
@@ -24,7 +24,7 @@ namespace FitMyFood.Views
                 if (e.SelectedItem == null)
                     return;
 
-                await App.MenuVM.NavigateTo(((HomeMenuItem)e.SelectedItem).Id);
+                await App.MenuViewModel.NavigateTo(((HomeMenuItem)e.SelectedItem).Id);
                 ListViewMenu.SelectedItem = null;
                 
             };

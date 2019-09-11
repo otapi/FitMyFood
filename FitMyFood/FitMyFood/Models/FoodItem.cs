@@ -57,9 +57,9 @@ namespace FitMyFood.Models
         {
             get
             {
-                return (Protein * MainListVM.ENERGYPROTEIN
-                        + Carbo * MainListVM.ENERGYCARBO
-                        + Fat * MainListVM.ENERGYFAT
+                return (Protein * MainListViewModel.ENERGYPROTEIN
+                        + Carbo * MainListViewModel.ENERGYCARBO
+                        + Fat * MainListViewModel.ENERGYFAT
                        ) * Weight / 100;
             }
         }

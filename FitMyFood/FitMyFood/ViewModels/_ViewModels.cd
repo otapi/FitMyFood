@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="FitMyFood.ViewModels.VariationItemVM">
+  <Class Name="FitMyFood.ViewModels.VariationItemViewModel">
     <Position X="3.75" Y="0.5" Width="3" />
     <Members>
       <Method Name="ChangeQuantity" Hidden="true" />
       <Method Name="FillSearchFoodItems" Hidden="true" />
       <Property Name="Item" Hidden="true" />
-      <Method Name="VariationItemVM" Hidden="true" />
+      <Method Name="VariationItemViewModel" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
@@ -14,10 +14,10 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>KBAQACAAAhAAIIEAAAAAgAAkKCIYgAEIAQAAABAAgAA=</HashCode>
-      <FileName>ViewModels\VariationItemVM.cs</FileName>
+      <FileName>ViewModels\VariationItemViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FitMyFood.ViewModels.MainListVM">
+  <Class Name="FitMyFood.ViewModels.MainListViewModel">
     <Position X="0.5" Y="0.5" Width="2.75" />
     <Members>
       <Method Name="CalcSummary" Hidden="true" />
@@ -25,7 +25,7 @@
       <Method Name="DefineCommands" Hidden="true" />
       <Method Name="ExecuteLoadItemsCommand" Hidden="true" />
       <Method Name="ExecuteLoadSelectorsCommand" Hidden="true" />
-      <Method Name="MainListVM" Hidden="true" />
+      <Method Name="MainListViewModel" Hidden="true" />
       <Method Name="PopulateDailyProfileSelector" Hidden="true" />
       <Method Name="PopulateMealSelector" Hidden="true" />
       <Method Name="PopulateVariationSelector" Hidden="true" />
@@ -36,14 +36,14 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>PEAAwAEAQSwmCABEAAwwBACSBIQlBgAQgFIKKABYAAg=</HashCode>
-      <FileName>ViewModels\MainListVM.cs</FileName>
+      <FileName>ViewModels\MainListViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FitMyFood.ViewModels.WeightTrackVM">
+  <Class Name="FitMyFood.ViewModels.WeightTrackViewModel">
     <Position X="3.75" Y="4" Width="2.5" />
     <Members>
       <Property Name="ActualWeight" Hidden="true" />
-      <Method Name="WeightTrackVM" Hidden="true" />
+      <Method Name="WeightTrackViewModel" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
@@ -51,34 +51,34 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAACEAAAAAAABA=</HashCode>
-      <FileName>ViewModels\WeightTrackVM.cs</FileName>
+      <FileName>ViewModels\WeightTrackViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FitMyFood.ViewModels.MenuVM">
+  <Class Name="FitMyFood.ViewModels.MenuViewModel">
     <Position X="0.5" Y="4" Width="2.75" />
     <Members>
       <Method Name="GetMenuItems" Hidden="true" />
-      <Method Name="MenuVM" Hidden="true" />
+      <Method Name="MenuViewModel" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <NestedTypes>
-      <Enum Name="FitMyFood.ViewModels.MenuVM.MenuItemType" Collapsed="true">
+      <Enum Name="FitMyFood.ViewModels.MenuViewModel.MenuItemType" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>ViewModels\MenuVM.cs</NewMemberFileName>
+          <NewMemberFileName>ViewModels\MenuViewModel.cs</NewMemberFileName>
         </TypeIdentifier>
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAEAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
-      <FileName>ViewModels\MenuVM.cs</FileName>
+      <FileName>ViewModels\MenuViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FitMyFood.ViewModels.FoodItemVM">
+  <Class Name="FitMyFood.ViewModels.FoodItemViewModel">
     <Position X="7.25" Y="0.5" Width="2.75" />
     <Members>
-      <Method Name="FoodItemVM" Hidden="true" />
+      <Method Name="FoodItemViewModel" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
@@ -86,7 +86,7 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>ACCAACAAABIAAABAAAAAAAgEAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\FoodItemVM.cs</FileName>
+      <FileName>ViewModels\FoodItemViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

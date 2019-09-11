@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace FitMyFood.CustomControls
+namespace FitMyFood.Views.CustomControls
 {
         public interface ISwipeCallBack
     {

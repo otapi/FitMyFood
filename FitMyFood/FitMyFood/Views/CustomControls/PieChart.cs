@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FitMyFood.CustomControls
+namespace FitMyFood.Views.CustomControls
 {
     /*
     public class PieChart extends View

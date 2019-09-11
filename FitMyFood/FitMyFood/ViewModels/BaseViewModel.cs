@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace FitMyFood.ViewModels
 {
-    public class BaseVM : INotifyPropertyChanged
+    public class BaseViewModel : INotifyPropertyChanged
     {
         bool isBusy = false;
         public bool IsBusy
@@ -41,7 +41,7 @@ namespace FitMyFood.ViewModels
             return true;
         }
 
-        public BaseVM(INavigation navigation)
+        public BaseViewModel(INavigation navigation)
         {
             Navigation = navigation;
         }

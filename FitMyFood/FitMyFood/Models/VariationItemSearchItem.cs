@@ -1,4 +1,4 @@
-﻿using FitMyFood.RemoteParsers;
+﻿using FitMyFood.Services.RemoteParsers;
 using System;
 using System.Collections.Generic;
 using System.Text;

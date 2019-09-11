@@ -19,16 +19,16 @@ namespace FitMyFood.Views
         public MainListPage()
         {
             InitializeComponent();
-            App.MainListVM = new MainListVM(Navigation);
-            App.MenuVM.Navigation = Navigation;
-            BindingContext = App.MainListVM;
+            App.MainListViewModel = new MainListViewModel(Navigation);
+            App.MenuViewModel.Navigation = Navigation;
+            BindingContext = App.MainListViewModel;
             
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            App.MainListVM.LoadItemsCommand.Execute(null);
+            App.MainListViewModel.LoadItemsCommand.Execute(null);
         }
 
         

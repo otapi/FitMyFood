@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 
 namespace FitMyFood.ViewModels
 {
-    public class WeightTrackVM : BaseVM
+    public class WeightTrackViewModel : BaseViewModel
     {
         double _ActualWeight;
         public double ActualWeight
@@ -29,19 +29,19 @@ namespace FitMyFood.ViewModels
                     Weight = value
                 });
                 t.Wait();
-                App.MainListVM.Settings.ActualWeight = value;
+                App.MainListViewModel.Settings.ActualWeight = value;
                 App.DB.SaveChangesNoWait();
             }
         }
 
         public ObservableCollection<WeightTrack> Weights { get; set; }
-        public WeightTrackVM(INavigation navigation) : base(navigation)
+        public WeightTrackViewModel(INavigation navigation) : base(navigation)
         {
             
             Weights = new ObservableCollection<WeightTrack>();
             var t = LoadWeights();
             t.Wait();
-            ActualWeight = App.MainListVM.Settings.ActualWeight;
+            ActualWeight = App.MainListViewModel.Settings.ActualWeight;
         }
 
         async Task LoadWeights()

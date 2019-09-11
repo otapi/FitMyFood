@@ -6,7 +6,7 @@ namespace FitMyFood.Models
 {
     public class HomeMenuItem
     {
-        public ViewModels.MenuVM.MenuItemType Id { get; set; }
+        public ViewModels.MenuViewModel.MenuItemType Id { get; set; }
 
         public string Title { get; set; }
     }

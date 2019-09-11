@@ -9,7 +9,7 @@ using FitMyFood.Views;
 
 namespace FitMyFood.ViewModels
 {
-    public class FoodItemVM : BaseVM
+    public class FoodItemViewModel : BaseViewModel
     {
         public Command VariationItem_SaveCommand { get; set; }
         public Command VariationItem_CancelCommand { get; set; }
@@ -30,7 +30,7 @@ namespace FitMyFood.ViewModels
         }
         public Variation Variation { get; set; }
 
-        public FoodItemVM(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
+        public FoodItemViewModel(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
         {
             if (foodItem == null)
             {
@@ -60,8 +60,8 @@ namespace FitMyFood.ViewModels
                 await App.DB.AddFoodItem(Item);
                 await App.DB.SaveChangesAsync();
             }
-            App.VariationItemVM.SearchItems.Add(var);
-            App.VariationItemVM.SelectedSearchItem = var;
+            App.VariationItemViewModel.SearchItems.Add(var);
+            App.VariationItemViewModel.SelectedSearchItem = var;
             IsBusy = false;
             await Navigation.PopAsync(true);
         }

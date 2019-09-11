@@ -8,10 +8,10 @@ namespace FitMyFood
 {
     public partial class App : Application
     {
-        public static ViewModels.MainListVM MainListVM { get; set; }
-        public static ViewModels.FoodItemVM FoodItemVM { get; set; }
-        public static ViewModels.VariationItemVM VariationItemVM { get; set; }
-        public static ViewModels.MenuVM MenuVM { get; set; }
+        public static ViewModels.MainListViewModel MainListViewModel { get; set; }
+        public static ViewModels.FoodItemViewModel FoodItemViewModel { get; set; }
+        public static ViewModels.VariationItemViewModel VariationItemViewModel { get; set; }
+        public static ViewModels.MenuViewModel MenuViewModel { get; set; }
         
         static Services.Database _DB;
         public static Services.Database DB
@@ -43,7 +43,7 @@ namespace FitMyFood
         {
             InitializeComponent();
             App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] ping");
-            MenuVM = new ViewModels.MenuVM(null);
+            MenuViewModel = new ViewModels.MenuViewModel(null);
 
             MainPage = new MainPage();
         }
