@@ -176,10 +176,6 @@ namespace FitMyFood.ViewModels
             {
                 return;
             }
-            if (VariationFoodItem == null)
-            {
-                VariationFoodItem = await App.DB.GetVariationFoodItemAsync(Item, Variation);
-            }
             VariationFoodItem = await App.DB.GetVariationFoodItemAsync(Item, Variation);
             App.DB.Remove(VariationFoodItem);
             await App.DB.SaveChangesAsync();
