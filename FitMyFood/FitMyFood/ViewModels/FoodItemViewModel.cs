@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FitMyFood.Views;
 using MvvmHelpers.Interfaces;
 using MvvmHelpers.Commands;
+using MvvmHelpers;
 
 // TODO: selectall text edits on focus with a Renderer or an Effect
 
@@ -32,7 +33,7 @@ namespace FitMyFood.ViewModels
         }
         public Variation Variation { get; set; }
 
-        public FoodItemViewModel(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
+        public FoodItemViewModel(FoodItem foodItem, Variation variation)
         {
             if (foodItem == null)
             {
@@ -65,11 +66,11 @@ namespace FitMyFood.ViewModels
             App.VariationItemViewModel.SearchItems.Add(var);
             App.VariationItemViewModel.SelectedSearchItem = var;
             IsBusy = false;
-            await Navigation.PopAsync(true);
+            await App.Navigation.PopAsync(true);
         }
         async Task VariationItem_Cancel()
         {
-            await Navigation.PopAsync(true);
+            await App.Navigation.PopAsync(true);
         }
     }
 }

@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using FitMyFood.Views;
 using MvvmHelpers.Interfaces;
 using MvvmHelpers.Commands;
+using MvvmHelpers;
 
 namespace FitMyFood.ViewModels
 {
@@ -14,7 +15,7 @@ namespace FitMyFood.ViewModels
     {
         public MasterDetailPage MasterDetailPage { get; set; }
 
-        public MenuViewModel(INavigation navigation) : base(navigation)
+        public MenuViewModel()
         {
 
         }
@@ -41,13 +42,13 @@ namespace FitMyFood.ViewModels
             switch (page)
             {
                 case MenuItemType.WeightTrack:
-                    await Navigation.PushAsync(new WeightTrackPage());
+                    await App.Navigation.PushAsync(new WeightTrackPage());
                     break;
                 case MenuItemType.Settings:
-                    await Navigation.PushAsync(new SettingsPage());
+                    await App.Navigation.PushAsync(new SettingsPage());
                     break;
                 case MenuItemType.About:
-                    await Navigation.PushAsync(new AboutPage());
+                    await App.Navigation.PushAsync(new AboutPage());
                     break;
             }
             MasterDetailPage.IsPresented = false;

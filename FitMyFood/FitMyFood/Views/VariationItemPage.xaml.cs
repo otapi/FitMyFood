@@ -15,7 +15,7 @@ namespace FitMyFood.Views
         {
             InitializeComponent();
 
-            App.VariationItemViewModel = new VariationItemViewModel(Navigation, foodItem, variation);
+            App.VariationItemViewModel = new VariationItemViewModel(foodItem, variation);
             BindingContext = App.VariationItemViewModel;
             if (foodItem == null)
             {

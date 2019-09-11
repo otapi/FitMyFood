@@ -4,13 +4,14 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using MvvmHelpers.Interfaces;
 using MvvmHelpers.Commands;
+using MvvmHelpers;
 
 namespace FitMyFood.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {
         public IAsyncCommand OpenWebCommand { get; }
-        public AboutViewModel(INavigation navigation) : base(navigation)
+        public AboutViewModel()
         {
             Title = "About";
 

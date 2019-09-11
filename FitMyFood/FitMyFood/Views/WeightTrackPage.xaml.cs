@@ -11,7 +11,7 @@ namespace FitMyFood.Views
         public WeightTrackPage()
         {
             InitializeComponent();
-            BindingContext = new ViewModels.WeightTrackViewModel(Navigation);
+            BindingContext = new ViewModels.WeightTrackViewModel();
         }
     }
 }

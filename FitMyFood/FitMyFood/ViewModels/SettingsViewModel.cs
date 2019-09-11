@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FitMyFood.Views;
 using MvvmHelpers.Interfaces;
 using MvvmHelpers.Commands;
+using MvvmHelpers;
 
 namespace FitMyFood.ViewModels
 {
@@ -84,7 +85,7 @@ namespace FitMyFood.ViewModels
             }
         }
 
-        public SettingsViewModel(INavigation navigation) : base(navigation)
+        public SettingsViewModel()
         {
 
             //Title = "Settings";

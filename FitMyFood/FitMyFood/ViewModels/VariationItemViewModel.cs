@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using FitMyFood.Services.RemoteParsers;
 using MvvmHelpers.Interfaces;
 using MvvmHelpers.Commands;
+using MvvmHelpers;
 
 namespace FitMyFood.ViewModels
 {
@@ -124,7 +125,7 @@ namespace FitMyFood.ViewModels
         KaloriaBazisRemoteParser kaloriaBazisRemoteParser;
 
 
-        public VariationItemViewModel(INavigation navigation, FoodItem foodItem, Variation variation) : base(navigation)
+        public VariationItemViewModel(FoodItem foodItem, Variation variation)
         {
             FoodItem_EditCommand = new AsyncCommand(FoodItem_Edit);
             MainList_RemoveItemCommand = new AsyncCommand(MainList_RemoveItem);
@@ -144,14 +145,14 @@ namespace FitMyFood.ViewModels
         async Task FoodItem_Edit()
         {
             IsBusy = true;
-            await Navigation.PushAsync(new FoodItemPage(await App.DB.GetFoodItemAsTracked(Item), null));
+            await App.Navigation.PushAsync(new FoodItemPage(await App.DB.GetFoodItemAsTracked(Item), null));
             IsBusy = false;
         }
 
         async Task FoodItem_New()
         {
             IsBusy = true;
-            await Navigation.PushAsync(new FoodItemPage(null, Variation));
+            await App.Navigation.PushAsync(new FoodItemPage(null, Variation));
             IsBusy = false;
         }
 
@@ -180,11 +181,11 @@ namespace FitMyFood.ViewModels
             App.DB.Remove(VariationFoodItem);
             await App.DB.SaveChangesAsync();
             IsBusy = false;
-            await Navigation.PopAsync(true);
+            await App.Navigation.PopAsync(true);
         }
         async Task MainList_EditFinished()
         {
-            await Navigation.PopAsync(true);
+            await App.Navigation.PopAsync(true);
         }
 
         async Task FillSearchFoodItems(string term)

@@ -13,6 +13,7 @@ using MvvmHelpers.Interfaces;
 using MvvmHelpers.Commands;
 
 
+
 /*
     FitMyFod
     com.otapigems.fitmyfood
@@ -39,7 +40,7 @@ await PopulateVariationSelector();
 */
 namespace FitMyFood.ViewModels
 {
-    public class MainListViewModel : BaseViewModel
+    public class MainListViewModel : MvvmHelpers.BaseViewModel
     {
         public static double ENERGYFAT = 9.3;
         public static double ENERGYPROTEIN = 4.2;
@@ -203,7 +204,7 @@ namespace FitMyFood.ViewModels
             VariationItem_NewCommand = new AsyncCommand(ExecuteVariationItem_NewCommand);
            
         }
-        public MainListViewModel(INavigation navigation) : base(navigation)
+        public MainListViewModel()
         {
             App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] start");
 
@@ -427,11 +428,11 @@ namespace FitMyFood.ViewModels
         
         async Task ExecuteVariationItem_EditCommand()
         {
-            await Navigation.PushAsync(new VariationItemPage(SelectedItem, MealVariation));
+            await App.Navigation.PushAsync(new VariationItemPage(SelectedItem, MealVariation));
         }
         async Task ExecuteVariationItem_NewCommand()
         {
-            await Navigation.PushAsync(new VariationItemPage(null, MealVariation));
+            await App.Navigation.PushAsync(new VariationItemPage(null, MealVariation));
         }
 
         

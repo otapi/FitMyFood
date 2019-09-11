@@ -19,8 +19,8 @@ namespace FitMyFood.Views
         public MainListPage()
         {
             InitializeComponent();
-            App.MainListViewModel = new MainListViewModel(Navigation);
-            App.MenuViewModel.Navigation = Navigation;
+            App.Navigation = Navigation;
+            App.MainListViewModel = new MainListViewModel();
             BindingContext = App.MainListViewModel;
             
         }

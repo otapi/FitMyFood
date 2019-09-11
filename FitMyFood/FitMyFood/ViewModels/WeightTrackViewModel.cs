@@ -7,6 +7,7 @@ using FitMyFood.Views;
 using System.Collections.ObjectModel;
 using MvvmHelpers.Interfaces;
 using MvvmHelpers.Commands;
+using MvvmHelpers;
 // TODO: OxyPlot.Xamarin.Forms - http://docs.oxyplot.org/en/latest/getting-started/hello-xamarin-forms.html
 
 namespace FitMyFood.ViewModels
@@ -36,7 +37,7 @@ namespace FitMyFood.ViewModels
         }
 
         public ObservableCollection<WeightTrack> Weights { get; set; }
-        public WeightTrackViewModel(INavigation navigation) : base(navigation)
+        public WeightTrackViewModel()
         {
             
             Weights = new ObservableCollection<WeightTrack>();
