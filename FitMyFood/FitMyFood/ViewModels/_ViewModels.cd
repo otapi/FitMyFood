@@ -10,10 +10,10 @@
     </Members>
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>KBAQACAAAhAAIIEAAAAAgAAkKCIYgAEIAQAAABAAgAA=</HashCode>
+      <HashCode>KBAQACAAAhEAIIEAABAAgAAkKGIYgAEIAQAAABAAgAA=</HashCode>
       <FileName>ViewModels\VariationItemViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -35,12 +35,12 @@
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>PEAAwAEAQSwmCABEAAwwBACSBIQlBgAQgFIKKABYAAg=</HashCode>
+      <HashCode>PEACwAFAQSwmCgBEAAwwBACSBIYlBgAQgFIKKABYAAg=</HashCode>
       <FileName>ViewModels\MainListViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FitMyFood.ViewModels.WeightTrackViewModel">
-    <Position X="3.75" Y="4" Width="2.5" />
+    <Position X="8.25" Y="4" Width="2.5" />
     <Members>
       <Property Name="ActualWeight" Hidden="true" />
       <Method Name="WeightTrackViewModel" Hidden="true" />
@@ -76,7 +76,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FitMyFood.ViewModels.FoodItemViewModel">
-    <Position X="7.25" Y="0.5" Width="2.75" />
+    <Position X="12" Y="1" Width="2.75" />
     <Members>
       <Method Name="FoodItemViewModel" Hidden="true" />
     </Members>

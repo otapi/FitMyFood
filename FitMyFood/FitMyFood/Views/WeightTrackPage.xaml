@@ -8,6 +8,7 @@
 
     <ContentPage.Content>
         <StackLayout>
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
             <Label Text="Actual weight (kg):" />
             <Entry Text="{Binding ActualWeight}" Keyboard="Numeric"/>
             <ListView x:Name="ItemsListView"

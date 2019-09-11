@@ -19,8 +19,8 @@
     </ContentPage.ToolbarItems>
     <ScrollView>
     <StackLayout Spacing="20" Padding="15">
-        
-        <Grid>
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+            <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

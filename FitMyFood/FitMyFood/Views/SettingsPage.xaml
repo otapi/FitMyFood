@@ -6,9 +6,11 @@
              Title="{Binding Title}"
              x:Name="SettingsPager">
     <ContentPage.Content>
+        
         <ScrollView>
         <StackLayout Padding="20">
-            <Label Text="Actual weight (kg):" />
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+                <Label Text="Actual weight (kg):" />
                 <Entry Text="{Binding Settings.ActualWeight}" Keyboard="Numeric"/>
                 <Label Text="Height (cm):" />
                 <Entry Text="{Binding Settings.Height}" Keyboard="Numeric"/>

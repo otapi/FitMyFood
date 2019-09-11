@@ -20,6 +20,7 @@
         <StackLayout>
             <Label Text="Name:" FontSize="Medium" />
             <Entry Text="{Binding Item.Name}"/>
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
             <BoxView HeightRequest="1" BackgroundColor="{StaticResource SeparatorColor}" HorizontalOptions="FillAndExpand" />
 
         
