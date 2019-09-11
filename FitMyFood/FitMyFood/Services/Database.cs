@@ -26,10 +26,10 @@ namespace FitMyFood.Services
             var databasePath = DependencyService.Get<Services.IFileHelper>().GetLocalFilePath("fitmyfood.db");
             App.PrintNote($"Database file: {databasePath}");
             var dbContext = new Database(databasePath);
-            //dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureDeleted();
             //if (Device.RuntimePlatform == Device.Android)
             //{
-                //databaseContext.Database.EnsureDeleted();
+              //  dbContext.Database.EnsureDeleted();
             //}
             dbContext.Database.EnsureCreated();
             dbContext.Database.Migrate();

@@ -36,11 +36,16 @@ namespace FitMyFood
 
         public static void PrintWarning(string message)
         {
+#if DEBUG
             System.Diagnostics.Debug.WriteLine($"[FitMyFood][Warning] {message}");
+#endif
+
         }
         public static void PrintNote(string message)
         {
+#if DEBUG
             System.Diagnostics.Debug.WriteLine($"[FitMyFood][Note] {message}");
+#endif
         }
 
         public App()
