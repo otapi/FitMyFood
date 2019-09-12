@@ -10,6 +10,7 @@ using FitMyFood.Services.RemoteParsers;
 using MvvmHelpers.Interfaces;
 using MvvmHelpers.Commands;
 using MvvmHelpers;
+using System.Linq;
 
 namespace FitMyFood.ViewModels
 {
@@ -115,7 +116,7 @@ namespace FitMyFood.ViewModels
                 }
             }
         }
-        public ObservableCollection<VariationItemSearchItem> SearchItems { get; set; }
+        public ObservableRangeCollection<VariationItemSearchItem> SearchItems { get; set; }
         
         public Variation Variation;
         public VariationFoodItem VariationFoodItem;
@@ -136,7 +137,7 @@ namespace FitMyFood.ViewModels
 
             Item = foodItem;
             OrigEnergy = (foodItem == null ? 0 : foodItem.Energy);
-            SearchItems = new ObservableCollection<VariationItemSearchItem>();
+            SearchItems = new ObservableRangeCollection<VariationItemSearchItem>();
             IsSearchItemsListviewVisible = false;
 
             Variation = variation;
@@ -190,18 +191,19 @@ namespace FitMyFood.ViewModels
 
         async Task FillSearchFoodItems(string term)
         {
+            IsBusy = true;
             App.VariationItemViewModel.IsSearchItemsListviewVisible = true;
             SearchItems.Clear();
-            foreach (var item in await App.DB.GetOrderedFoodItemsAsync(term))
-            {
-                SearchItems.Add(new VariationItemSearchItem()
+            SearchItems.AddRange(
+                from item in await App.DB.GetOrderedFoodItemsAsync(term)
+                select new VariationItemSearchItem()
                 {
                     Source = null,
                     Name = item.Name,
                     Icon = null,
                     InternalFoodItem = item
-                });
-            };
+                }
+            );
 
             // External sources
             if (kaloriaBazisRemoteParser == null)
@@ -209,33 +211,22 @@ namespace FitMyFood.ViewModels
                 kaloriaBazisRemoteParser = new KaloriaBazisRemoteParser();
             }
             await FillSearchItems_ExternalSources(kaloriaBazisRemoteParser, term);
+            IsBusy = false;
         }
 
         async Task FillSearchItems_ExternalSources(IRemoteParser source, string term)
         {
-            foreach (var item in await source.GetMatches(term))
-            {
-                bool exit = false;
-                foreach (var s in SearchItems)
-                {
-                    if (s.Name == item)
-                    {
-                        exit = true;
-                        break;
-                    }
-                }
-                if (exit)
-                {
-                    continue;
-                }
-                SearchItems.Add(new VariationItemSearchItem()
+            SearchItems.AddRange(
+                from item in await source.GetMatches(term)
+                where !(from s in SearchItems
+                       select s.Name).Contains(item)
+                select new VariationItemSearchItem()
                 {
                     Name = item,
                     Icon = source.GetIcon(),
                     Source = source,
                 }
-                );
-            }
+            );
         }
 
         private void SuggestWeight()

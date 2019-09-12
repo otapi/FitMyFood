@@ -36,11 +36,11 @@ namespace FitMyFood.ViewModels
             }
         }
 
-        public ObservableCollection<WeightTrack> Weights { get; set; }
+        public ObservableRangeCollection<WeightTrack> Weights { get; set; }
         public WeightTrackViewModel()
         {
             
-            Weights = new ObservableCollection<WeightTrack>();
+            Weights = new ObservableRangeCollection<WeightTrack>();
             var t = LoadWeights();
             t.Wait();
             ActualWeight = App.MainListViewModel.Settings.ActualWeight;
@@ -48,12 +48,9 @@ namespace FitMyFood.ViewModels
 
         async Task LoadWeights()
         {
+            IsBusy = true;
             Weights.Clear();
-
-            foreach (var w in await App.DB.GetWeightTracks())
-            {
-                Weights.Add(w);
-            }
+            Weights.AddRange(await App.DB.GetWeightTracks());
             IsBusy = false;
         }
     }

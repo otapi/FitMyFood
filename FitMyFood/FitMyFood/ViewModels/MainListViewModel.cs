@@ -11,25 +11,9 @@ using System.Collections.Generic;
 using FitMyFood.Services;
 using MvvmHelpers.Interfaces;
 using MvvmHelpers.Commands;
+using MvvmHelpers;
+using System.Linq;
 
-
-
-/*
-    FitMyFod
-    com.otapigems.fitmyfood
-    Copyright (C) 2018 Barnabás Nagy - otapiGems.com - otapiGems@protonmail.ch
-   
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 
 // TODO: convert all .Wait() and .Result to:
 /* Task.Run(async () =>
@@ -40,7 +24,7 @@ await PopulateVariationSelector();
 */
 namespace FitMyFood.ViewModels
 {
-    public class MainListViewModel : MvvmHelpers.BaseViewModel
+    public class MainListViewModel : BaseViewModel
     {
         public static double ENERGYFAT = 9.3;
         public static double ENERGYPROTEIN = 4.2;
@@ -51,10 +35,14 @@ namespace FitMyFood.ViewModels
         public static double MODERATELY = 1.3;
         public static double ACTIVE = 1.4;
 
-        public ObservableCollection<FoodItem> Items { get; set; }
-        public ObservableCollection<View> DailyProfileSelectorSource { get; set; }
-        public ObservableCollection<View> MealSelectorSource { get; set; }
-        public ObservableCollection<View> VariationSelectorSource { get; set; }
+        public ObservableRangeCollection<FoodItem> Items { get; set; }
+        public ObservableRangeCollection<View> DailyProfileSelectorSource { get; set; }
+        public ObservableRangeCollection<View> MealSelectorSource { get; set; }
+        public ObservableRangeCollection<View> VariationSelectorSource { get; set; }
+
+        List<DailyProfile> dailyProfileSelectors;
+        List<Meal> mealSelectors;
+        List<Variation> variationSelectors;
 
         public Settings Settings { get; set; }
         FoodItem _TargetFood;
@@ -119,9 +107,6 @@ namespace FitMyFood.ViewModels
         // TODO: rename to Variation
         public Variation MealVariation { get; set; }
 
-        List<DailyProfile> DailyProfileSelectorItems;
-        List<Meal> MealSelectorItems;
-        List<Variation> VariationSelectorItems;
 
         int _DailyProfileSelectorIndex;
         public int DailyProfileSelectorIndex
@@ -129,9 +114,9 @@ namespace FitMyFood.ViewModels
             set
             {
                 SetProperty(ref _DailyProfileSelectorIndex, value);
-                if (DailyProfileSelectorItems.Count > 0 && DailyProfileSelectorIndex>-1)
+                if (dailyProfileSelectors.Count > 0 && DailyProfileSelectorIndex>-1)
                 {
-                    DailyProfile = DailyProfileSelectorItems[DailyProfileSelectorIndex];
+                    DailyProfile = dailyProfileSelectors[DailyProfileSelectorIndex];
                 }
                 UpdateVariantSelectorCommand.Execute(null);
             }
@@ -146,9 +131,9 @@ namespace FitMyFood.ViewModels
             set
             {
                 SetProperty(ref _MealSelectorIndex, value);
-                if (MealSelectorItems.Count > 0 && MealSelectorIndex > -1)
+                if (mealSelectors.Count > 0 && MealSelectorIndex > -1)
                 {
-                    Meal = MealSelectorItems[MealSelectorIndex];
+                    Meal = mealSelectors[MealSelectorIndex];
                 }
                 UpdateVariantSelectorCommand.Execute(null);
             }
@@ -163,9 +148,9 @@ namespace FitMyFood.ViewModels
             set
             {
                 SetProperty(ref _VariationSelectorIndex, value);
-                if (VariationSelectorItems.Count > 0 && VariationSelectorIndex > -1)
+                if (variationSelectors.Count > 0 && VariationSelectorIndex > -1)
                 {
-                    MealVariation = VariationSelectorItems[VariationSelectorIndex];
+                    MealVariation = variationSelectors[VariationSelectorIndex];
                 }
                 App.MainListViewModel.LoadItemsCommand.Execute(null);
             }
@@ -211,18 +196,17 @@ namespace FitMyFood.ViewModels
             Title = "Browse";
             DefineCommands();
 
-            Items = new ObservableCollection<FoodItem>();
-            DailyProfileSelectorSource = new ObservableCollection<View>();
-            MealSelectorSource = new ObservableCollection<View>();
-            VariationSelectorSource = new ObservableCollection<View>();
+            Items = new ObservableRangeCollection<FoodItem>();
+            DailyProfileSelectorSource = new ObservableRangeCollection<View>();
+            MealSelectorSource = new ObservableRangeCollection<View>();
+            VariationSelectorSource = new ObservableRangeCollection<View>();
 
-            DailyProfileSelectorItems = new List<DailyProfile>();
-            MealSelectorItems = new List<Meal>();
-            VariationSelectorItems = new List<Variation>();
+            dailyProfileSelectors = new List<DailyProfile>();
+            mealSelectors = new List<Meal>();
+            variationSelectors = new List<Variation>();
             
             TargetFood = new FoodItem();
             TotalFood = new FoodItem();
-            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] db pre");
 
             Settings = App.DB.GetSettings().Result;
 
@@ -241,8 +225,6 @@ namespace FitMyFood.ViewModels
         */
         void CalcTargetFood()
         {
-            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] start");
-
             string message = "";
             double BMR;
             if (Settings.Sex == false)
@@ -307,9 +289,6 @@ namespace FitMyFood.ViewModels
                         $"Target change: {dailyKcalChange} kcal\n" +
                         $"Target weight change: {dailyWeightChangeInGramm} gramm\n" +
                         $"Target energy: {dailyKcalTarget} kcal\n";
-
-            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] end");
-
         }
         void CalcSummary()
         {
@@ -349,57 +328,64 @@ namespace FitMyFood.ViewModels
 
         async Task ExecuteLoadSelectorsCommand()
         {
-            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] start");
-
             IsBusy = true;
             await PopulateDailyProfileSelector();
             await PopulateMealSelector();
             IsBusy = false;
-            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] end");
 
         }
 
         async Task PopulateMealSelector()
         {
-            MealSelectorItems = await App.DB.GetMealsAsync();
+            mealSelectors = await App.DB.GetMealsAsync();
             MealSelectorSource.Clear();
-            foreach (var item in MealSelectorItems)
-            {
-                MealSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
-            }
+            MealSelectorSource.AddRange(
+                from item in mealSelectors
+                select new Label()
+                {
+                    Text = item.Name, HorizontalTextAlignment = TextAlignment.Center
+                }
+            );
+
             MealSelectorIndex = 0;
         }
 
         async Task PopulateDailyProfileSelector()
         {
-            DailyProfileSelectorItems = await App.DB.GetDailyProfilesAsync();
+            dailyProfileSelectors = await App.DB.GetDailyProfilesAsync();
             DailyProfileSelectorSource.Clear();
-            foreach (var item in DailyProfileSelectorItems)
-            {
-                DailyProfileSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
-            }
+            DailyProfileSelectorSource.AddRange(
+                from item in dailyProfileSelectors
+                select new Label()
+                {
+                    Text = item.Name, HorizontalTextAlignment = TextAlignment.Center
+                }
+            );
             DailyProfileSelectorIndex = 0;
         }
 
         async Task PopulateVariationSelector()
         {
-            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] ping");
 
-            if (MealSelectorItems.Count <1 || DailyProfileSelectorItems.Count < 1 || DailyProfile == null || Meal == null)
+            if (mealSelectors.Count <1 || dailyProfileSelectors.Count < 1 || DailyProfile == null || Meal == null)
             {
                 return;
             }
+            IsBusy = true;
 
-            VariationSelectorItems = await App.DB.GetVariationsAsync(DailyProfile, Meal);
+            variationSelectors = await App.DB.GetVariationsAsync(DailyProfile, Meal);
             VariationSelectorSource.Clear();
-            foreach (var item in VariationSelectorItems)
-            {
-                VariationSelectorSource.Add(new Label() { Text = item.Name, HorizontalTextAlignment = TextAlignment.Center });
-            }
-            MealVariation = VariationSelectorItems[VariationSelectorIndex];
+            VariationSelectorSource.AddRange(
+                from item in variationSelectors
+                select new Label()
+                {
+                    Text = item.Name, HorizontalTextAlignment = TextAlignment.Center
+                }
+            );
+            
+            MealVariation = variationSelectors[VariationSelectorIndex];
             CalcTargetFood();
-            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] endg");
-
+            IsBusy = false;
         }
         /// <summary>
         /// This is ist
@@ -413,14 +399,15 @@ namespace FitMyFood.ViewModels
             }
             IsBusy = true;
             Items.Clear();
-
             var variationFoodItems = await App.DB.GetVariationFoodItemsIncludeFoodItem(MealVariation);
+            var itemsToAdd = new List<FoodItem>();
             foreach (var variationFoodItem in variationFoodItems)
             {
                 var foodItem = await App.DB.GetFoodItemAsNoTracked(variationFoodItem.FoodItem);
                 foodItem.Quantity = variationFoodItem.Quantity;
-                Items.Add(foodItem);
+                itemsToAdd.Add(foodItem);
             }
+            Items.ReplaceRange(itemsToAdd);
             CalcSummary();
             
             IsBusy = false;
