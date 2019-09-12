@@ -4,6 +4,9 @@
              x:Class="FitMyFood.Views.AboutPage"
              xmlns:vm="clr-namespace:FitMyFood.ViewModels"
              Title="{Binding Title}">
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel/>
+    </ContentPage.BindingContext>
     
     <ContentPage.Resources>
         <ResourceDictionary>

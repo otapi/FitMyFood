@@ -4,7 +4,12 @@
              x:Class="FitMyFood.Views.VariationItemPage"
              Title="{Binding Title}"
              x:Name="VariationItemPager"
+             xmlns:vm="clr-namespace:FitMyFood.ViewModels"
              >
+    <ContentPage.BindingContext>
+        <vm:VariationItemViewModel/>
+    </ContentPage.BindingContext>
+    
     <ContentPage.ToolbarItems>
 
 

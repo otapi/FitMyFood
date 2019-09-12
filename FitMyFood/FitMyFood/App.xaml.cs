@@ -24,23 +24,17 @@ namespace FitMyFood
             {
                 if (_DB == null)
                 {
-                    App.PrintWarning($"[DatabaseHelper] Database haven't started yet!");
+                    App.PrintNote($"[DatabaseHelper] Database haven't started yet!");
                 }
                 return _DB;
             }
         }
 
-        public static void PrintWarning(string message)
-        {
-#if DEBUG
-            System.Diagnostics.Debug.WriteLine($"[FitMyFood][Warning] {message}");
-#endif
-
-        }
+        
         public static void PrintNote(string message)
         {
 #if DEBUG
-            System.Diagnostics.Debug.WriteLine($"[FitMyFood][Note] {message}");
+            System.Diagnostics.Debug.WriteLine($"[FitMyFood] {message}");
 #endif
         }
 

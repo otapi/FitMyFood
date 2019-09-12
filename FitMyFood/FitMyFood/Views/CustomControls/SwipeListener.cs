@@ -51,10 +51,10 @@ namespace FitMyFood.Views.CustomControls
                     }
                     catch (Exception err)
                     {
-                        App.PrintWarning("" + err.Message);
+                        App.PrintNote("" + err.Message);
                     }
                     break;
-
+                     
                 case GestureStatus.Completed:
                     if (translatedX < (-Content.Width*SwiperStackLayout.Threshold))
                     {

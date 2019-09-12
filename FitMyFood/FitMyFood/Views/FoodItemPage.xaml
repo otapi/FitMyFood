@@ -3,8 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitMyFood.Views.FoodItemPage"
              Title="New Item"
-             x:Name="FoodItemPager">
-    
+             x:Name="FoodItemPager"
+             xmlns:vm="clr-namespace:FitMyFood.ViewModels"
+             >
+    <ContentPage.BindingContext>
+        <vm:FoodItemViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Save"  Command="{Binding Path=BindingContext.VariationItem_SaveCommand, Source={x:Reference Name=FoodItemPager}}">
             <ToolbarItem.Icon>

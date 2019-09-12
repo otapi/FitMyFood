@@ -6,7 +6,12 @@
              xmlns:controls="clr-namespace:FitMyFood.Views.CustomControls"
              Title="{Binding Title}"
              x:Name="MainListPager"
+             xmlns:vm="clr-namespace:FitMyFood.ViewModels"
             >
+    <ContentPage.BindingContext>
+        <vm:MainListViewModel/>
+    </ContentPage.BindingContext>
+    
     <ContentPage.ToolbarItems>
 
 

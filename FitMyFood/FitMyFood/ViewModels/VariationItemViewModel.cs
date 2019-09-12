@@ -157,7 +157,11 @@ namespace FitMyFood.ViewModels
 
             Variation = variation;
         }
+        // Just for XAML Intellisense
+        public VariationItemViewModel()
+        {
 
+        }
         async Task FoodItem_Edit()
         {
             IsBusy = true;

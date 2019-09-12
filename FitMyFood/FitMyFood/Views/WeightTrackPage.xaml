@@ -4,7 +4,12 @@
              x:Class="FitMyFood.Views.WeightTrackPage"
              xmlns:vm="clr-namespace:FitMyFood.ViewModels"
              Title="{Binding Title}"
-             x:Name="WeightTrackPager">
+             x:Name="WeightTrackPager"
+             >
+
+    <ContentPage.BindingContext>
+        <vm:WeightTrackViewModel/>
+    </ContentPage.BindingContext>
 
     <ContentPage.Content>
         <StackLayout>

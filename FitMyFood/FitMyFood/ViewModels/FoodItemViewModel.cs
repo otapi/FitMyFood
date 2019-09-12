@@ -16,7 +16,7 @@ namespace FitMyFood.ViewModels
     {
         public IAsyncCommand VariationItem_SaveCommand { get; set; }
         public IAsyncCommand VariationItem_CancelCommand { get; set; }
-        public bool newitem;
+        public bool isNewitem;
         FoodItem _Item;
         public FoodItem Item {
             get
@@ -37,11 +37,11 @@ namespace FitMyFood.ViewModels
         {
             if (foodItem == null)
             {
-                newitem = true;
+                isNewitem = true;
                 foodItem = new FoodItem();
             } else
             {
-                newitem = false;
+                isNewitem = false;
             }
 
             this.Item = foodItem;
@@ -50,6 +50,11 @@ namespace FitMyFood.ViewModels
             VariationItem_CancelCommand = new AsyncCommand(VariationItem_Cancel);
         }
 
+        // just for XAML Intellisense
+        public FoodItemViewModel()
+        {
+
+        }
         async Task VariationItem_Save()
         {
             IsBusy = true;
@@ -58,7 +63,7 @@ namespace FitMyFood.ViewModels
                 Name = Item.Name,
                 InternalFoodItem = Item
             };
-            if (newitem)
+            if (isNewitem)
             {
                 await App.DB.AddFoodItem(Item);
                 await App.DB.SaveChangesAsync();

@@ -4,12 +4,17 @@
              x:Class="FitMyFood.Views.SettingsPage"
              xmlns:vm="clr-namespace:FitMyFood.ViewModels"
              Title="{Binding Title}"
-             x:Name="SettingsPager">
+             x:Name="SettingsPager"
+             >
+    <ContentPage.BindingContext>
+        <vm:SettingsViewModel/>
+    </ContentPage.BindingContext>
+    
     <ContentPage.Content>
         
         <ScrollView>
         <StackLayout Padding="20">
-                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
                 <Label Text="Actual weight (kg):" />
                 <Entry Text="{Binding Settings.ActualWeight}" Keyboard="Numeric"/>
                 <Label Text="Height (cm):" />

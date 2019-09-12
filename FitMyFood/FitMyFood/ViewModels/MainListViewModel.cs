@@ -173,12 +173,11 @@ namespace FitMyFood.ViewModels
             }
         }
 
-        public IAsyncCommand LoadSelectorsCommand { get; set; } 
-        public IAsyncCommand UpdateVariantSelectorCommand { get; set; }
-        public IAsyncCommand LoadItemsCommand { get; set; }
-        public IAsyncCommand VariationItem_EditCommand { get; set; }
+        public IAsyncCommand LoadSelectorsCommand { get; private set; } 
+        public IAsyncCommand UpdateVariantSelectorCommand { get; private set; }
+        public IAsyncCommand LoadItemsCommand { get; private set; }
+        public IAsyncCommand VariationItem_EditCommand { get; private set; }
         public IAsyncCommand VariationItem_NewCommand { get; private set; }
-
 
         void DefineCommands()
         {
@@ -191,8 +190,6 @@ namespace FitMyFood.ViewModels
         }
         public MainListViewModel()
         {
-            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] start");
-
             Title = "Browse";
             DefineCommands();
 
