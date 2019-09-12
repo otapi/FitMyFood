@@ -1,7 +1,7 @@
 ﻿using FitMyFood.Services.RemoteParsers;
-using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitMyFood.Models
 {
@@ -12,6 +12,9 @@ namespace FitMyFood.Models
         public string Icon { get; set; }
         public IRemoteParser Source { get; set; }
         public FoodItem InternalFoodItem { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public string NameSort => Name[0].ToString();
+
         public FoodItem GetFoodItem()
         {
             if (Source == null)

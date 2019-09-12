@@ -19,7 +19,6 @@
     </ContentPage.ToolbarItems>
     <ScrollView>
     <StackLayout Spacing="20" Padding="15">
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
             <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -38,8 +37,11 @@
                     Grid.Row="0" Grid.Column="1"
                     HorizontalOptions="End"
                     IsVisible="{Binding IsSearchItemsListviewVisible}"/>
-            <ListView x:Name="SearchItemsListview"
-                    ItemsSource="{Binding SearchItems}"
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" 
+                                   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                <ListView x:Name="SearchItemsListview"
+                    ItemsSource="{Binding SearchItemsGrouped}"
                     HasUnevenRows="true"
                     IsPullToRefreshEnabled="False"
                     CachingStrategy="RecycleElement"
@@ -48,6 +50,8 @@
                     SelectedItem="{Binding SelectedSearchItem, Mode=TwoWay}"
                     VerticalOptions="FillAndExpand"
                     Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                      IsGroupingEnabled="True"
+                      GroupDisplayBinding="{Binding Key}"
                   >
                 <ListView.ItemTemplate>
                     <DataTemplate>

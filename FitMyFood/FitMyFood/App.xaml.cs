@@ -24,11 +24,7 @@ namespace FitMyFood
             {
                 if (_DB == null)
                 {
-                    App.PrintNote($"[DatabaseHelper] start");
-                    
-                    _DB = Services.Database.Create();
-                    App.PrintNote($"[DatabaseHelper] end");
-
+                    App.PrintWarning($"[DatabaseHelper] Database haven't started yet!");
                 }
                 return _DB;
             }
@@ -51,6 +47,7 @@ namespace FitMyFood
         public App()
         {
             InitializeComponent();
+            _DB = Services.Database.Create();
 #if DEBUG
             App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] ping");
 #endif

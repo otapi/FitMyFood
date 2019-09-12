@@ -21,6 +21,7 @@ namespace FitMyFood.Services
 
         // TODO: why: There are many strategies for handling the lifecycle of a context object. I prefer to create a context when I need one and then dispose it at the end of the operation. 
 
+        // TODO: make the create async, but avoid using the DB until it is really created
         public static Database Create()
         {
             var databasePath = DependencyService.Get<Services.IFileHelper>().GetLocalFilePath("fitmyfood.db");
@@ -159,22 +160,14 @@ namespace FitMyFood.Services
 
         public async Task<Settings> GetSettings()
         {
-            App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] start");
+            
 
             var settings = (await Settings.ToListAsync());
             if (settings.Count == 0)
             {
-                App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] default pre");
-
                 var set = DefaultValues.Settings();
-                App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] default after");
-
                 await Settings.AddAsync(set);
-                App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] add pre");
-
                 await SaveChangesAsync();
-                    App.PrintNote($"[{this.GetType().Name}/{System.Reflection.MethodBase.GetCurrentMethod().Name}] save after");
-
                 return set;
             } else
             {

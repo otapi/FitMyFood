@@ -116,14 +116,24 @@ namespace FitMyFood.ViewModels
                 }
             }
         }
-        public ObservableRangeCollection<VariationItemSearchItem> SearchItems { get; set; }
-        
         public Variation Variation;
         public VariationFoodItem VariationFoodItem;
 
         public double OrigEnergy;
 
         KaloriaBazisRemoteParser kaloriaBazisRemoteParser;
+
+        public ObservableRangeCollection<VariationItemSearchItem> SearchItems { get; set; }
+        public ObservableRangeCollection<Grouping<string, VariationItemSearchItem>> SearchItemsGrouped { get; } = new ObservableRangeCollection<Grouping<string, VariationItemSearchItem>>();
+        void SortAndGroupdSearchItems()
+        {
+            var sorted = from item in SearchItems
+                         orderby item.Name
+                         group item by item.NameSort into itemGroup
+                         select new Grouping<string, VariationItemSearchItem>(itemGroup.Key, itemGroup);
+            SearchItemsGrouped.Clear();
+            SearchItemsGrouped.AddRange(sorted);
+        }        
 
 
         public VariationItemViewModel(FoodItem foodItem, Variation variation)
@@ -139,6 +149,11 @@ namespace FitMyFood.ViewModels
             OrigEnergy = (foodItem == null ? 0 : foodItem.Energy);
             SearchItems = new ObservableRangeCollection<VariationItemSearchItem>();
             IsSearchItemsListviewVisible = false;
+
+            SearchItems.CollectionChanged += (sender, args) =>
+            {
+                SortAndGroupdSearchItems();
+            };
 
             Variation = variation;
         }
